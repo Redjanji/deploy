@@ -1,0 +1,542 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2026-07-10T02:29:40.351+08:00  INFO 34468 --- [image-service] [           main] c.x.i.ImageServiceApplication            : Starting ImageServiceApplication v0.0.1-SNAPSHOT using Java 21.0.10 with PID 34468 (C:\Users\75328\OneDrive\桌面\xss\image-service\target\image-service-0.0.1-SNAPSHOT.jar started by 75328 in C:\Users\75328\OneDrive\桌面\xss)
+2026-07-10T02:29:40.354+08:00  INFO 34468 --- [image-service] [           main] c.x.i.ImageServiceApplication            : No active profile set, falling back to 1 default profile: "default"
+2026-07-10T02:29:42.474+08:00  INFO 34468 --- [image-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2026-07-10T02:29:42.505+08:00  INFO 34468 --- [image-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-10T02:29:42.506+08:00  INFO 34468 --- [image-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2026-07-10T02:29:42.569+08:00  INFO 34468 --- [image-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-10T02:29:42.571+08:00  INFO 34468 --- [image-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2114 ms
+2026-07-10T02:29:43.030+08:00 DEBUG 34468 --- [image-service] [           main] com.zaxxer.hikari.HikariConfig           : Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader org.springframework.boot.loader.launch.LaunchedClassLoader@37bba400
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.7 
+2026-07-10T02:29:45.390+08:00  INFO 34468 --- [image-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path '/'
+2026-07-10T02:29:45.403+08:00  INFO 34468 --- [image-service] [           main] c.x.i.ImageServiceApplication            : Started ImageServiceApplication in 5.62 seconds (process running for 6.51)
+2026-07-10T02:32:05.442+08:00  INFO 34468 --- [image-service] [0.1-8082-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-10T02:32:05.442+08:00  INFO 34468 --- [image-service] [0.1-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-10T02:32:05.443+08:00  INFO 34468 --- [image-service] [0.1-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-07-10T02:32:05.476+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : HikariPool-1 - configuration:
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : allowPoolSuspension.............false
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : autoCommit......................true
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : catalog.........................none
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : connectionInitSql...............none
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : connectionTestQuery.............none
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : connectionTimeout...............30000
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : dataSource......................none
+2026-07-10T02:32:05.478+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : dataSourceClassName.............none
+2026-07-10T02:32:05.480+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : dataSourceJNDI..................none
+2026-07-10T02:32:05.480+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : dataSourceProperties............{password=<masked>}
+2026-07-10T02:32:05.481+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : driverClassName................."com.mysql.cj.jdbc.Driver"
+2026-07-10T02:32:05.481+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : exceptionOverrideClassName......none
+2026-07-10T02:32:05.481+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : healthCheckProperties...........{}
+2026-07-10T02:32:05.481+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : healthCheckRegistry.............none
+2026-07-10T02:32:05.481+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : idleTimeout.....................600000
+2026-07-10T02:32:05.481+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : initializationFailTimeout.......1
+2026-07-10T02:32:05.482+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : isolateInternalQueries..........false
+2026-07-10T02:32:05.482+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : jdbcUrl.........................jdbc:mysql://172.24.35.23:3306/image_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+2026-07-10T02:32:05.482+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : keepaliveTime...................0
+2026-07-10T02:32:05.482+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : leakDetectionThreshold..........0
+2026-07-10T02:32:05.483+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : maxLifetime.....................1800000
+2026-07-10T02:32:05.483+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : maximumPoolSize.................10
+2026-07-10T02:32:05.483+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : metricRegistry..................none
+2026-07-10T02:32:05.483+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : metricsTrackerFactory...........none
+2026-07-10T02:32:05.483+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : minimumIdle.....................2
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : password........................<masked>
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : poolName........................"HikariPool-1"
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : readOnly........................false
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : registerMbeans..................false
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : scheduledExecutor...............none
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : schema..........................none
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : threadFactory...................internal
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : transactionIsolation............default
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : username........................"root"
+2026-07-10T02:32:05.484+08:00 DEBUG 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariConfig           : validationTimeout...............5000
+2026-07-10T02:32:05.485+08:00  INFO 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-10T02:32:15.560+08:00  INFO 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@164fbb16
+2026-07-10T02:32:15.562+08:00  INFO 34468 --- [image-service] [0.1-8082-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-10T02:32:15.663+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=1, active=1, idle=0, waiting=0)
+2026-07-10T02:32:15.664+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=1, active=1, idle=0, waiting=0)
+2026-07-10T02:32:25.679+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@574cd063
+2026-07-10T02:32:25.711+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:32:25.711+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:32:45.665+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:32:45.665+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:32:45.665+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:33:15.666+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:33:15.667+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:33:15.667+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:33:45.668+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:33:45.668+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:33:45.668+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:34:15.670+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:34:15.670+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:34:15.670+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:34:45.671+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:34:45.671+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:34:45.671+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:35:15.673+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:35:15.673+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:35:15.673+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:35:45.674+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:35:45.674+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:35:45.674+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:36:15.675+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:36:15.676+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:36:15.676+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:36:45.676+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:36:45.676+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:36:45.676+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:37:15.677+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:37:15.677+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:37:15.677+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:37:45.679+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:37:45.679+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:37:45.679+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:38:15.682+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:38:15.682+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:38:15.683+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:38:45.683+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:38:45.683+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:38:45.683+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:39:15.684+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:39:15.684+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:39:15.684+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:39:45.686+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:39:45.686+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:39:45.686+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:40:15.688+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:40:15.688+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:40:15.688+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:40:45.690+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:40:45.690+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:40:45.690+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:41:15.691+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:41:15.692+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:41:15.692+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:41:45.693+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:41:45.693+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:41:45.693+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:42:15.695+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:42:15.695+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:42:15.695+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:42:45.696+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:42:45.696+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:42:45.696+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:43:15.698+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:43:15.698+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:43:15.698+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:43:45.698+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:43:45.698+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:43:45.698+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:44:15.700+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:44:15.700+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:44:15.700+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:44:45.702+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:44:45.702+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:44:45.702+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:45:15.703+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:45:15.703+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:45:15.703+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:45:45.704+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:45:45.704+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:45:45.704+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:46:15.704+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:46:15.704+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:46:15.704+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:46:45.706+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:46:45.706+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:46:45.706+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:47:15.707+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:47:15.707+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:47:15.707+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:47:45.708+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:47:45.708+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:47:45.708+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:48:15.709+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:48:15.709+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:48:15.709+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:48:45.710+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:48:45.710+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:48:45.710+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:49:15.711+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:49:15.712+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:49:15.712+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:49:45.713+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:49:45.713+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:49:45.713+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:50:15.714+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:50:15.714+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:50:15.715+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:50:45.716+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:50:45.716+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:50:45.716+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:51:15.718+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:51:15.719+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:51:15.719+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:51:45.720+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:51:45.720+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:51:45.721+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:52:15.721+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:52:15.721+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:52:15.721+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:52:45.723+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:52:45.723+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:52:45.723+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:53:15.725+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:53:15.725+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:53:15.725+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:53:45.727+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:53:45.727+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:53:45.727+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:54:15.728+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:54:15.728+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:54:15.728+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:54:45.729+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:54:45.729+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:54:45.729+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:55:15.730+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:55:15.730+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:55:15.730+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:55:45.732+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:55:45.732+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:55:45.732+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:56:15.733+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:56:15.733+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:56:15.733+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:56:45.734+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:56:45.734+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:56:45.735+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:57:15.736+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:57:15.736+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:57:15.736+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:57:45.737+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:57:45.737+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:57:45.737+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:58:15.738+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:58:15.738+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:58:15.738+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:58:45.739+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:58:45.739+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:58:45.739+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:59:15.741+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:59:15.741+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:59:15.741+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T02:59:45.741+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:59:45.741+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T02:59:45.741+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:00:15.743+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:00:15.743+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:00:15.743+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:00:45.744+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:00:45.744+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:00:45.745+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:01:15.745+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:01:15.745+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:01:15.745+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:01:45.020+08:00 DEBUG 34468 --- [image-service] [nnection closer] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@574cd063: (connection has passed maxLifetime)
+2026-07-10T03:01:45.746+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=1, active=0, idle=1, waiting=0)
+2026-07-10T03:01:45.746+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=1, active=0, idle=1, waiting=0)
+2026-07-10T03:01:55.038+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@56bfc8b8
+2026-07-10T03:01:55.069+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:01:55.069+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:02:02.809+08:00 DEBUG 34468 --- [image-service] [nnection closer] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@164fbb16: (connection has passed maxLifetime)
+2026-07-10T03:02:12.823+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5024bb9c
+2026-07-10T03:02:12.855+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:02:15.748+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:02:15.748+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:02:15.748+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:02:45.750+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:02:45.750+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:02:45.750+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:03:15.752+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:03:15.752+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:03:15.752+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:03:45.754+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:03:45.754+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:03:45.754+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:04:15.755+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:04:15.755+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:04:15.755+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:04:45.757+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:04:45.757+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:04:45.757+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:05:15.758+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:05:15.758+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:05:15.758+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:05:45.759+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:05:45.760+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:05:45.760+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:06:15.761+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:06:15.761+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:06:15.761+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:06:45.761+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:06:45.761+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:06:45.761+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:07:15.763+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:07:15.763+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:07:15.763+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:07:45.764+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:07:45.764+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:07:45.764+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:08:15.765+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:08:15.765+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:08:15.765+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:08:45.765+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:08:45.765+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:08:45.766+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:09:15.766+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:09:15.766+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:09:15.766+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:09:45.768+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:09:45.768+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:09:45.768+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:10:15.769+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:10:15.769+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:10:15.770+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:10:45.770+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:10:45.770+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:10:45.770+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:11:15.772+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:11:15.772+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:11:15.772+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:11:45.772+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:11:45.772+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:11:45.772+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:12:15.773+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:12:15.773+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:12:15.773+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:12:45.774+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:12:45.774+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:12:45.774+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:13:15.776+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:13:15.776+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:13:15.776+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:13:45.778+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:13:45.778+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:13:45.778+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:14:15.780+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:14:15.780+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:14:15.780+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:14:45.781+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:14:45.781+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:14:45.781+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:15:15.784+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:15:15.784+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:15:15.784+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:15:45.786+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:15:45.786+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:15:45.786+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:16:15.788+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:16:15.788+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:16:15.788+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:16:45.789+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:16:45.789+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:16:45.789+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:17:15.791+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:17:15.791+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:17:15.791+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:17:45.793+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:17:45.793+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:17:45.793+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:18:15.794+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:18:15.794+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:18:15.794+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:18:45.796+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:18:45.796+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:18:45.796+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:19:15.798+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:19:15.798+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:19:15.798+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:19:45.799+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:19:45.799+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:19:45.799+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:20:15.800+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:20:15.800+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:20:15.800+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:20:45.801+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:20:45.801+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:20:45.801+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:21:15.803+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:21:15.803+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:21:15.803+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:21:45.805+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:21:45.805+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:21:45.805+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:22:15.806+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:22:15.806+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:22:15.806+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:22:45.808+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:22:45.808+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:22:45.808+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:23:15.809+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:23:15.809+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:23:15.809+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:23:45.810+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:23:45.810+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:23:45.810+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:24:15.812+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:24:15.812+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:24:15.812+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:24:45.812+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:24:45.812+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:24:45.813+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:25:15.814+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:25:15.814+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:25:15.814+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:25:45.816+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:25:45.816+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:25:45.816+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:26:15.818+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:26:15.818+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:26:15.818+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:26:45.819+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:26:45.819+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:26:45.819+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:27:15.821+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:27:15.821+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:27:15.821+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:27:45.822+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:27:45.822+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:27:45.822+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:28:15.823+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:28:15.823+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:28:15.823+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:28:45.824+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:28:45.824+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:28:45.824+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:29:15.825+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:29:15.825+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:29:15.825+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:29:45.826+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:29:45.826+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:29:45.827+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:30:15.828+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:30:15.828+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:30:15.828+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:30:45.829+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:30:45.829+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:30:45.829+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:31:15.831+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:31:15.831+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:31:15.831+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:31:25.860+08:00 DEBUG 34468 --- [image-service] [nnection closer] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@56bfc8b8: (connection has passed maxLifetime)
+2026-07-10T03:31:35.875+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@997aa8c
+2026-07-10T03:31:35.907+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:31:45.832+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:31:45.832+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:31:45.832+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:32:04.910+08:00 DEBUG 34468 --- [image-service] [nnection closer] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@5024bb9c: (connection has passed maxLifetime)
+2026-07-10T03:32:14.925+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@23bde7cf
+2026-07-10T03:32:14.957+08:00 DEBUG 34468 --- [image-service] [onnection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Connection not added, stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:32:15.833+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:32:15.833+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:32:15.833+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:32:45.835+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:32:45.835+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:32:45.835+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:33:15.836+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:33:15.836+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:33:15.836+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:33:45.839+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:33:45.839+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:33:45.839+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:34:15.840+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:34:15.840+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:34:15.840+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:34:45.841+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:34:45.841+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:34:45.841+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:35:15.842+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:35:15.842+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:35:15.842+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:35:45.844+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:35:45.844+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:35:45.844+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:36:15.845+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:36:15.845+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:36:15.845+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:36:45.847+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:36:45.847+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:36:45.847+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:37:15.848+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:37:15.848+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:37:15.849+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:37:45.851+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:37:45.851+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:37:45.851+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:38:15.852+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:38:15.852+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:38:15.852+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:38:45.854+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:38:45.854+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:38:45.854+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:39:15.855+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:39:15.855+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:39:15.855+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:39:45.857+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:39:45.857+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:39:45.857+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:40:15.860+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:40:15.860+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:40:15.860+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:40:45.861+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:40:45.861+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:40:45.862+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:41:15.863+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:41:15.863+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:41:15.863+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:41:45.864+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:41:45.864+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:41:45.864+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:42:15.865+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:42:15.865+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:42:15.865+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:42:45.867+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:42:45.867+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:42:45.867+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:43:15.868+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:43:15.868+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:43:15.868+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:43:45.869+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:43:45.869+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:43:45.869+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:44:15.869+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:44:15.869+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:44:15.869+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:44:45.870+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:44:45.870+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:44:45.870+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:45:15.871+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:45:15.871+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:45:15.872+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:45:45.874+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:45:45.874+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:45:45.874+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:46:15.875+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:46:15.875+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:46:15.875+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:46:45.876+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:46:45.876+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:46:45.876+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:47:15.877+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:47:15.877+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:47:15.877+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:47:45.878+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:47:45.878+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:47:45.878+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:48:15.879+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:48:15.879+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:48:15.879+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-10T03:48:45.880+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Before cleanup stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:48:45.880+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After cleanup  stats (total=2, active=0, idle=2, waiting=0)
+2026-07-10T03:48:45.880+08:00 DEBUG 34468 --- [image-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.

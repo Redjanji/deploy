@@ -1,0 +1,93 @@
+server:
+  port: 8085
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: property-service
+  config:
+    import: "optional:nacos:property-service.yaml"
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 0.1
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:172.24.35.23}:3306/property_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASS:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:172.24.35.23}
+    port: 5672
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+image-hub:
+  base-url: ${SERVICE_IMAGE:http://127.0.0.1:8082}
+  cdn-prefix: https://cdn.example.com/images/
+
+dict-service:
+  base-url: ${SERVICE_DICT:http://127.0.0.1:8081}
+
+property:
+  max-images: 20
+  geohash-precision: 12
+  search-precision: 5
+  default-radius-km: 5.0
+
+sync:
+  property-exchange: property.sync.exchange
+  property-routing-key: property.sync
+
+message:
+  send:
+    exchange: message.send.exchange
+    routing-key: message.send
+  notify:
+    admin-email: ${MESSAGE_NOTIFY_ADMIN_EMAIL:redjanji@163.com}
+
+# 统计事件 RabbitMQ 配置（发送到 analytics-service）
+analytics:
+  exchange: analytics.event.exchange
+  routing-key: analytics.event
+
+# Actuator 健康检查配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 0.1

@@ -1,0 +1,203 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2026-07-10T02:29:40.151+08:00  INFO 31492 --- [search-service] [           main] c.x.s.SearchServiceApplication           : Starting SearchServiceApplication v0.0.1-SNAPSHOT using Java 21.0.10 with PID 31492 (C:\Users\75328\OneDrive\桌面\xss\search-service\target\search-service-0.0.1-SNAPSHOT.jar started by 75328 in C:\Users\75328\OneDrive\桌面\xss)
+2026-07-10T02:29:40.155+08:00  INFO 31492 --- [search-service] [           main] c.x.s.SearchServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-07-10T02:29:41.404+08:00  INFO 31492 --- [search-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Elasticsearch repositories in DEFAULT mode.
+2026-07-10T02:29:41.419+08:00  INFO 31492 --- [search-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 Elasticsearch repository interfaces.
+2026-07-10T02:29:41.427+08:00  INFO 31492 --- [search-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Reactive Elasticsearch repositories in DEFAULT mode.
+2026-07-10T02:29:41.430+08:00  INFO 31492 --- [search-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Reactive Elasticsearch repository interfaces.
+2026-07-10T02:29:42.525+08:00  INFO 31492 --- [search-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8086 (http)
+2026-07-10T02:29:42.575+08:00  INFO 31492 --- [search-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-10T02:29:42.576+08:00  INFO 31492 --- [search-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2026-07-10T02:29:42.742+08:00  INFO 31492 --- [search-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-10T02:29:42.745+08:00  INFO 31492 --- [search-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2508 ms
+2026-07-10T02:29:42.890+08:00  INFO 31492 --- [search-service] [           main] c.x.s.config.SearchServiceConfig         : SearchService initialized - Elasticsearch connection will be attempted on first use
+2026-07-10T02:29:43.785+08:00  WARN 31492 --- [search-service] [           main] .m.SimpleElasticsearchPersistentProperty : Unsupported type 'class java.lang.String' for date property 'createdAt'.
+2026-07-10T02:29:43.788+08:00  WARN 31492 --- [search-service] [           main] .m.SimpleElasticsearchPersistentProperty : Unsupported type 'class java.lang.String' for date property 'updatedAt'.
+2026-07-10T02:29:44.898+08:00  INFO 31492 --- [search-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8086 (http) with context path '/'
+2026-07-10T02:29:44.904+08:00  INFO 31492 --- [search-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [172.24.35.23:5672]
+2026-07-10T02:29:44.973+08:00  INFO 31492 --- [search-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#da09250:0/SimpleConnection@67c21bf [delegate=amqp://guest@172.24.35.23:5672/, localPort=57275]
+2026-07-10T02:29:45.072+08:00  INFO 31492 --- [search-service] [           main] c.x.s.SearchServiceApplication           : Started SearchServiceApplication in 5.436 seconds (process running for 6.15)
+2026-07-10T02:32:26.688+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=CREATE, propertyId=55, appId=my-backend-system
+2026-07-10T02:32:26.936+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 55
+2026-07-10T02:32:26.938+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=UPDATE, propertyId=55, appId=my-backend-system
+2026-07-10T02:32:27.004+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 55
+2026-07-10T02:32:27.006+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=UPDATE, propertyId=55, appId=my-backend-system
+2026-07-10T02:32:27.038+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 55
+2026-07-10T02:32:27.039+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=UPDATE, propertyId=55, appId=my-backend-system
+2026-07-10T02:32:27.066+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 55
+2026-07-10T02:32:27.066+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=CREATE, propertyId=56, appId=my-backend-system
+2026-07-10T02:32:27.083+08:00 ERROR 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Failed to index property: 56
+
+org.springframework.web.client.HttpClientErrorException$NotFound: 404 : "{"code":404,"message":"房源不存在","data":null}"
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:112) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:183) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:137) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.ResponseErrorHandler.handleError(ResponseErrorHandler.java:63) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:942) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:891) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:790) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:672) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at com.xss.searchservice.service.impl.PropertySearchServiceImpl.indexProperty(PropertySearchServiceImpl.java:164) ~[!/:0.0.1-SNAPSHOT]
+	at com.xss.searchservice.service.impl.PropertySearchServiceImpl.syncProperty(PropertySearchServiceImpl.java:194) ~[!/:0.0.1-SNAPSHOT]
+	at com.xss.searchservice.consumer.PropertySyncConsumer.handlePropertySync(PropertySyncConsumer.java:30) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:169) ~[spring-messaging-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.adapter.KotlinAwareInvocableHandlerMethod.doInvoke(KotlinAwareInvocableHandlerMethod.java:45) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:119) ~[spring-messaging-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.adapter.HandlerAdapter.invoke(HandlerAdapter.java:75) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:278) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandlerAndProcessResult(MessagingMessageListenerAdapter.java:225) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.onMessage(MessagingMessageListenerAdapter.java:149) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:1682) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.actualInvokeListener(AbstractMessageListenerContainer.java:1604) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.retry.interceptor.RetryOperationsInterceptor$1.doWithRetry(RetryOperationsInterceptor.java:92) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.support.RetryTemplate.doExecute(RetryTemplate.java:344) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.support.RetryTemplate.execute(RetryTemplate.java:233) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.interceptor.RetryOperationsInterceptor.invoke(RetryOperationsInterceptor.java:113) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.$Proxy91.invokeListener(Unknown Source) ~[na:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:1592) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:1583) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.executeListenerAndHandleException(AbstractMessageListenerContainer.java:1528) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.lambda$executeListener$8(AbstractMessageListenerContainer.java:1506) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.1.jar!/:1.13.1]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.executeListener(AbstractMessageListenerContainer.java:1506) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.doReceiveAndExecute(SimpleMessageListenerContainer.java:1082) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.receiveAndExecute(SimpleMessageListenerContainer.java:1018) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.mainLoop(SimpleMessageListenerContainer.java:1421) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1322) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-07-10T02:32:27.087+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=DELETE, propertyId=56, appId=my-backend-system
+2026-07-10T02:32:27.101+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Deleted property from index: 56
+2026-07-10T02:32:30.026+08:00  INFO 31492 --- [search-service] [0.1-8086-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-10T02:32:30.027+08:00  INFO 31492 --- [search-service] [0.1-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-10T02:32:30.027+08:00  INFO 31492 --- [search-service] [0.1-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-07-10T02:32:36.904+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=CREATE, propertyId=57, appId=my-backend-system
+2026-07-10T02:32:36.917+08:00 ERROR 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Failed to index property: 57
+
+org.springframework.web.client.HttpClientErrorException$NotFound: 404 : "{"code":404,"message":"房源不存在","data":null}"
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:112) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:183) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:137) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.ResponseErrorHandler.handleError(ResponseErrorHandler.java:63) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:942) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:891) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:790) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:672) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at com.xss.searchservice.service.impl.PropertySearchServiceImpl.indexProperty(PropertySearchServiceImpl.java:164) ~[!/:0.0.1-SNAPSHOT]
+	at com.xss.searchservice.service.impl.PropertySearchServiceImpl.syncProperty(PropertySearchServiceImpl.java:194) ~[!/:0.0.1-SNAPSHOT]
+	at com.xss.searchservice.consumer.PropertySyncConsumer.handlePropertySync(PropertySyncConsumer.java:30) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:169) ~[spring-messaging-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.adapter.KotlinAwareInvocableHandlerMethod.doInvoke(KotlinAwareInvocableHandlerMethod.java:45) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:119) ~[spring-messaging-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.adapter.HandlerAdapter.invoke(HandlerAdapter.java:75) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:278) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandlerAndProcessResult(MessagingMessageListenerAdapter.java:225) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.onMessage(MessagingMessageListenerAdapter.java:149) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:1682) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.actualInvokeListener(AbstractMessageListenerContainer.java:1604) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.retry.interceptor.RetryOperationsInterceptor$1.doWithRetry(RetryOperationsInterceptor.java:92) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.support.RetryTemplate.doExecute(RetryTemplate.java:344) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.support.RetryTemplate.execute(RetryTemplate.java:233) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.interceptor.RetryOperationsInterceptor.invoke(RetryOperationsInterceptor.java:113) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.$Proxy91.invokeListener(Unknown Source) ~[na:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:1592) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:1583) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.executeListenerAndHandleException(AbstractMessageListenerContainer.java:1528) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.lambda$executeListener$8(AbstractMessageListenerContainer.java:1506) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.1.jar!/:1.13.1]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.executeListener(AbstractMessageListenerContainer.java:1506) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.doReceiveAndExecute(SimpleMessageListenerContainer.java:1082) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.receiveAndExecute(SimpleMessageListenerContainer.java:1018) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.mainLoop(SimpleMessageListenerContainer.java:1421) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1322) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-07-10T02:40:30.225+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=CREATE, propertyId=58, appId=my-backend-system
+2026-07-10T02:40:30.280+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 58
+2026-07-10T02:40:30.325+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=UPDATE, propertyId=58, appId=my-backend-system
+2026-07-10T02:40:30.365+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 58
+2026-07-10T02:40:30.368+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=UPDATE, propertyId=58, appId=my-backend-system
+2026-07-10T02:40:30.394+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 58
+2026-07-10T02:40:30.396+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=UPDATE, propertyId=58, appId=my-backend-system
+2026-07-10T02:40:30.419+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 58
+2026-07-10T02:40:30.421+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=CREATE, propertyId=59, appId=my-backend-system
+2026-07-10T02:40:30.446+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Indexed property: 59
+2026-07-10T02:40:30.447+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=DELETE, propertyId=59, appId=my-backend-system
+2026-07-10T02:40:30.457+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Deleted property from index: 59
+2026-07-10T02:40:33.615+08:00  INFO 31492 --- [search-service] [ntContainer#0-1] c.x.s.consumer.PropertySyncConsumer      : Received property sync message: type=CREATE, propertyId=60, appId=my-backend-system
+2026-07-10T02:40:33.626+08:00 ERROR 31492 --- [search-service] [ntContainer#0-1] c.x.s.s.impl.PropertySearchServiceImpl   : Failed to index property: 60
+
+org.springframework.web.client.HttpClientErrorException$NotFound: 404 : "{"code":404,"message":"房源不存在","data":null}"
+	at org.springframework.web.client.HttpClientErrorException.create(HttpClientErrorException.java:112) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:183) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.DefaultResponseErrorHandler.handleError(DefaultResponseErrorHandler.java:137) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.ResponseErrorHandler.handleError(ResponseErrorHandler.java:63) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.handleResponse(RestTemplate.java:942) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:891) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:790) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:672) ~[spring-web-6.1.10.jar!/:6.1.10]
+	at com.xss.searchservice.service.impl.PropertySearchServiceImpl.indexProperty(PropertySearchServiceImpl.java:164) ~[!/:0.0.1-SNAPSHOT]
+	at com.xss.searchservice.service.impl.PropertySearchServiceImpl.syncProperty(PropertySearchServiceImpl.java:194) ~[!/:0.0.1-SNAPSHOT]
+	at com.xss.searchservice.consumer.PropertySyncConsumer.handlePropertySync(PropertySyncConsumer.java:30) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:169) ~[spring-messaging-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.adapter.KotlinAwareInvocableHandlerMethod.doInvoke(KotlinAwareInvocableHandlerMethod.java:45) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:119) ~[spring-messaging-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.adapter.HandlerAdapter.invoke(HandlerAdapter.java:75) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:278) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandlerAndProcessResult(MessagingMessageListenerAdapter.java:225) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.onMessage(MessagingMessageListenerAdapter.java:149) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:1682) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.actualInvokeListener(AbstractMessageListenerContainer.java:1604) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.retry.interceptor.RetryOperationsInterceptor$1.doWithRetry(RetryOperationsInterceptor.java:92) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.support.RetryTemplate.doExecute(RetryTemplate.java:344) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.support.RetryTemplate.execute(RetryTemplate.java:233) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.retry.interceptor.RetryOperationsInterceptor.invoke(RetryOperationsInterceptor.java:113) ~[spring-retry-2.0.6.jar!/:na]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223) ~[spring-aop-6.1.10.jar!/:6.1.10]
+	at org.springframework.amqp.rabbit.listener.$Proxy91.invokeListener(Unknown Source) ~[na:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.invokeListener(AbstractMessageListenerContainer.java:1592) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.doExecuteListener(AbstractMessageListenerContainer.java:1583) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.executeListenerAndHandleException(AbstractMessageListenerContainer.java:1528) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.lambda$executeListener$8(AbstractMessageListenerContainer.java:1506) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.1.jar!/:1.13.1]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.executeListener(AbstractMessageListenerContainer.java:1506) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.doReceiveAndExecute(SimpleMessageListenerContainer.java:1082) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.receiveAndExecute(SimpleMessageListenerContainer.java:1018) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.mainLoop(SimpleMessageListenerContainer.java:1421) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1322) ~[spring-rabbit-3.1.6.jar!/:3.1.6]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+

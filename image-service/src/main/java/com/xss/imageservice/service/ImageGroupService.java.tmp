@@ -1,0 +1,92 @@
+package com.xss.imageservice.service;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.xss.imageservice.exception.BusinessException;
+import com.xss.imageservice.mapper.ImageGroupItemMapper;
+import com.xss.imageservice.mapper.ImageGroupMapper;
+import com.xss.imageservice.model.entity.ImageEntity;
+import com.xss.imageservice.model.entity.ImageGroupEntity;
+import com.xss.imageservice.model.entity.ImageGroupItemEntity;
+import com.xss.imageservice.model.vo.GroupVO;
+import com.xss.imageservice.model.vo.ImageVO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class ImageGroupService {
+
+    private final ImageGroupMapper groupMapper;
+    private final ImageGroupItemMapper groupItemMapper;
+    private final ImageService imageService;
+
+    @Transactional
+    public ImageGroupEntity create(String appId, String name, String description) {
+        ImageGroupEntity entity = new ImageGroupEntity();
+        entity.setAppId(appId);
+        entity.setName(name);
+        entity.setDescription(description);
+        entity.setSortOrder(0);
+        groupMapper.insert(entity);
+        return entity;
+    }
+
+    @Transactional
+    public void addImage(Long groupId, String appId, Long ownerId, Long imageId, Integer sortOrder) {
+        ImageGroupEntity group = groupMapper.selectById(groupId);
+        if (group == null || !group.getAppId().equals(appId)) {
+            throw new BusinessException(403, "无权操作该分组");
+        }
+
+        ImageEntity image = imageService.getById(imageId);
+        if (image == null || !image.getAppId().equals(appId)) {
+            throw new BusinessException(400, "图片不存在或无权操作");
+        }
+        if (image.getOwnerId() != null && !image.getOwnerId().equals(ownerId)) {
+            throw new BusinessException(403, "无权操作他人私有图片");
+        }
+
+        ImageGroupItemEntity item = new ImageGroupItemEntity();
+        item.setGroupId(groupId);
+        item.setImageId(imageId);
+        item.setSortOrder(sortOrder != null ? sortOrder : 0);
+        groupItemMapper.insert(item);
+    }
+
+    public GroupVO getGroupWithImages(Long groupId, String appId, Long ownerId, String sizeType) {
+        ImageGroupEntity group = groupMapper.selectById(groupId);
+        if (group == null || !group.getAppId().equals(appId)) {
+            throw new BusinessException(403, "无权操作该分组");
+        }
+
+        List<ImageEntity> images = groupItemMapper.selectImagesByGroupId(groupId, ownerId);
+        String baseUrl = imageService.getBaseUrl();
+        List<ImageVO> imageVOs = images.stream()
+                .map(img -> {
+                    ImageVO vo = ImageVO.from(img, baseUrl);
+                    switch (sizeType) {
+                        case "large" -> vo.setUrl(vo.getLargeUrl() != null ? vo.getLargeUrl() : vo.getOriginUrl());
+                        case "medium" -> vo.setUrl(vo.getMediumUrl() != null ? vo.getMediumUrl() : vo.getOriginUrl());
+                        case "small" -> vo.setUrl(vo.getSmallUrl() != null ? vo.getSmallUrl() : vo.getOriginUrl());
+                        default -> vo.setUrl(vo.getOriginUrl());
+                    }
+                    return vo;
+                })
+                .toList();
+
+        return GroupVO.builder()
+                .id(group.getId())
+                .name(group.getName())
+                .description(group.getDescription())
+                .sortOrder(group.getSortOrder())
+                .images(imageVOs)
+                .build();
+    }
+
+    public List<ImageGroupEntity> listByApp(String appId) {
+        return groupMapper.selectByAppId(appId);
+    }
+}

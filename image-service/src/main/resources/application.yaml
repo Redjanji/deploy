@@ -1,0 +1,93 @@
+spring:
+  application:
+    name: image-service
+  config:
+    import: "optional:nacos:image-service.yaml"
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 0.1
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:172.24.35.23}:3306/image_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASS:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:172.24.35.23}
+    port: 5672
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+    connection-timeout: 10s
+
+logging:
+  level:
+    com.zaxxer.hikari: DEBUG
+    com.mysql.cj: DEBUG
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 30MB
+
+# MinIO 配置
+minio:
+  endpoint: ${MINIO_ENDPOINT:http://172.24.35.23:9000}
+  access-key: ${MINIO_ACCESS_KEY:minioadmin}
+  secret-key: ${MINIO_SECRET_KEY:minioadmin}
+  bucket: images
+
+# 图片处理配置
+image:
+  max-size: 10485760          # 10MB
+  allowed-extensions: jpg,jpeg,png,gif,webp,bmp
+  allowed-mime-types: image/jpeg,image/png,image/gif,image/webp,image/bmp
+  thumbnail-widths: 1280,640,200
+  webp-quality: 0.8
+  # CDN 地址，配置后优先使用 CDN（如 https://cdn.example.com/images/）
+  # 留空则使用本地访问路径（通过网关转发）
+  cdn-url: ${IMAGE_CDN_URL:}
+  # 本地访问基础路径（通过网关转发时使用）
+  local-url: "/api/images/"
+
+# 统计事件 RabbitMQ 配置（发送到 analytics-service）
+analytics:
+  exchange: analytics.event.exchange
+  routing-key: analytics.event
+
+# Actuator 健康检查配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 0.1
+
+server:
+  port: 8082
+  address: 0.0.0.0   # 监听所有网络接口

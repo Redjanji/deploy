@@ -1,0 +1,1476 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2026-07-10T02:29:40.152+08:00  INFO 34904 --- [dict-service] [           main] c.x.dictservice.DictServiceApplication   : Starting DictServiceApplication v0.0.1-SNAPSHOT using Java 21.0.10 with PID 34904 (C:\Users\75328\OneDrive\桌面\xss\dict-service\target\dict-service-0.0.1-SNAPSHOT.jar started by 75328 in C:\Users\75328\OneDrive\桌面\xss)
+2026-07-10T02:29:40.156+08:00  INFO 34904 --- [dict-service] [           main] c.x.dictservice.DictServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-07-10T02:29:41.383+08:00  INFO 34904 --- [dict-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-10T02:29:41.386+08:00  INFO 34904 --- [dict-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-10T02:29:41.407+08:00  INFO 34904 --- [dict-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2026-07-10T02:29:42.526+08:00  INFO 34904 --- [dict-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-07-10T02:29:42.549+08:00  INFO 34904 --- [dict-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-10T02:29:42.550+08:00  INFO 34904 --- [dict-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2026-07-10T02:29:42.619+08:00  INFO 34904 --- [dict-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-10T02:29:42.622+08:00  INFO 34904 --- [dict-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2394 ms
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+Get /172.24.32.1 network interface 
+Get network interface info: name:ethernet_32778 (Hyper-V Virtual Ethernet Adapter #2)
+Initialization Sequence datacenterId:28 workerId:22
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.7 
+2026-07-10T02:29:45.603+08:00  INFO 34904 --- [dict-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-07-10T02:29:45.619+08:00  INFO 34904 --- [dict-service] [           main] c.x.dictservice.DictServiceApplication   : Started DictServiceApplication in 6.055 seconds (process running for 6.746)
+2026-07-10T02:30:11.860+08:00  INFO 34904 --- [dict-service] [0.1-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-10T02:30:11.861+08:00  INFO 34904 --- [dict-service] [0.1-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-10T02:30:11.861+08:00  INFO 34904 --- [dict-service] [0.1-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-07-10T02:30:14.033+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-2] c.x.d.service.ChinaRegionService         : Redis 读取失败，降级查 DB: key=regions:provinces, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71113e8] was not registered for synchronization because synchronization is not active
+2026-07-10T02:30:14.045+08:00  INFO 34904 --- [dict-service] [0.1-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-10T02:30:24.215+08:00  INFO 34904 --- [dict-service] [0.1-8081-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@60453312
+2026-07-10T02:30:24.218+08:00  INFO 34904 --- [dict-service] [0.1-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+JDBC Connection [HikariProxyConnection@510194596 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT region_code, region_name, region_type, sort_order FROM v_provinces ORDER BY sort_order
+==> Parameters: 
+<==    Columns: region_code, region_name, region_type, sort_order
+<==        Row: 11, 北京市, 省/直辖市, 0
+<==        Row: 12, 天津市, 省/直辖市, 0
+<==        Row: 13, 河北省, 省/直辖市, 0
+<==        Row: 14, 山西省, 省/直辖市, 0
+<==        Row: 15, 内蒙古自治区, 省/直辖市, 0
+<==        Row: 21, 辽宁省, 省/直辖市, 0
+<==        Row: 22, 吉林省, 省/直辖市, 0
+<==        Row: 23, 黑龙江省, 省/直辖市, 0
+<==        Row: 31, 上海市, 省/直辖市, 0
+<==        Row: 32, 江苏省, 省/直辖市, 0
+<==        Row: 33, 浙江省, 省/直辖市, 0
+<==        Row: 34, 安徽省, 省/直辖市, 0
+<==        Row: 35, 福建省, 省/直辖市, 0
+<==        Row: 36, 江西省, 省/直辖市, 0
+<==        Row: 37, 山东省, 省/直辖市, 0
+<==        Row: 41, 河南省, 省/直辖市, 0
+<==        Row: 42, 湖北省, 省/直辖市, 0
+<==        Row: 43, 湖南省, 省/直辖市, 0
+<==        Row: 44, 广东省, 省/直辖市, 0
+<==        Row: 45, 广西壮族自治区, 省/直辖市, 0
+<==        Row: 46, 海南省, 省/直辖市, 0
+<==        Row: 50, 重庆市, 省/直辖市, 0
+<==        Row: 51, 四川省, 省/直辖市, 0
+<==        Row: 52, 贵州省, 省/直辖市, 0
+<==        Row: 53, 云南省, 省/直辖市, 0
+<==        Row: 54, 西藏自治区, 省/直辖市, 0
+<==        Row: 61, 陕西省, 省/直辖市, 0
+<==        Row: 62, 甘肃省, 省/直辖市, 0
+<==        Row: 63, 青海省, 省/直辖市, 0
+<==        Row: 64, 宁夏回族自治区, 省/直辖市, 0
+<==        Row: 65, 新疆维吾尔自治区, 省/直辖市, 0
+<==      Total: 31
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71113e8]
+2026-07-10T02:30:26.302+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-2] c.x.d.service.ChinaRegionService         : 缓存写入失败: key=regions:provinces, err=Unable to connect to Redis
+2026-07-10T02:30:28.352+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-3] c.x.dictservice.service.CountryService   : Redis 读取失败，降级查 DB: key=countries:list:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@57d84d17] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1379781105 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT country_code, country_code3, numeric_code, name_zh, name_en, phone_code, currency_code, continent_code, flag_emoji, sort_order FROM v_countries WHERE (continent_code = ? OR ? IS NULL) AND ((name_zh LIKE CONCAT('%', ?, '%') OR name_en LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, country_code
+==> Parameters: null, null, null, null, null
+<==    Columns: country_code, country_code3, numeric_code, name_zh, name_en, phone_code, currency_code, continent_code, flag_emoji, sort_order
+<==        Row: AD, AND, 020, 安道尔, Andorra, 376, EUR, Europe, ??, 0
+<==        Row: AE, ARE, 784, 阿拉伯联合酋长国, United Arab Emirates, 971, AED, Asia, ??, 0
+<==        Row: AF, AFG, 004, 阿富汗, Afghanistan, 93, AFN, Asia, ??, 0
+<==        Row: AG, ATG, 028, 安提瓜和巴布达, Antigua and Barbuda, 1, XCD, North America, ??, 0
+<==        Row: AI, AIA, 660, 安圭拉, Anguilla, 1, XCD, North America, ??, 0
+<==        Row: AL, ALB, 008, 阿尔巴尼亚, Albania, 355, ALL, Europe, ??, 0
+<==        Row: AM, ARM, 051, 亚美尼亚, Armenia, 374, AMD, Asia, ??, 0
+<==        Row: AO, AGO, 024, 安哥拉, Angola, 244, AOA, Africa, ??, 0
+<==        Row: AQ, ATA, 010, 南极洲, Antarctica, 672, , Antarctica, ??, 0
+<==        Row: AR, ARG, 032, 阿根廷, Argentina, 54, ARS, South America, ??, 0
+<==        Row: AS, ASM, 016, 美属萨摩亚, American Samoa, 1, USD, Oceania, ??, 0
+<==        Row: AT, AUT, 040, 奥地利, Austria, 43, EUR, Europe, ??, 0
+<==        Row: AU, AUS, 036, 澳大利亚, Australia, 61, AUD, Oceania, ??, 0
+<==        Row: AW, ABW, 533, 阿鲁巴, Aruba, 297, AWG, North America, ??, 0
+<==        Row: AX, ALA, 248, 奥兰群岛, Åland Islands, 358, EUR, Europe, ??, 0
+<==        Row: AZ, AZE, 031, 阿塞拜疆, Azerbaijan, 994, AZN, Europe, ??, 0
+<==        Row: BA, BIH, 070, 波斯尼亚和黑塞哥维那, Bosnia and Herzegovina, 387, BAM, Europe, ??, 0
+<==        Row: BB, BRB, 052, 巴巴多斯, Barbados, 1, BBD, North America, ??, 0
+<==        Row: BD, BGD, 050, 孟加拉国, Bangladesh, 880, BDT, Asia, ??, 0
+<==        Row: BE, BEL, 056, 比利时, Belgium, 32, EUR, Europe, ??, 0
+<==        Row: BF, BFA, 854, 布基纳法索, Burkina Faso, 226, XOF, Africa, ??, 0
+<==        Row: BG, BGR, 100, 保加利亚, Bulgaria, 359, EUR, Europe, ??, 0
+<==        Row: BH, BHR, 048, 巴林, Bahrain, 973, BHD, Asia, ??, 0
+<==        Row: BI, BDI, 108, 布隆迪, Burundi, 257, BIF, Africa, ??, 0
+<==        Row: BJ, BEN, 204, 贝宁, Benin, 229, XOF, Africa, ??, 0
+<==        Row: BL, BLM, 652, 圣巴泰勒米, Saint Barthélemy, 590, EUR, North America, ??, 0
+<==        Row: BM, BMU, 060, 百慕大, Bermuda, 1, BMD, North America, ??, 0
+<==        Row: BN, BRN, 096, 文莱, Brunei, 673, BND, Asia, ??, 0
+<==        Row: BO, BOL, 068, 玻利维亚, Bolivia, 591, BOB, South America, ??, 0
+<==        Row: BQ, BES, 535, 荷蘭加勒比區, Caribbean Netherlands, 599, USD, North America, ??, 0
+<==        Row: BR, BRA, 076, 巴西, Brazil, 55, BRL, South America, ??, 0
+<==        Row: BS, BHS, 044, 巴哈马, Bahamas, 1, BSD, North America, ??, 0
+<==        Row: BT, BTN, 064, 不丹, Bhutan, 975, BTN, Asia, ??, 0
+<==        Row: BV, BVT, 074, 布维岛, Bouvet Island, 47, , Antarctica, ??, 0
+<==        Row: BW, BWA, 072, 博茨瓦纳, Botswana, 267, BWP, Africa, ??, 0
+<==        Row: BY, BLR, 112, 白俄罗斯, Belarus, 375, BYN, Europe, ??, 0
+<==        Row: BZ, BLZ, 084, 伯利兹, Belize, 501, BZD, North America, ??, 0
+<==        Row: CA, CAN, 124, 加拿大, Canada, 1, CAD, North America, ??, 0
+<==        Row: CC, CCK, 166, 科科斯, Cocos (Keeling) Islands, 61, AUD, Asia, ??, 0
+<==        Row: CD, COD, 180, 民主刚果, DRC, 243, CDF, Africa, ??, 0
+<==        Row: CF, CAF, 140, 中非共和国, Central African Republic, 236, XAF, Africa, ??, 0
+<==        Row: CG, COG, 178, 刚果, Congo, 242, XAF, Africa, ??, 0
+<==        Row: CH, CHE, 756, 瑞士, Switzerland, 41, CHF, Europe, ??, 0
+<==        Row: CI, CIV, 384, 科特迪瓦, Ivory Coast, 225, XOF, Africa, ??, 0
+<==        Row: CK, COK, 184, 库克群岛, Cook Islands, 682, CKD, Oceania, ??, 0
+<==        Row: CL, CHL, 152, 智利, Chile, 56, CLP, South America, ??, 0
+<==        Row: CM, CMR, 120, 喀麦隆, Cameroon, 237, XAF, Africa, ??, 0
+<==        Row: CN, CHN, 156, 中国, China, 86, CNY, Asia, ??, 0
+<==        Row: CO, COL, 170, 哥伦比亚, Colombia, 57, COP, South America, ??, 0
+<==        Row: CR, CRI, 188, 哥斯达黎加, Costa Rica, 506, CRC, North America, ??, 0
+<==        Row: CU, CUB, 192, 古巴, Cuba, 53, CUC, North America, ??, 0
+<==        Row: CV, CPV, 132, 佛得角, Cabo Verde, 238, CVE, Africa, ??, 0
+<==        Row: CW, CUW, 531, 库拉索, Curaçao, 599, ANG, North America, ??, 0
+<==        Row: CX, CXR, 162, 圣诞岛, Christmas Island, 61, AUD, Asia, ??, 0
+<==        Row: CY, CYP, 196, 塞浦路斯, Cyprus, 357, EUR, Europe, ??, 0
+<==        Row: CZ, CZE, 203, 捷克, Czechia, 420, CZK, Europe, ??, 0
+<==        Row: DE, DEU, 276, 德国, Germany, 49, EUR, Europe, ??, 0
+<==        Row: DJ, DJI, 262, 吉布提, Djibouti, 253, DJF, Africa, ??, 0
+<==        Row: DK, DNK, 208, 丹麦, Denmark, 45, DKK, Europe, ??, 0
+<==        Row: DM, DMA, 212, 多米尼加, Dominica, 1, XCD, North America, ??, 0
+<==        Row: DO, DOM, 214, 多明尼加, Dominican Republic, 1, DOP, North America, ??, 0
+<==        Row: DZ, DZA, 012, 阿尔及利亚, Algeria, 213, DZD, Africa, ??, 0
+<==        Row: EC, ECU, 218, 厄瓜多尔, Ecuador, 593, USD, South America, ??, 0
+<==        Row: EE, EST, 233, 爱沙尼亚, Estonia, 372, EUR, Europe, ??, 0
+<==        Row: EG, EGY, 818, 埃及, Egypt, 20, EGP, Africa, ??, 0
+<==        Row: EH, ESH, 732, 西撒哈拉, Western Sahara, 212, DZD, Africa, ??, 0
+<==        Row: ER, ERI, 232, 厄立特里亚, Eritrea, 291, ERN, Africa, ??, 0
+<==        Row: ES, ESP, 724, 西班牙, Spain, 34, EUR, Europe, ??, 0
+<==        Row: ET, ETH, 231, 埃塞俄比亚, Ethiopia, 251, ETB, Africa, ??, 0
+<==        Row: FI, FIN, 246, 芬兰, Finland, 358, EUR, Europe, ??, 0
+<==        Row: FJ, FJI, 242, 斐济, Fiji, 679, FJD, Oceania, ??, 0
+<==        Row: FK, FLK, 238, 福克兰群岛, Falkland Islands, 500, FKP, South America, ??, 0
+<==        Row: FM, FSM, 583, 密克罗尼西亚, Micronesia, 691, USD, Oceania, ??, 0
+<==        Row: FO, FRO, 234, 法罗群岛, Faroe Islands, 298, DKK, Europe, ??, 0
+<==        Row: FR, FRA, 250, 法国, France, 33, EUR, Europe, ??, 0
+<==        Row: GA, GAB, 266, 加蓬, Gabon, 241, XAF, Africa, ??, 0
+<==        Row: GB, GBR, 826, 英国, United Kingdom, 44, GBP, Europe, ??, 0
+<==        Row: GD, GRD, 308, 格林纳达, Grenada, 1, XCD, North America, ??, 0
+<==        Row: GE, GEO, 268, 格鲁吉亚, Georgia, 995, GEL, Asia, ??, 0
+<==        Row: GF, GUF, 254, 法属圭亚那, French Guiana, 594, EUR, South America, ??, 0
+<==        Row: GG, GGY, 831, 根西岛, Guernsey, 44, GBP, Europe, ??, 0
+<==        Row: GH, GHA, 288, 加纳, Ghana, 233, GHS, Africa, ??, 0
+<==        Row: GI, GIB, 292, 直布罗陀, Gibraltar, 350, GIP, Europe, ??, 0
+<==        Row: GL, GRL, 304, 格陵兰, Greenland, 299, DKK, North America, ??, 0
+<==        Row: GM, GMB, 270, 冈比亚, Gambia, 220, GMD, Africa, ??, 0
+<==        Row: GN, GIN, 324, 几内亚, Guinea, 224, GNF, Africa, ??, 0
+<==        Row: GP, GLP, 312, 瓜德罗普岛, Guadeloupe, 590, EUR, North America, ??, 0
+<==        Row: GQ, GNQ, 226, 赤道几内亚, Equatorial Guinea, 240, XAF, Africa, ??, 0
+<==        Row: GR, GRC, 300, 希腊, Greece, 30, EUR, Europe, ??, 0
+<==        Row: GS, SGS, 239, 南乔治亚, South Georgia, 500, GBP, Antarctica, ??, 0
+<==        Row: GT, GTM, 320, 危地马拉, Guatemala, 502, GTQ, North America, ??, 0
+<==        Row: GU, GUM, 316, 关岛, Guam, 1, USD, Oceania, ??, 0
+<==        Row: GW, GNB, 624, 几内亚比绍, Guinea-Bissau, 245, XOF, Africa, ??, 0
+<==        Row: GY, GUY, 328, 圭亚那, Guyana, 592, GYD, South America, ??, 0
+<==        Row: HK, HKG, 344, , Hong Kong, 852, HKD, Asia, ??, 0
+<==        Row: HM, HMD, 334, 赫德岛和麦当劳群岛, Heard Island and McDonald Islands, 672, , Antarctica, ??, 0
+<==        Row: HN, HND, 340, 洪都拉斯, Honduras, 504, HNL, North America, ??, 0
+<==        Row: HR, HRV, 191, 克罗地亚, Croatia, 385, EUR, Europe, ??, 0
+<==        Row: HT, HTI, 332, 海地, Haiti, 509, HTG, North America, ??, 0
+<==        Row: HU, HUN, 348, 匈牙利, Hungary, 36, HUF, Europe, ??, 0
+<==        Row: ID, IDN, 360, 印度尼西亚, Indonesia, 62, IDR, Asia, ??, 0
+<==        Row: IE, IRL, 372, 爱尔兰, Ireland, 353, EUR, Europe, ??, 0
+<==        Row: IL, ISR, 376, 以色列, Israel, 972, ILS, Asia, ??, 0
+<==        Row: IM, IMN, 833, 马恩岛, Isle of Man, 44, GBP, Europe, ??, 0
+<==        Row: IN, IND, 356, 印度, India, 91, INR, Asia, ??, 0
+<==        Row: IO, IOT, 086, 英属印度洋领地, British Indian Ocean Territory, 246, USD, Asia, ??, 0
+<==        Row: IQ, IRQ, 368, 伊拉克, Iraq, 964, IQD, Asia, ??, 0
+<==        Row: IR, IRN, 364, 伊朗, Iran, 98, IRR, Asia, ??, 0
+<==        Row: IS, ISL, 352, 冰岛, Iceland, 354, ISK, Europe, ??, 0
+<==        Row: IT, ITA, 380, 意大利, Italy, 39, EUR, Europe, ??, 0
+<==        Row: JE, JEY, 832, 泽西岛, Jersey, 44, GBP, Europe, ??, 0
+<==        Row: JM, JAM, 388, 牙买加, Jamaica, 1, JMD, North America, ??, 0
+<==        Row: JO, JOR, 400, 约旦, Jordan, 962, JOD, Asia, ??, 0
+<==        Row: JP, JPN, 392, 日本, Japan, 81, JPY, Asia, ??, 0
+<==        Row: KE, KEN, 404, 肯尼亚, Kenya, 254, KES, Africa, ??, 0
+<==        Row: KG, KGZ, 417, 吉尔吉斯斯坦, Kyrgyzstan, 996, KGS, Asia, ??, 0
+<==        Row: KH, KHM, 116, 柬埔寨, Cambodia, 855, KHR, Asia, ??, 0
+<==        Row: KI, KIR, 296, 基里巴斯, Kiribati, 686, AUD, Oceania, ??, 0
+<==        Row: KM, COM, 174, 科摩罗, Comoros, 269, KMF, Africa, ??, 0
+<==        Row: KN, KNA, 659, 圣基茨和尼维斯, Saint Kitts and Nevis, 1, XCD, North America, ??, 0
+<==        Row: KP, PRK, 408, 朝鲜, North Korea, 850, KPW, Asia, ??, 0
+<==        Row: KR, KOR, 410, 韩国, South Korea, 82, KRW, Asia, ??, 0
+<==        Row: KW, KWT, 414, 科威特, Kuwait, 965, KWD, Asia, ??, 0
+<==        Row: KY, CYM, 136, 开曼群岛, Cayman Islands, 1, KYD, North America, ??, 0
+<==        Row: KZ, KAZ, 398, 哈萨克斯坦, Kazakhstan, 7, KZT, Asia, ??, 0
+<==        Row: LA, LAO, 418, 老挝, Laos, 856, LAK, Asia, ??, 0
+<==        Row: LB, LBN, 422, 黎巴嫩, Lebanon, 961, LBP, Asia, ??, 0
+<==        Row: LC, LCA, 662, 圣卢西亚, Saint Lucia, 1, XCD, North America, ??, 0
+<==        Row: LI, LIE, 438, 列支敦士登, Liechtenstein, 423, CHF, Europe, ??, 0
+<==        Row: LK, LKA, 144, 斯里兰卡, Sri Lanka, 94, LKR, Asia, ??, 0
+<==        Row: LR, LBR, 430, 利比里亚, Liberia, 231, LRD, Africa, ??, 0
+<==        Row: LS, LSO, 426, 莱索托, Lesotho, 266, LSL, Africa, ??, 0
+<==        Row: LT, LTU, 440, 立陶宛, Lithuania, 370, EUR, Europe, ??, 0
+<==        Row: LU, LUX, 442, 卢森堡, Luxembourg, 352, EUR, Europe, ??, 0
+<==        Row: LV, LVA, 428, 拉脱维亚, Latvia, 371, EUR, Europe, ??, 0
+<==        Row: LY, LBY, 434, 利比亚, Libya, 218, LYD, Africa, ??, 0
+<==        Row: MA, MAR, 504, 摩洛哥, Morocco, 212, MAD, Africa, ??, 0
+<==        Row: MC, MCO, 492, 摩纳哥, Monaco, 377, EUR, Europe, ??, 0
+<==        Row: MD, MDA, 498, 摩尔多瓦, Moldova, 373, MDL, Europe, ??, 0
+<==        Row: ME, MNE, 499, 黑山, Montenegro, 382, EUR, Europe, ??, 0
+<==        Row: MF, MAF, 663, 圣马丁, Saint Martin, 590, EUR, North America, ??, 0
+<==        Row: MG, MDG, 450, 马达加斯加, Madagascar, 261, MGA, Africa, ??, 0
+<==        Row: MH, MHL, 584, 马绍尔群岛, Marshall Islands, 692, USD, Oceania, ??, 0
+<==        Row: MK, MKD, 807, 北馬其頓, North Macedonia, 389, MKD, Europe, ??, 0
+<==        Row: ML, MLI, 466, 马里, Mali, 223, XOF, Africa, ??, 0
+<==        Row: MM, MMR, 104, 缅甸, Myanmar, 95, MMK, Asia, ??, 0
+<==        Row: MN, MNG, 496, 蒙古, Mongolia, 976, MNT, Asia, ??, 0
+<==        Row: MO, MAC, 446, , Macau, 853, MOP, Asia, ??, 0
+<==        Row: MP, MNP, 580, 北马里亚纳群岛, Northern Mariana Islands, 1, USD, Oceania, ??, 0
+<==        Row: MQ, MTQ, 474, 马提尼克, Martinique, 596, EUR, North America, ??, 0
+<==        Row: MR, MRT, 478, 毛里塔尼亚, Mauritania, 222, MRU, Africa, ??, 0
+<==        Row: MS, MSR, 500, 蒙特塞拉特, Montserrat, 1, XCD, North America, ??, 0
+<==        Row: MT, MLT, 470, 马耳他, Malta, 356, EUR, Europe, ??, 0
+<==        Row: MU, MUS, 480, 毛里求斯, Mauritius, 230, MUR, Africa, ??, 0
+<==        Row: MV, MDV, 462, 马尔代夫, Maldives, 960, MVR, Asia, ??, 0
+<==        Row: MW, MWI, 454, 马拉维, Malawi, 265, MWK, Africa, ??, 0
+<==        Row: MX, MEX, 484, 墨西哥, Mexico, 52, MXN, North America, ??, 0
+<==        Row: MY, MYS, 458, 马来西亚, Malaysia, 60, MYR, Asia, ??, 0
+<==        Row: MZ, MOZ, 508, 莫桑比克, Mozambique, 258, MZN, Africa, ??, 0
+<==        Row: NA, NAM, 516, 纳米比亚, Namibia, 264, NAD, Africa, ??, 0
+<==        Row: NC, NCL, 540, 新喀里多尼亚, New Caledonia, 687, XPF, Oceania, ??, 0
+<==        Row: NE, NER, 562, 尼日尔, Niger, 227, XOF, Africa, ??, 0
+<==        Row: NF, NFK, 574, 诺福克岛, Norfolk Island, 672, AUD, Oceania, ??, 0
+<==        Row: NG, NGA, 566, 尼日利亚, Nigeria, 234, NGN, Africa, ??, 0
+<==        Row: NI, NIC, 558, 尼加拉瓜, Nicaragua, 505, NIO, North America, ??, 0
+<==        Row: NL, NLD, 528, 荷兰, Netherlands, 31, EUR, Europe, ??, 0
+<==        Row: NO, NOR, 578, 挪威, Norway, 47, NOK, Europe, ??, 0
+<==        Row: NP, NPL, 524, 尼泊尔, Nepal, 977, NPR, Asia, ??, 0
+<==        Row: NR, NRU, 520, 瑙鲁, Nauru, 674, AUD, Oceania, ??, 0
+<==        Row: NU, NIU, 570, 纽埃, Niue, 683, NZD, Oceania, ??, 0
+<==        Row: NZ, NZL, 554, 新西兰, New Zealand, 64, NZD, Oceania, ??, 0
+<==        Row: OM, OMN, 512, 阿曼, Oman, 968, OMR, Asia, ??, 0
+<==        Row: PA, PAN, 591, 巴拿马, Panama, 507, PAB, North America, ??, 0
+<==        Row: PE, PER, 604, 秘鲁, Peru, 51, PEN, South America, ??, 0
+<==        Row: PF, PYF, 258, 法属波利尼西亚, French Polynesia, 689, XPF, Oceania, ??, 0
+<==        Row: PG, PNG, 598, 巴布亚新几内亚, Papua New Guinea, 675, PGK, Oceania, ??, 0
+<==        Row: PH, PHL, 608, 菲律宾, Philippines, 63, PHP, Asia, ??, 0
+<==        Row: PK, PAK, 586, 巴基斯坦, Pakistan, 92, PKR, Asia, ??, 0
+<==        Row: PL, POL, 616, 波兰, Poland, 48, PLN, Europe, ??, 0
+<==        Row: PM, SPM, 666, 圣皮埃尔和密克隆, Saint Pierre and Miquelon, 508, EUR, North America, ??, 0
+<==        Row: PN, PCN, 612, 皮特凯恩群岛, Pitcairn Islands, 64, NZD, Oceania, ??, 0
+<==        Row: PR, PRI, 630, 波多黎各, Puerto Rico, 1, USD, North America, ??, 0
+<==        Row: PS, PSE, 275, 巴勒斯坦, Palestine, 970, EGP, Asia, ??, 0
+<==        Row: PT, PRT, 620, 葡萄牙, Portugal, 351, EUR, Europe, ??, 0
+<==        Row: PW, PLW, 585, 帕劳, Palau, 680, USD, Oceania, ??, 0
+<==        Row: PY, PRY, 600, 巴拉圭, Paraguay, 595, PYG, South America, ??, 0
+<==        Row: QA, QAT, 634, 卡塔尔, Qatar, 974, QAR, Asia, ??, 0
+<==        Row: RE, REU, 638, 留尼旺岛, Réunion, 262, EUR, Africa, ??, 0
+<==        Row: RO, ROU, 642, 罗马尼亚, Romania, 40, RON, Europe, ??, 0
+<==        Row: RS, SRB, 688, 塞尔维亚, Serbia, 381, RSD, Europe, ??, 0
+<==        Row: RU, RUS, 643, 俄罗斯, Russia, 7, RUB, Europe, ??, 0
+<==        Row: RW, RWA, 646, 卢旺达, Rwanda, 250, RWF, Africa, ??, 0
+<==        Row: SA, SAU, 682, 沙特阿拉伯, Saudi Arabia, 966, SAR, Asia, ??, 0
+<==        Row: SB, SLB, 090, 所罗门群岛, Solomon Islands, 677, SBD, Oceania, ??, 0
+<==        Row: SC, SYC, 690, 塞舌尔, Seychelles, 248, SCR, Africa, ??, 0
+<==        Row: SD, SDN, 729, 苏丹, Sudan, 249, SDG, Africa, ??, 0
+<==        Row: SE, SWE, 752, 瑞典, Sweden, 46, SEK, Europe, ??, 0
+<==        Row: SG, SGP, 702, , Singapore, 65, SGD, Asia, ??, 0
+<==        Row: SH, SHN, 654, 圣赫勒拿、阿森松和特里斯坦-达库尼亚, Saint Helena, Ascension and Tristan da Cunha, 290, GBP, Africa, ??, 0
+<==        Row: SI, SVN, 705, 斯洛文尼亚, Slovenia, 386, EUR, Europe, ??, 0
+<==        Row: SJ, SJM, 744, 斯瓦尔巴特, Svalbard and Jan Mayen, 47, NOK, Europe, ??, 0
+<==        Row: SK, SVK, 703, 斯洛伐克, Slovakia, 421, EUR, Europe, ??, 0
+<==        Row: SL, SLE, 694, 塞拉利昂, Sierra Leone, 232, SLE, Africa, ??, 0
+<==        Row: SM, SMR, 674, 圣马力诺, San Marino, 378, EUR, Europe, ??, 0
+<==        Row: SN, SEN, 686, 塞内加尔, Senegal, 221, XOF, Africa, ??, 0
+<==        Row: SO, SOM, 706, 索马里, Somalia, 252, SOS, Africa, ??, 0
+<==        Row: SR, SUR, 740, 苏里南, Suriname, 597, SRD, South America, ??, 0
+<==        Row: SS, SSD, 728, 南苏丹, South Sudan, 211, SSP, Africa, ??, 0
+<==        Row: ST, STP, 678, 圣多美和普林西比, São Tomé and Príncipe, 239, STN, Africa, ??, 0
+<==        Row: SV, SLV, 222, 萨尔瓦多, El Salvador, 503, USD, North America, ??, 0
+<==        Row: SX, SXM, 534, 圣马丁岛, Sint Maarten, 1, ANG, North America, ??, 0
+<==        Row: SY, SYR, 760, 叙利亚, Syria, 963, SYP, Asia, ??, 0
+<==        Row: SZ, SWZ, 748, 斯威士兰, Eswatini, 268, SZL, Africa, ??, 0
+<==        Row: TC, TCA, 796, 特克斯和凯科斯群岛, Turks and Caicos Islands, 1, USD, North America, ??, 0
+<==        Row: TD, TCD, 148, 乍得, Chad, 235, XAF, Africa, ??, 0
+<==        Row: TF, ATF, 260, 法国南部和南极土地, French Southern and Antarctic Lands, 262, EUR, Antarctica, ??, 0
+<==        Row: TG, TGO, 768, 多哥, Togo, 228, XOF, Africa, ??, 0
+<==        Row: TH, THA, 764, 泰国, Thailand, 66, THB, Asia, ??, 0
+<==        Row: TJ, TJK, 762, 塔吉克斯坦, Tajikistan, 992, TJS, Asia, ??, 0
+<==        Row: TK, TKL, 772, 托克劳, Tokelau, 690, NZD, Oceania, ??, 0
+<==        Row: TL, TLS, 626, 东帝汶, Timor-Leste, 670, USD, Oceania, ??, 0
+<==        Row: TM, TKM, 795, 土库曼斯坦, Turkmenistan, 993, TMT, Asia, ??, 0
+<==        Row: TN, TUN, 788, 突尼斯, Tunisia, 216, TND, Africa, ??, 0
+<==        Row: TO, TON, 776, 汤加, Tonga, 676, TOP, Oceania, ??, 0
+<==        Row: TR, TUR, 792, 土耳其, Turkey, 90, TRY, Europe, ??, 0
+<==        Row: TT, TTO, 780, 特立尼达和多巴哥, Trinidad and Tobago, 1, TTD, North America, ??, 0
+<==        Row: TV, TUV, 798, 图瓦卢, Tuvalu, 688, AUD, Oceania, ??, 0
+<==        Row: TW, TWN, 158, , Taiwan, 886, TWD, Asia, ??, 0
+<==        Row: TZ, TZA, 834, 坦桑尼亚, Tanzania, 255, TZS, Africa, ??, 0
+<==        Row: UA, UKR, 804, 乌克兰, Ukraine, 380, UAH, Europe, ??, 0
+<==        Row: UG, UGA, 800, 乌干达, Uganda, 256, UGX, Africa, ??, 0
+<==        Row: UM, UMI, 581, 美国本土外小岛屿, United States Minor Outlying Islands, 1, USD, Oceania, ??, 0
+<==        Row: US, USA, 840, 美国, United States, 1, USD, North America, ??, 0
+<==        Row: UY, URY, 858, 乌拉圭, Uruguay, 598, UYU, South America, ??, 0
+<==        Row: UZ, UZB, 860, 乌兹别克斯坦, Uzbekistan, 998, UZS, Asia, ??, 0
+<==        Row: VA, VAT, 336, 梵蒂冈, Vatican City, 379, EUR, Europe, ??, 0
+<==        Row: VC, VCT, 670, 圣文森特和格林纳丁斯, Saint Vincent and the Grenadines, 1, XCD, North America, ??, 0
+<==        Row: VE, VEN, 862, 委内瑞拉, Venezuela, 58, VES, South America, ??, 0
+<==        Row: VG, VGB, 092, 英属维尔京群岛, British Virgin Islands, 1, USD, North America, ??, 0
+<==        Row: VI, VIR, 850, 美属维尔京群岛, United States Virgin Islands, 1, USD, North America, ??, 0
+<==        Row: VN, VNM, 704, 越南, Vietnam, 84, VND, Asia, ??, 0
+<==        Row: VU, VUT, 548, 瓦努阿图, Vanuatu, 678, VUV, Oceania, ??, 0
+<==        Row: WF, WLF, 876, 瓦利斯和富图纳群岛, Wallis and Futuna, 681, XPF, Oceania, ??, 0
+<==        Row: WS, WSM, 882, 萨摩亚, Samoa, 685, WST, Oceania, ??, 0
+<==        Row: XK, UNK, , 科索沃, Kosovo, 383, EUR, Europe, ??, 0
+<==        Row: YE, YEM, 887, 也门, Yemen, 967, YER, Asia, ??, 0
+<==        Row: YT, MYT, 175, 马约特, Mayotte, 262, EUR, Africa, ??, 0
+<==        Row: ZA, ZAF, 710, 南非, South Africa, 27, ZAR, Africa, ??, 0
+<==        Row: ZM, ZMB, 894, 赞比亚, Zambia, 260, ZMW, Africa, ??, 0
+<==        Row: ZW, ZWE, 716, 津巴布韦, Zimbabwe, 263, ZWL, Africa, ??, 0
+<==      Total: 250
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@57d84d17]
+2026-07-10T02:30:30.405+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-3] c.x.dictservice.service.CountryService   : 缓存写入失败: key=countries:list:all:all, err=Unable to connect to Redis
+2026-07-10T02:30:32.423+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-4] c.x.dictservice.service.CurrencyService  : Redis 读取失败，降级查 DB: key=currencies:list:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@431a8060] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1193610459 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT currency_code, name_zh, name_en, symbol, status FROM sys_currency WHERE (status = ? OR ? IS NULL) AND ((name_zh LIKE CONCAT('%', ?, '%') OR name_en LIKE CONCAT('%', ?, '%') OR currency_code LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY currency_code
+==> Parameters: null, null, null, null, null, null
+<==    Columns: currency_code, name_zh, name_en, symbol, status
+<==        Row: AED, null, United Arab Emirates dirham, د.إ, 1
+<==        Row: AFN, null, Afghan afghani, ؋, 1
+<==        Row: ALL, null, Albanian lek, L, 1
+<==        Row: AMD, null, Armenian dram, ֏, 1
+<==        Row: ANG, null, Netherlands Antillean guilder, ƒ, 1
+<==        Row: AOA, null, Angolan kwanza, Kz, 1
+<==        Row: ARS, null, Argentine peso, $, 1
+<==        Row: AUD, null, Australian dollar, $, 1
+<==        Row: AWG, null, Aruban florin, ƒ, 1
+<==        Row: AZN, null, Azerbaijani manat, ₼, 1
+<==        Row: BAM, null, Bosnia and Herzegovina convertible mark, KM, 1
+<==        Row: BBD, null, Barbadian dollar, $, 1
+<==        Row: BDT, null, Bangladeshi taka, ৳, 1
+<==        Row: BHD, null, Bahraini dinar, .د.ب, 1
+<==        Row: BIF, null, Burundian franc, Fr, 1
+<==        Row: BMD, null, Bermudian dollar, $, 1
+<==        Row: BND, null, Brunei dollar, $, 1
+<==        Row: BOB, null, Bolivian boliviano, Bs., 1
+<==        Row: BRL, null, Brazilian real, R$, 1
+<==        Row: BSD, null, Bahamian dollar, $, 1
+<==        Row: BTN, null, Bhutanese ngultrum, Nu., 1
+<==        Row: BWP, null, Botswana pula, P, 1
+<==        Row: BYN, null, Belarusian ruble, Br, 1
+<==        Row: BZD, null, Belize dollar, $, 1
+<==        Row: CAD, null, Canadian dollar, $, 1
+<==        Row: CDF, null, Congolese franc, FC, 1
+<==        Row: CHF, null, Swiss franc, Fr., 1
+<==        Row: CKD, null, Cook Islands dollar, $, 1
+<==        Row: CLP, null, Chilean peso, $, 1
+<==        Row: CNY, null, Chinese yuan, ¥, 1
+<==        Row: COP, null, Colombian peso, $, 1
+<==        Row: CRC, null, Costa Rican colón, ₡, 1
+<==        Row: CUC, null, Cuban convertible peso, $, 1
+<==        Row: CVE, null, Cape Verdean escudo, Esc, 1
+<==        Row: CZK, null, Czech koruna, Kč, 1
+<==        Row: DJF, null, Djiboutian franc, Fr, 1
+<==        Row: DKK, null, krone, kr., 1
+<==        Row: DOP, null, Dominican peso, $, 1
+<==        Row: DZD, null, Algerian dinar, دج, 1
+<==        Row: EGP, null, Egyptian pound, E£, 1
+<==        Row: ERN, null, Eritrean nakfa, Nfk, 1
+<==        Row: ETB, null, Ethiopian birr, Br, 1
+<==        Row: EUR, null, Euro, €, 1
+<==        Row: FJD, null, Fijian dollar, $, 1
+<==        Row: FKP, null, Falkland Islands pound, £, 1
+<==        Row: GBP, null, British pound, £, 1
+<==        Row: GEL, null, lari, ₾, 1
+<==        Row: GHS, null, Ghanaian cedi, ₵, 1
+<==        Row: GIP, null, Gibraltar pound, £, 1
+<==        Row: GMD, null, dalasi, D, 1
+<==        Row: GNF, null, Guinean franc, Fr, 1
+<==        Row: GTQ, null, Guatemalan quetzal, Q, 1
+<==        Row: GYD, null, Guyanese dollar, $, 1
+<==        Row: HKD, null, Hong Kong dollar, $, 1
+<==        Row: HNL, null, Honduran lempira, L, 1
+<==        Row: HTG, null, Haitian gourde, G, 1
+<==        Row: HUF, null, Hungarian forint, Ft, 1
+<==        Row: IDR, null, Indonesian rupiah, Rp, 1
+<==        Row: ILS, null, Israeli new shekel, ₪, 1
+<==        Row: INR, null, Indian rupee, ₹, 1
+<==        Row: IQD, null, Iraqi dinar, ع.د, 1
+<==        Row: IRR, null, Iranian rial, ﷼, 1
+<==        Row: ISK, null, Icelandic króna, kr, 1
+<==        Row: JMD, null, Jamaican dollar, $, 1
+<==        Row: JOD, null, Jordanian dinar, د.ا, 1
+<==        Row: JPY, null, Japanese yen, ¥, 1
+<==        Row: KES, null, Kenyan shilling, Sh, 1
+<==        Row: KGS, null, Kyrgyzstani som, с, 1
+<==        Row: KHR, null, Cambodian riel, ៛, 1
+<==        Row: KMF, null, Comorian franc, Fr, 1
+<==        Row: KPW, null, North Korean won, ₩, 1
+<==        Row: KRW, null, South Korean won, ₩, 1
+<==        Row: KWD, null, Kuwaiti dinar, د.ك, 1
+<==        Row: KYD, null, Cayman Islands dollar, $, 1
+<==        Row: KZT, null, Kazakhstani tenge, ₸, 1
+<==        Row: LAK, null, Lao kip, ₭, 1
+<==        Row: LBP, null, Lebanese pound, ل.ل, 1
+<==        Row: LKR, null, Sri Lankan rupee, Rs  රු, 1
+<==        Row: LRD, null, Liberian dollar, $, 1
+<==        Row: LSL, null, Lesotho loti, L, 1
+<==        Row: LYD, null, Libyan dinar, ل.د, 1
+<==        Row: MAD, null, Moroccan dirham, د.م., 1
+<==        Row: MDL, null, Moldovan leu, L, 1
+<==        Row: MGA, null, Malagasy ariary, Ar, 1
+<==        Row: MKD, null, denar, den, 1
+<==        Row: MMK, null, Burmese kyat, Ks, 1
+<==        Row: MNT, null, Mongolian tögrög, ₮, 1
+<==        Row: MOP, null, Macanese pataca, P, 1
+<==        Row: MRU, null, Mauritanian ouguiya, UM, 1
+<==        Row: MUR, null, Mauritian rupee, ₨, 1
+<==        Row: MVR, null, Maldivian rufiyaa, .ރ, 1
+<==        Row: MWK, null, Malawian kwacha, MK, 1
+<==        Row: MXN, null, Mexican peso, $, 1
+<==        Row: MYR, null, Malaysian ringgit, RM, 1
+<==        Row: MZN, null, Mozambican metical, MT, 1
+<==        Row: NAD, null, Namibian dollar, $, 1
+<==        Row: NGN, null, Nigerian naira, ₦, 1
+<==        Row: NIO, null, Nicaraguan córdoba, C$, 1
+<==        Row: NOK, null, krone, kr, 1
+<==        Row: NPR, null, Nepalese rupee, ₨, 1
+<==        Row: NZD, null, New Zealand dollar, $, 1
+<==        Row: OMR, null, Omani rial, ر.ع., 1
+<==        Row: PAB, null, Panamanian balboa, B/., 1
+<==        Row: PEN, null, Peruvian sol, S/ , 1
+<==        Row: PGK, null, Papua New Guinean kina, K, 1
+<==        Row: PHP, null, Philippine peso, ₱, 1
+<==        Row: PKR, null, Pakistani rupee, ₨, 1
+<==        Row: PLN, null, Polish złoty, zł, 1
+<==        Row: PYG, null, Paraguayan guaraní, ₲, 1
+<==        Row: QAR, null, Qatari riyal, ر.ق, 1
+<==        Row: RON, null, Romanian leu, lei, 1
+<==        Row: RSD, null, Serbian dinar, дин., 1
+<==        Row: RUB, null, Russian ruble, ₽, 1
+<==        Row: RWF, null, Rwandan franc, Fr, 1
+<==        Row: SAR, null, Saudi riyal, ر.س, 1
+<==        Row: SBD, null, Solomon Islands dollar, $, 1
+<==        Row: SCR, null, Seychellois rupee, ₨, 1
+<==        Row: SDG, null, Sudanese pound, ج.س, 1
+<==        Row: SEK, null, Swedish krona, kr, 1
+<==        Row: SGD, null, Singapore dollar, $, 1
+<==        Row: SLE, null, Leone, Le, 1
+<==        Row: SOS, null, Somali shilling, Sh, 1
+<==        Row: SRD, null, Surinamese dollar, $, 1
+<==        Row: SSP, null, South Sudanese pound, £, 1
+<==        Row: STN, null, São Tomé and Príncipe dobra, Db, 1
+<==        Row: SYP, null, Syrian pound, £, 1
+<==        Row: SZL, null, Swazi lilangeni, L, 1
+<==        Row: THB, null, Thai baht, ฿, 1
+<==        Row: TJS, null, Tajikistani somoni, ЅМ, 1
+<==        Row: TMT, null, Turkmenistan manat, m, 1
+<==        Row: TND, null, Tunisian dinar, د.ت, 1
+<==        Row: TOP, null, Tongan paʻanga, T$, 1
+<==        Row: TRY, null, Turkish lira, ₺, 1
+<==        Row: TTD, null, Trinidad and Tobago dollar, $, 1
+<==        Row: TWD, null, New Taiwan dollar, $, 1
+<==        Row: TZS, null, Tanzanian shilling, Sh, 1
+<==        Row: UAH, null, Ukrainian hryvnia, ₴, 1
+<==        Row: UGX, null, Ugandan shilling, Sh, 1
+<==        Row: USD, null, United States dollar, $, 1
+<==        Row: UYU, null, Uruguayan peso, $, 1
+<==        Row: UZS, null, Uzbekistani soʻm, so'm, 1
+<==        Row: VES, null, Venezuelan bolívar soberano, Bs.S., 1
+<==        Row: VND, null, Vietnamese đồng, ₫, 1
+<==        Row: VUV, null, Vanuatu vatu, Vt, 1
+<==        Row: WST, null, Samoan tālā, T, 1
+<==        Row: XAF, null, Central African CFA franc, Fr, 1
+<==        Row: XCD, null, Eastern Caribbean dollar, $, 1
+<==        Row: XOF, null, West African CFA franc, Fr, 1
+<==        Row: XPF, null, CFP franc, ₣, 1
+<==        Row: YER, null, Yemeni rial, ﷼, 1
+<==        Row: ZAR, null, South African rand, R, 1
+<==        Row: ZMW, null, Zambian kwacha, ZK, 1
+<==        Row: ZWL, null, Zimbabwean dollar, $, 1
+<==      Total: 153
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@431a8060]
+2026-07-10T02:30:34.447+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-4] c.x.dictservice.service.CurrencyService  : 缓存写入失败: key=currencies:list:all:all, err=Unable to connect to Redis
+2026-07-10T02:30:36.467+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-6] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:types, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@29bc6bea] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@763623941 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT type_code, type_name, remark FROM sys_property_dict_type ORDER BY type_code
+==> Parameters: 
+<==    Columns: type_code, type_name, remark
+<==        Row: audit_status, 审核状态, 草稿/待审核/通过/驳回
+<==        Row: decoration, 装修情况, 毛坯/简装/精装/豪装
+<==        Row: gas_supply, 供气, 管道燃气/罐装气/无
+<==        Row: heating_method, 供暖方式, 集中供暖/地暖/空调/燃气壁挂炉/无
+<==        Row: internet, 网络接入, 光纤/ADSL/有线通/无
+<==        Row: lease_term, 租期, 短租/长租
+<==        Row: orientation, 朝向, 房源朝向
+<==        Row: power_supply, 供电, 市政供电/自发电/太阳能
+<==        Row: property_label, 房源标签, 近地铁/公园旁/学区房/商圈等
+<==        Row: property_type, 房源类型, 住宅/办公/商业/工业
+<==        Row: publish_status, 发布状态, 草稿/已发布/已下架
+<==        Row: rental_area_unit, 面积单位, 平方米/平方英尺
+<==        Row: room_type, 户型, 开间/一室/两室/三室/四室以上
+<==        Row: tv_service, 电视服务, 有线电视/IPTV/卫星/无
+<==        Row: water_supply, 供水, 市政供水/井水/河水
+<==      Total: 15
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@29bc6bea]
+2026-07-10T02:30:38.479+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-6] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:types, err=Unable to connect to Redis
+2026-07-10T02:30:40.494+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-7] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:property_type:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7cc05f75] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2126335459 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: property_type(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: residential, 住宅, 1, 1
+<==        Row: office, 办公, 2, 1
+<==        Row: commercial, 商业, 3, 1
+<==        Row: industrial, 工业, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7cc05f75]
+2026-07-10T02:30:42.505+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-7] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:property_type:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:30:44.519+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-8] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:decoration:items:1:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@15a0e4be] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@531470943 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: decoration(String), 1(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: rough, 毛坯, 1, 1
+<==        Row: simple, 简装, 2, 1
+<==        Row: hardcover, 精装, 3, 1
+<==        Row: luxury, 豪装, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@15a0e4be]
+2026-07-10T02:30:46.529+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-8] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:decoration:items:1:all, err=Unable to connect to Redis
+2026-07-10T02:30:48.539+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-9] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:orientation:items:all:南, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b3c9f86] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@368800401 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: orientation(String), 0(Integer), 南(String), 南(String), 南(String)
+<==    Columns: code, name, sort_order, status
+<==        Row: south, 南, 2, 1
+<==        Row: north_south, 南北, 5, 1
+<==        Row: south_north, 南北通透, 6, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b3c9f86]
+2026-07-10T02:30:50.548+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-9] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:orientation:items:all:南, err=Unable to connect to Redis
+2026-07-10T02:30:52.562+08:00  WARN 34904 --- [dict-service] [.1-8081-exec-10] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:property_type:item:residential, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@52ef03af] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@948179219 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND item_key = ? LIMIT 1
+==> Parameters: property_type(String), residential(String)
+<==    Columns: code, name, sort_order, status
+<==        Row: residential, 住宅, 1, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@52ef03af]
+2026-07-10T02:30:54.573+08:00  WARN 34904 --- [dict-service] [.1-8081-exec-10] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:property_type:item:residential, err=Unable to connect to Redis
+2026-07-10T02:30:56.585+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-1] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:property_type:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@738ebae8] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@76949784 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: property_type(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: residential, 住宅, 1, 1
+<==        Row: office, 办公, 2, 1
+<==        Row: commercial, 商业, 3, 1
+<==        Row: industrial, 工业, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@738ebae8]
+2026-07-10T02:30:58.595+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-1] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:property_type:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:00.606+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-2] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:decoration:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@443c856c] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@204529946 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: decoration(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: rough, 毛坯, 1, 1
+<==        Row: simple, 简装, 2, 1
+<==        Row: hardcover, 精装, 3, 1
+<==        Row: luxury, 豪装, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@443c856c]
+2026-07-10T02:31:02.613+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-2] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:decoration:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:04.624+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-3] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:heating_method:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1594bed5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1391151444 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: heating_method(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: central, 集中供暖, 1, 1
+<==        Row: floor, 地暖, 2, 1
+<==        Row: ac, 空调, 3, 1
+<==        Row: gas, 燃气壁挂炉, 4, 1
+<==        Row: none, 无, 5, 1
+<==      Total: 5
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1594bed5]
+2026-07-10T02:31:06.633+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-3] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:heating_method:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:08.647+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-4] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:water_supply:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@336fc8f7] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1547913621 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: water_supply(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: municipal, 市政供水, 1, 1
+<==        Row: well, 井水, 2, 1
+<==        Row: river, 河水, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@336fc8f7]
+2026-07-10T02:31:10.657+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-4] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:water_supply:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:12.671+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-5] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:power_supply:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@25ec5c27] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@724285162 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: power_supply(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: municipal, 市政供电, 1, 1
+<==        Row: self_gen, 自发电, 2, 1
+<==        Row: solar, 太阳能, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@25ec5c27]
+2026-07-10T02:31:14.679+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-5] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:power_supply:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:16.690+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-6] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:gas_supply:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@138ab58d] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1495494445 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: gas_supply(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: pipeline, 管道燃气, 1, 1
+<==        Row: tank, 罐装气, 2, 1
+<==        Row: none, 无, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@138ab58d]
+2026-07-10T02:31:18.699+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-6] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:gas_supply:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:20.711+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-7] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:internet:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@b84f88a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1765628400 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: internet(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: fiber, 光纤, 1, 1
+<==        Row: adsl, ADSL, 2, 1
+<==        Row: cable, 有线通, 3, 1
+<==        Row: none, 无, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@b84f88a]
+2026-07-10T02:31:22.721+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-7] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:internet:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:24.731+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-8] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:tv_service:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@679896a8] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1972313073 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: tv_service(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: cable, 有线电视, 1, 1
+<==        Row: iptv, IPTV, 2, 1
+<==        Row: satellite, 卫星, 3, 1
+<==        Row: none, 无, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@679896a8]
+2026-07-10T02:31:26.742+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-8] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:tv_service:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:28.754+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-9] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:orientation:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54c678aa] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@729357595 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: orientation(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: north, 北, 1, 1
+<==        Row: south, 南, 2, 1
+<==        Row: east, 东, 3, 1
+<==        Row: west, 西, 4, 1
+<==        Row: north_south, 南北, 5, 1
+<==        Row: south_north, 南北通透, 6, 1
+<==      Total: 6
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54c678aa]
+2026-07-10T02:31:30.761+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-9] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:orientation:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:32.773+08:00  WARN 34904 --- [dict-service] [.1-8081-exec-10] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:room_type:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7f571d1e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1427086112 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: room_type(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: studio, 开间, 1, 1
+<==        Row: 1br, 一室, 2, 1
+<==        Row: 2br, 两室, 3, 1
+<==        Row: 3br, 三室, 4, 1
+<==        Row: 4br+, 四室以上, 5, 1
+<==      Total: 5
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7f571d1e]
+2026-07-10T02:31:34.784+08:00  WARN 34904 --- [dict-service] [.1-8081-exec-10] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:room_type:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:36.794+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-1] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:rental_area_unit:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d6aaf8c] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1001720627 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: rental_area_unit(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: sqm, 平方米, 1, 1
+<==        Row: sqft, 平方英尺, 2, 1
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d6aaf8c]
+2026-07-10T02:31:38.802+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-1] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:rental_area_unit:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:40.812+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-2] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:lease_term:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2a66d0f0] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@181483317 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: lease_term(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: short, 短租, 1, 1
+<==        Row: long, 长租, 2, 1
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2a66d0f0]
+2026-07-10T02:31:42.820+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-2] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:lease_term:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:44.829+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-3] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:publish_status:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5b232241] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1810980326 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: publish_status(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: draft, 草稿, 1, 1
+<==        Row: published, 已发布, 2, 1
+<==        Row: offline, 已下架, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5b232241]
+2026-07-10T02:31:46.836+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-3] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:publish_status:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:48.847+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-4] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:audit_status:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4c6b29d3] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@26110169 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: audit_status(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: draft, 草稿, 1, 1
+<==        Row: pending, 待审核, 2, 1
+<==        Row: approved, 审核通过, 3, 1
+<==        Row: rejected, 驳回, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4c6b29d3]
+2026-07-10T02:31:50.855+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-4] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:audit_status:items:all:all, err=Unable to connect to Redis
+2026-07-10T02:31:52.866+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-5] c.xss.dictservice.service.DictService    : Redis 读取失败，降级查 DB: key=dict:property:property_label:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6a16bcd1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@769448144 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: property_label(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: near_subway, 近地铁, 1, 1
+<==        Row: park, 公园旁, 2, 1
+<==        Row: school, 学区房, 3, 1
+<==        Row: mall, 商圈, 4, 1
+<==        Row: river_view, 河景, 5, 1
+<==        Row: penthouse, 顶楼复式, 6, 1
+<==      Total: 6
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6a16bcd1]
+2026-07-10T02:31:54.875+08:00  WARN 34904 --- [dict-service] [0.1-8081-exec-5] c.xss.dictservice.service.DictService    : 缓存写入失败: key=dict:property:property_label:items:all:all, err=Unable to connect to Redis
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5270936] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@418511095 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT region_code, region_name, region_type, sort_order FROM v_provinces ORDER BY sort_order
+==> Parameters: 
+<==    Columns: region_code, region_name, region_type, sort_order
+<==        Row: 11, 北京市, 省/直辖市, 0
+<==        Row: 12, 天津市, 省/直辖市, 0
+<==        Row: 13, 河北省, 省/直辖市, 0
+<==        Row: 14, 山西省, 省/直辖市, 0
+<==        Row: 15, 内蒙古自治区, 省/直辖市, 0
+<==        Row: 21, 辽宁省, 省/直辖市, 0
+<==        Row: 22, 吉林省, 省/直辖市, 0
+<==        Row: 23, 黑龙江省, 省/直辖市, 0
+<==        Row: 31, 上海市, 省/直辖市, 0
+<==        Row: 32, 江苏省, 省/直辖市, 0
+<==        Row: 33, 浙江省, 省/直辖市, 0
+<==        Row: 34, 安徽省, 省/直辖市, 0
+<==        Row: 35, 福建省, 省/直辖市, 0
+<==        Row: 36, 江西省, 省/直辖市, 0
+<==        Row: 37, 山东省, 省/直辖市, 0
+<==        Row: 41, 河南省, 省/直辖市, 0
+<==        Row: 42, 湖北省, 省/直辖市, 0
+<==        Row: 43, 湖南省, 省/直辖市, 0
+<==        Row: 44, 广东省, 省/直辖市, 0
+<==        Row: 45, 广西壮族自治区, 省/直辖市, 0
+<==        Row: 46, 海南省, 省/直辖市, 0
+<==        Row: 50, 重庆市, 省/直辖市, 0
+<==        Row: 51, 四川省, 省/直辖市, 0
+<==        Row: 52, 贵州省, 省/直辖市, 0
+<==        Row: 53, 云南省, 省/直辖市, 0
+<==        Row: 54, 西藏自治区, 省/直辖市, 0
+<==        Row: 61, 陕西省, 省/直辖市, 0
+<==        Row: 62, 甘肃省, 省/直辖市, 0
+<==        Row: 63, 青海省, 省/直辖市, 0
+<==        Row: 64, 宁夏回族自治区, 省/直辖市, 0
+<==        Row: 65, 新疆维吾尔自治区, 省/直辖市, 0
+<==      Total: 31
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5270936]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@538db616] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@887719909 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT country_code, country_code3, numeric_code, name_zh, name_en, phone_code, currency_code, continent_code, flag_emoji, sort_order FROM v_countries WHERE (continent_code = ? OR ? IS NULL) AND ((name_zh LIKE CONCAT('%', ?, '%') OR name_en LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, country_code
+==> Parameters: null, null, null, null, null
+<==    Columns: country_code, country_code3, numeric_code, name_zh, name_en, phone_code, currency_code, continent_code, flag_emoji, sort_order
+<==        Row: AD, AND, 020, 安道尔, Andorra, 376, EUR, Europe, ??, 0
+<==        Row: AE, ARE, 784, 阿拉伯联合酋长国, United Arab Emirates, 971, AED, Asia, ??, 0
+<==        Row: AF, AFG, 004, 阿富汗, Afghanistan, 93, AFN, Asia, ??, 0
+<==        Row: AG, ATG, 028, 安提瓜和巴布达, Antigua and Barbuda, 1, XCD, North America, ??, 0
+<==        Row: AI, AIA, 660, 安圭拉, Anguilla, 1, XCD, North America, ??, 0
+<==        Row: AL, ALB, 008, 阿尔巴尼亚, Albania, 355, ALL, Europe, ??, 0
+<==        Row: AM, ARM, 051, 亚美尼亚, Armenia, 374, AMD, Asia, ??, 0
+<==        Row: AO, AGO, 024, 安哥拉, Angola, 244, AOA, Africa, ??, 0
+<==        Row: AQ, ATA, 010, 南极洲, Antarctica, 672, , Antarctica, ??, 0
+<==        Row: AR, ARG, 032, 阿根廷, Argentina, 54, ARS, South America, ??, 0
+<==        Row: AS, ASM, 016, 美属萨摩亚, American Samoa, 1, USD, Oceania, ??, 0
+<==        Row: AT, AUT, 040, 奥地利, Austria, 43, EUR, Europe, ??, 0
+<==        Row: AU, AUS, 036, 澳大利亚, Australia, 61, AUD, Oceania, ??, 0
+<==        Row: AW, ABW, 533, 阿鲁巴, Aruba, 297, AWG, North America, ??, 0
+<==        Row: AX, ALA, 248, 奥兰群岛, Åland Islands, 358, EUR, Europe, ??, 0
+<==        Row: AZ, AZE, 031, 阿塞拜疆, Azerbaijan, 994, AZN, Europe, ??, 0
+<==        Row: BA, BIH, 070, 波斯尼亚和黑塞哥维那, Bosnia and Herzegovina, 387, BAM, Europe, ??, 0
+<==        Row: BB, BRB, 052, 巴巴多斯, Barbados, 1, BBD, North America, ??, 0
+<==        Row: BD, BGD, 050, 孟加拉国, Bangladesh, 880, BDT, Asia, ??, 0
+<==        Row: BE, BEL, 056, 比利时, Belgium, 32, EUR, Europe, ??, 0
+<==        Row: BF, BFA, 854, 布基纳法索, Burkina Faso, 226, XOF, Africa, ??, 0
+<==        Row: BG, BGR, 100, 保加利亚, Bulgaria, 359, EUR, Europe, ??, 0
+<==        Row: BH, BHR, 048, 巴林, Bahrain, 973, BHD, Asia, ??, 0
+<==        Row: BI, BDI, 108, 布隆迪, Burundi, 257, BIF, Africa, ??, 0
+<==        Row: BJ, BEN, 204, 贝宁, Benin, 229, XOF, Africa, ??, 0
+<==        Row: BL, BLM, 652, 圣巴泰勒米, Saint Barthélemy, 590, EUR, North America, ??, 0
+<==        Row: BM, BMU, 060, 百慕大, Bermuda, 1, BMD, North America, ??, 0
+<==        Row: BN, BRN, 096, 文莱, Brunei, 673, BND, Asia, ??, 0
+<==        Row: BO, BOL, 068, 玻利维亚, Bolivia, 591, BOB, South America, ??, 0
+<==        Row: BQ, BES, 535, 荷蘭加勒比區, Caribbean Netherlands, 599, USD, North America, ??, 0
+<==        Row: BR, BRA, 076, 巴西, Brazil, 55, BRL, South America, ??, 0
+<==        Row: BS, BHS, 044, 巴哈马, Bahamas, 1, BSD, North America, ??, 0
+<==        Row: BT, BTN, 064, 不丹, Bhutan, 975, BTN, Asia, ??, 0
+<==        Row: BV, BVT, 074, 布维岛, Bouvet Island, 47, , Antarctica, ??, 0
+<==        Row: BW, BWA, 072, 博茨瓦纳, Botswana, 267, BWP, Africa, ??, 0
+<==        Row: BY, BLR, 112, 白俄罗斯, Belarus, 375, BYN, Europe, ??, 0
+<==        Row: BZ, BLZ, 084, 伯利兹, Belize, 501, BZD, North America, ??, 0
+<==        Row: CA, CAN, 124, 加拿大, Canada, 1, CAD, North America, ??, 0
+<==        Row: CC, CCK, 166, 科科斯, Cocos (Keeling) Islands, 61, AUD, Asia, ??, 0
+<==        Row: CD, COD, 180, 民主刚果, DRC, 243, CDF, Africa, ??, 0
+<==        Row: CF, CAF, 140, 中非共和国, Central African Republic, 236, XAF, Africa, ??, 0
+<==        Row: CG, COG, 178, 刚果, Congo, 242, XAF, Africa, ??, 0
+<==        Row: CH, CHE, 756, 瑞士, Switzerland, 41, CHF, Europe, ??, 0
+<==        Row: CI, CIV, 384, 科特迪瓦, Ivory Coast, 225, XOF, Africa, ??, 0
+<==        Row: CK, COK, 184, 库克群岛, Cook Islands, 682, CKD, Oceania, ??, 0
+<==        Row: CL, CHL, 152, 智利, Chile, 56, CLP, South America, ??, 0
+<==        Row: CM, CMR, 120, 喀麦隆, Cameroon, 237, XAF, Africa, ??, 0
+<==        Row: CN, CHN, 156, 中国, China, 86, CNY, Asia, ??, 0
+<==        Row: CO, COL, 170, 哥伦比亚, Colombia, 57, COP, South America, ??, 0
+<==        Row: CR, CRI, 188, 哥斯达黎加, Costa Rica, 506, CRC, North America, ??, 0
+<==        Row: CU, CUB, 192, 古巴, Cuba, 53, CUC, North America, ??, 0
+<==        Row: CV, CPV, 132, 佛得角, Cabo Verde, 238, CVE, Africa, ??, 0
+<==        Row: CW, CUW, 531, 库拉索, Curaçao, 599, ANG, North America, ??, 0
+<==        Row: CX, CXR, 162, 圣诞岛, Christmas Island, 61, AUD, Asia, ??, 0
+<==        Row: CY, CYP, 196, 塞浦路斯, Cyprus, 357, EUR, Europe, ??, 0
+<==        Row: CZ, CZE, 203, 捷克, Czechia, 420, CZK, Europe, ??, 0
+<==        Row: DE, DEU, 276, 德国, Germany, 49, EUR, Europe, ??, 0
+<==        Row: DJ, DJI, 262, 吉布提, Djibouti, 253, DJF, Africa, ??, 0
+<==        Row: DK, DNK, 208, 丹麦, Denmark, 45, DKK, Europe, ??, 0
+<==        Row: DM, DMA, 212, 多米尼加, Dominica, 1, XCD, North America, ??, 0
+<==        Row: DO, DOM, 214, 多明尼加, Dominican Republic, 1, DOP, North America, ??, 0
+<==        Row: DZ, DZA, 012, 阿尔及利亚, Algeria, 213, DZD, Africa, ??, 0
+<==        Row: EC, ECU, 218, 厄瓜多尔, Ecuador, 593, USD, South America, ??, 0
+<==        Row: EE, EST, 233, 爱沙尼亚, Estonia, 372, EUR, Europe, ??, 0
+<==        Row: EG, EGY, 818, 埃及, Egypt, 20, EGP, Africa, ??, 0
+<==        Row: EH, ESH, 732, 西撒哈拉, Western Sahara, 212, DZD, Africa, ??, 0
+<==        Row: ER, ERI, 232, 厄立特里亚, Eritrea, 291, ERN, Africa, ??, 0
+<==        Row: ES, ESP, 724, 西班牙, Spain, 34, EUR, Europe, ??, 0
+<==        Row: ET, ETH, 231, 埃塞俄比亚, Ethiopia, 251, ETB, Africa, ??, 0
+<==        Row: FI, FIN, 246, 芬兰, Finland, 358, EUR, Europe, ??, 0
+<==        Row: FJ, FJI, 242, 斐济, Fiji, 679, FJD, Oceania, ??, 0
+<==        Row: FK, FLK, 238, 福克兰群岛, Falkland Islands, 500, FKP, South America, ??, 0
+<==        Row: FM, FSM, 583, 密克罗尼西亚, Micronesia, 691, USD, Oceania, ??, 0
+<==        Row: FO, FRO, 234, 法罗群岛, Faroe Islands, 298, DKK, Europe, ??, 0
+<==        Row: FR, FRA, 250, 法国, France, 33, EUR, Europe, ??, 0
+<==        Row: GA, GAB, 266, 加蓬, Gabon, 241, XAF, Africa, ??, 0
+<==        Row: GB, GBR, 826, 英国, United Kingdom, 44, GBP, Europe, ??, 0
+<==        Row: GD, GRD, 308, 格林纳达, Grenada, 1, XCD, North America, ??, 0
+<==        Row: GE, GEO, 268, 格鲁吉亚, Georgia, 995, GEL, Asia, ??, 0
+<==        Row: GF, GUF, 254, 法属圭亚那, French Guiana, 594, EUR, South America, ??, 0
+<==        Row: GG, GGY, 831, 根西岛, Guernsey, 44, GBP, Europe, ??, 0
+<==        Row: GH, GHA, 288, 加纳, Ghana, 233, GHS, Africa, ??, 0
+<==        Row: GI, GIB, 292, 直布罗陀, Gibraltar, 350, GIP, Europe, ??, 0
+<==        Row: GL, GRL, 304, 格陵兰, Greenland, 299, DKK, North America, ??, 0
+<==        Row: GM, GMB, 270, 冈比亚, Gambia, 220, GMD, Africa, ??, 0
+<==        Row: GN, GIN, 324, 几内亚, Guinea, 224, GNF, Africa, ??, 0
+<==        Row: GP, GLP, 312, 瓜德罗普岛, Guadeloupe, 590, EUR, North America, ??, 0
+<==        Row: GQ, GNQ, 226, 赤道几内亚, Equatorial Guinea, 240, XAF, Africa, ??, 0
+<==        Row: GR, GRC, 300, 希腊, Greece, 30, EUR, Europe, ??, 0
+<==        Row: GS, SGS, 239, 南乔治亚, South Georgia, 500, GBP, Antarctica, ??, 0
+<==        Row: GT, GTM, 320, 危地马拉, Guatemala, 502, GTQ, North America, ??, 0
+<==        Row: GU, GUM, 316, 关岛, Guam, 1, USD, Oceania, ??, 0
+<==        Row: GW, GNB, 624, 几内亚比绍, Guinea-Bissau, 245, XOF, Africa, ??, 0
+<==        Row: GY, GUY, 328, 圭亚那, Guyana, 592, GYD, South America, ??, 0
+<==        Row: HK, HKG, 344, , Hong Kong, 852, HKD, Asia, ??, 0
+<==        Row: HM, HMD, 334, 赫德岛和麦当劳群岛, Heard Island and McDonald Islands, 672, , Antarctica, ??, 0
+<==        Row: HN, HND, 340, 洪都拉斯, Honduras, 504, HNL, North America, ??, 0
+<==        Row: HR, HRV, 191, 克罗地亚, Croatia, 385, EUR, Europe, ??, 0
+<==        Row: HT, HTI, 332, 海地, Haiti, 509, HTG, North America, ??, 0
+<==        Row: HU, HUN, 348, 匈牙利, Hungary, 36, HUF, Europe, ??, 0
+<==        Row: ID, IDN, 360, 印度尼西亚, Indonesia, 62, IDR, Asia, ??, 0
+<==        Row: IE, IRL, 372, 爱尔兰, Ireland, 353, EUR, Europe, ??, 0
+<==        Row: IL, ISR, 376, 以色列, Israel, 972, ILS, Asia, ??, 0
+<==        Row: IM, IMN, 833, 马恩岛, Isle of Man, 44, GBP, Europe, ??, 0
+<==        Row: IN, IND, 356, 印度, India, 91, INR, Asia, ??, 0
+<==        Row: IO, IOT, 086, 英属印度洋领地, British Indian Ocean Territory, 246, USD, Asia, ??, 0
+<==        Row: IQ, IRQ, 368, 伊拉克, Iraq, 964, IQD, Asia, ??, 0
+<==        Row: IR, IRN, 364, 伊朗, Iran, 98, IRR, Asia, ??, 0
+<==        Row: IS, ISL, 352, 冰岛, Iceland, 354, ISK, Europe, ??, 0
+<==        Row: IT, ITA, 380, 意大利, Italy, 39, EUR, Europe, ??, 0
+<==        Row: JE, JEY, 832, 泽西岛, Jersey, 44, GBP, Europe, ??, 0
+<==        Row: JM, JAM, 388, 牙买加, Jamaica, 1, JMD, North America, ??, 0
+<==        Row: JO, JOR, 400, 约旦, Jordan, 962, JOD, Asia, ??, 0
+<==        Row: JP, JPN, 392, 日本, Japan, 81, JPY, Asia, ??, 0
+<==        Row: KE, KEN, 404, 肯尼亚, Kenya, 254, KES, Africa, ??, 0
+<==        Row: KG, KGZ, 417, 吉尔吉斯斯坦, Kyrgyzstan, 996, KGS, Asia, ??, 0
+<==        Row: KH, KHM, 116, 柬埔寨, Cambodia, 855, KHR, Asia, ??, 0
+<==        Row: KI, KIR, 296, 基里巴斯, Kiribati, 686, AUD, Oceania, ??, 0
+<==        Row: KM, COM, 174, 科摩罗, Comoros, 269, KMF, Africa, ??, 0
+<==        Row: KN, KNA, 659, 圣基茨和尼维斯, Saint Kitts and Nevis, 1, XCD, North America, ??, 0
+<==        Row: KP, PRK, 408, 朝鲜, North Korea, 850, KPW, Asia, ??, 0
+<==        Row: KR, KOR, 410, 韩国, South Korea, 82, KRW, Asia, ??, 0
+<==        Row: KW, KWT, 414, 科威特, Kuwait, 965, KWD, Asia, ??, 0
+<==        Row: KY, CYM, 136, 开曼群岛, Cayman Islands, 1, KYD, North America, ??, 0
+<==        Row: KZ, KAZ, 398, 哈萨克斯坦, Kazakhstan, 7, KZT, Asia, ??, 0
+<==        Row: LA, LAO, 418, 老挝, Laos, 856, LAK, Asia, ??, 0
+<==        Row: LB, LBN, 422, 黎巴嫩, Lebanon, 961, LBP, Asia, ??, 0
+<==        Row: LC, LCA, 662, 圣卢西亚, Saint Lucia, 1, XCD, North America, ??, 0
+<==        Row: LI, LIE, 438, 列支敦士登, Liechtenstein, 423, CHF, Europe, ??, 0
+<==        Row: LK, LKA, 144, 斯里兰卡, Sri Lanka, 94, LKR, Asia, ??, 0
+<==        Row: LR, LBR, 430, 利比里亚, Liberia, 231, LRD, Africa, ??, 0
+<==        Row: LS, LSO, 426, 莱索托, Lesotho, 266, LSL, Africa, ??, 0
+<==        Row: LT, LTU, 440, 立陶宛, Lithuania, 370, EUR, Europe, ??, 0
+<==        Row: LU, LUX, 442, 卢森堡, Luxembourg, 352, EUR, Europe, ??, 0
+<==        Row: LV, LVA, 428, 拉脱维亚, Latvia, 371, EUR, Europe, ??, 0
+<==        Row: LY, LBY, 434, 利比亚, Libya, 218, LYD, Africa, ??, 0
+<==        Row: MA, MAR, 504, 摩洛哥, Morocco, 212, MAD, Africa, ??, 0
+<==        Row: MC, MCO, 492, 摩纳哥, Monaco, 377, EUR, Europe, ??, 0
+<==        Row: MD, MDA, 498, 摩尔多瓦, Moldova, 373, MDL, Europe, ??, 0
+<==        Row: ME, MNE, 499, 黑山, Montenegro, 382, EUR, Europe, ??, 0
+<==        Row: MF, MAF, 663, 圣马丁, Saint Martin, 590, EUR, North America, ??, 0
+<==        Row: MG, MDG, 450, 马达加斯加, Madagascar, 261, MGA, Africa, ??, 0
+<==        Row: MH, MHL, 584, 马绍尔群岛, Marshall Islands, 692, USD, Oceania, ??, 0
+<==        Row: MK, MKD, 807, 北馬其頓, North Macedonia, 389, MKD, Europe, ??, 0
+<==        Row: ML, MLI, 466, 马里, Mali, 223, XOF, Africa, ??, 0
+<==        Row: MM, MMR, 104, 缅甸, Myanmar, 95, MMK, Asia, ??, 0
+<==        Row: MN, MNG, 496, 蒙古, Mongolia, 976, MNT, Asia, ??, 0
+<==        Row: MO, MAC, 446, , Macau, 853, MOP, Asia, ??, 0
+<==        Row: MP, MNP, 580, 北马里亚纳群岛, Northern Mariana Islands, 1, USD, Oceania, ??, 0
+<==        Row: MQ, MTQ, 474, 马提尼克, Martinique, 596, EUR, North America, ??, 0
+<==        Row: MR, MRT, 478, 毛里塔尼亚, Mauritania, 222, MRU, Africa, ??, 0
+<==        Row: MS, MSR, 500, 蒙特塞拉特, Montserrat, 1, XCD, North America, ??, 0
+<==        Row: MT, MLT, 470, 马耳他, Malta, 356, EUR, Europe, ??, 0
+<==        Row: MU, MUS, 480, 毛里求斯, Mauritius, 230, MUR, Africa, ??, 0
+<==        Row: MV, MDV, 462, 马尔代夫, Maldives, 960, MVR, Asia, ??, 0
+<==        Row: MW, MWI, 454, 马拉维, Malawi, 265, MWK, Africa, ??, 0
+<==        Row: MX, MEX, 484, 墨西哥, Mexico, 52, MXN, North America, ??, 0
+<==        Row: MY, MYS, 458, 马来西亚, Malaysia, 60, MYR, Asia, ??, 0
+<==        Row: MZ, MOZ, 508, 莫桑比克, Mozambique, 258, MZN, Africa, ??, 0
+<==        Row: NA, NAM, 516, 纳米比亚, Namibia, 264, NAD, Africa, ??, 0
+<==        Row: NC, NCL, 540, 新喀里多尼亚, New Caledonia, 687, XPF, Oceania, ??, 0
+<==        Row: NE, NER, 562, 尼日尔, Niger, 227, XOF, Africa, ??, 0
+<==        Row: NF, NFK, 574, 诺福克岛, Norfolk Island, 672, AUD, Oceania, ??, 0
+<==        Row: NG, NGA, 566, 尼日利亚, Nigeria, 234, NGN, Africa, ??, 0
+<==        Row: NI, NIC, 558, 尼加拉瓜, Nicaragua, 505, NIO, North America, ??, 0
+<==        Row: NL, NLD, 528, 荷兰, Netherlands, 31, EUR, Europe, ??, 0
+<==        Row: NO, NOR, 578, 挪威, Norway, 47, NOK, Europe, ??, 0
+<==        Row: NP, NPL, 524, 尼泊尔, Nepal, 977, NPR, Asia, ??, 0
+<==        Row: NR, NRU, 520, 瑙鲁, Nauru, 674, AUD, Oceania, ??, 0
+<==        Row: NU, NIU, 570, 纽埃, Niue, 683, NZD, Oceania, ??, 0
+<==        Row: NZ, NZL, 554, 新西兰, New Zealand, 64, NZD, Oceania, ??, 0
+<==        Row: OM, OMN, 512, 阿曼, Oman, 968, OMR, Asia, ??, 0
+<==        Row: PA, PAN, 591, 巴拿马, Panama, 507, PAB, North America, ??, 0
+<==        Row: PE, PER, 604, 秘鲁, Peru, 51, PEN, South America, ??, 0
+<==        Row: PF, PYF, 258, 法属波利尼西亚, French Polynesia, 689, XPF, Oceania, ??, 0
+<==        Row: PG, PNG, 598, 巴布亚新几内亚, Papua New Guinea, 675, PGK, Oceania, ??, 0
+<==        Row: PH, PHL, 608, 菲律宾, Philippines, 63, PHP, Asia, ??, 0
+<==        Row: PK, PAK, 586, 巴基斯坦, Pakistan, 92, PKR, Asia, ??, 0
+<==        Row: PL, POL, 616, 波兰, Poland, 48, PLN, Europe, ??, 0
+<==        Row: PM, SPM, 666, 圣皮埃尔和密克隆, Saint Pierre and Miquelon, 508, EUR, North America, ??, 0
+<==        Row: PN, PCN, 612, 皮特凯恩群岛, Pitcairn Islands, 64, NZD, Oceania, ??, 0
+<==        Row: PR, PRI, 630, 波多黎各, Puerto Rico, 1, USD, North America, ??, 0
+<==        Row: PS, PSE, 275, 巴勒斯坦, Palestine, 970, EGP, Asia, ??, 0
+<==        Row: PT, PRT, 620, 葡萄牙, Portugal, 351, EUR, Europe, ??, 0
+<==        Row: PW, PLW, 585, 帕劳, Palau, 680, USD, Oceania, ??, 0
+<==        Row: PY, PRY, 600, 巴拉圭, Paraguay, 595, PYG, South America, ??, 0
+<==        Row: QA, QAT, 634, 卡塔尔, Qatar, 974, QAR, Asia, ??, 0
+<==        Row: RE, REU, 638, 留尼旺岛, Réunion, 262, EUR, Africa, ??, 0
+<==        Row: RO, ROU, 642, 罗马尼亚, Romania, 40, RON, Europe, ??, 0
+<==        Row: RS, SRB, 688, 塞尔维亚, Serbia, 381, RSD, Europe, ??, 0
+<==        Row: RU, RUS, 643, 俄罗斯, Russia, 7, RUB, Europe, ??, 0
+<==        Row: RW, RWA, 646, 卢旺达, Rwanda, 250, RWF, Africa, ??, 0
+<==        Row: SA, SAU, 682, 沙特阿拉伯, Saudi Arabia, 966, SAR, Asia, ??, 0
+<==        Row: SB, SLB, 090, 所罗门群岛, Solomon Islands, 677, SBD, Oceania, ??, 0
+<==        Row: SC, SYC, 690, 塞舌尔, Seychelles, 248, SCR, Africa, ??, 0
+<==        Row: SD, SDN, 729, 苏丹, Sudan, 249, SDG, Africa, ??, 0
+<==        Row: SE, SWE, 752, 瑞典, Sweden, 46, SEK, Europe, ??, 0
+<==        Row: SG, SGP, 702, , Singapore, 65, SGD, Asia, ??, 0
+<==        Row: SH, SHN, 654, 圣赫勒拿、阿森松和特里斯坦-达库尼亚, Saint Helena, Ascension and Tristan da Cunha, 290, GBP, Africa, ??, 0
+<==        Row: SI, SVN, 705, 斯洛文尼亚, Slovenia, 386, EUR, Europe, ??, 0
+<==        Row: SJ, SJM, 744, 斯瓦尔巴特, Svalbard and Jan Mayen, 47, NOK, Europe, ??, 0
+<==        Row: SK, SVK, 703, 斯洛伐克, Slovakia, 421, EUR, Europe, ??, 0
+<==        Row: SL, SLE, 694, 塞拉利昂, Sierra Leone, 232, SLE, Africa, ??, 0
+<==        Row: SM, SMR, 674, 圣马力诺, San Marino, 378, EUR, Europe, ??, 0
+<==        Row: SN, SEN, 686, 塞内加尔, Senegal, 221, XOF, Africa, ??, 0
+<==        Row: SO, SOM, 706, 索马里, Somalia, 252, SOS, Africa, ??, 0
+<==        Row: SR, SUR, 740, 苏里南, Suriname, 597, SRD, South America, ??, 0
+<==        Row: SS, SSD, 728, 南苏丹, South Sudan, 211, SSP, Africa, ??, 0
+<==        Row: ST, STP, 678, 圣多美和普林西比, São Tomé and Príncipe, 239, STN, Africa, ??, 0
+<==        Row: SV, SLV, 222, 萨尔瓦多, El Salvador, 503, USD, North America, ??, 0
+<==        Row: SX, SXM, 534, 圣马丁岛, Sint Maarten, 1, ANG, North America, ??, 0
+<==        Row: SY, SYR, 760, 叙利亚, Syria, 963, SYP, Asia, ??, 0
+<==        Row: SZ, SWZ, 748, 斯威士兰, Eswatini, 268, SZL, Africa, ??, 0
+<==        Row: TC, TCA, 796, 特克斯和凯科斯群岛, Turks and Caicos Islands, 1, USD, North America, ??, 0
+<==        Row: TD, TCD, 148, 乍得, Chad, 235, XAF, Africa, ??, 0
+<==        Row: TF, ATF, 260, 法国南部和南极土地, French Southern and Antarctic Lands, 262, EUR, Antarctica, ??, 0
+<==        Row: TG, TGO, 768, 多哥, Togo, 228, XOF, Africa, ??, 0
+<==        Row: TH, THA, 764, 泰国, Thailand, 66, THB, Asia, ??, 0
+<==        Row: TJ, TJK, 762, 塔吉克斯坦, Tajikistan, 992, TJS, Asia, ??, 0
+<==        Row: TK, TKL, 772, 托克劳, Tokelau, 690, NZD, Oceania, ??, 0
+<==        Row: TL, TLS, 626, 东帝汶, Timor-Leste, 670, USD, Oceania, ??, 0
+<==        Row: TM, TKM, 795, 土库曼斯坦, Turkmenistan, 993, TMT, Asia, ??, 0
+<==        Row: TN, TUN, 788, 突尼斯, Tunisia, 216, TND, Africa, ??, 0
+<==        Row: TO, TON, 776, 汤加, Tonga, 676, TOP, Oceania, ??, 0
+<==        Row: TR, TUR, 792, 土耳其, Turkey, 90, TRY, Europe, ??, 0
+<==        Row: TT, TTO, 780, 特立尼达和多巴哥, Trinidad and Tobago, 1, TTD, North America, ??, 0
+<==        Row: TV, TUV, 798, 图瓦卢, Tuvalu, 688, AUD, Oceania, ??, 0
+<==        Row: TW, TWN, 158, , Taiwan, 886, TWD, Asia, ??, 0
+<==        Row: TZ, TZA, 834, 坦桑尼亚, Tanzania, 255, TZS, Africa, ??, 0
+<==        Row: UA, UKR, 804, 乌克兰, Ukraine, 380, UAH, Europe, ??, 0
+<==        Row: UG, UGA, 800, 乌干达, Uganda, 256, UGX, Africa, ??, 0
+<==        Row: UM, UMI, 581, 美国本土外小岛屿, United States Minor Outlying Islands, 1, USD, Oceania, ??, 0
+<==        Row: US, USA, 840, 美国, United States, 1, USD, North America, ??, 0
+<==        Row: UY, URY, 858, 乌拉圭, Uruguay, 598, UYU, South America, ??, 0
+<==        Row: UZ, UZB, 860, 乌兹别克斯坦, Uzbekistan, 998, UZS, Asia, ??, 0
+<==        Row: VA, VAT, 336, 梵蒂冈, Vatican City, 379, EUR, Europe, ??, 0
+<==        Row: VC, VCT, 670, 圣文森特和格林纳丁斯, Saint Vincent and the Grenadines, 1, XCD, North America, ??, 0
+<==        Row: VE, VEN, 862, 委内瑞拉, Venezuela, 58, VES, South America, ??, 0
+<==        Row: VG, VGB, 092, 英属维尔京群岛, British Virgin Islands, 1, USD, North America, ??, 0
+<==        Row: VI, VIR, 850, 美属维尔京群岛, United States Virgin Islands, 1, USD, North America, ??, 0
+<==        Row: VN, VNM, 704, 越南, Vietnam, 84, VND, Asia, ??, 0
+<==        Row: VU, VUT, 548, 瓦努阿图, Vanuatu, 678, VUV, Oceania, ??, 0
+<==        Row: WF, WLF, 876, 瓦利斯和富图纳群岛, Wallis and Futuna, 681, XPF, Oceania, ??, 0
+<==        Row: WS, WSM, 882, 萨摩亚, Samoa, 685, WST, Oceania, ??, 0
+<==        Row: XK, UNK, , 科索沃, Kosovo, 383, EUR, Europe, ??, 0
+<==        Row: YE, YEM, 887, 也门, Yemen, 967, YER, Asia, ??, 0
+<==        Row: YT, MYT, 175, 马约特, Mayotte, 262, EUR, Africa, ??, 0
+<==        Row: ZA, ZAF, 710, 南非, South Africa, 27, ZAR, Africa, ??, 0
+<==        Row: ZM, ZMB, 894, 赞比亚, Zambia, 260, ZMW, Africa, ??, 0
+<==        Row: ZW, ZWE, 716, 津巴布韦, Zimbabwe, 263, ZWL, Africa, ??, 0
+<==      Total: 250
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@538db616]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1547a04e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1379917845 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT currency_code, name_zh, name_en, symbol, status FROM sys_currency WHERE (status = ? OR ? IS NULL) AND ((name_zh LIKE CONCAT('%', ?, '%') OR name_en LIKE CONCAT('%', ?, '%') OR currency_code LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY currency_code
+==> Parameters: null, null, null, null, null, null
+<==    Columns: currency_code, name_zh, name_en, symbol, status
+<==        Row: AED, null, United Arab Emirates dirham, د.إ, 1
+<==        Row: AFN, null, Afghan afghani, ؋, 1
+<==        Row: ALL, null, Albanian lek, L, 1
+<==        Row: AMD, null, Armenian dram, ֏, 1
+<==        Row: ANG, null, Netherlands Antillean guilder, ƒ, 1
+<==        Row: AOA, null, Angolan kwanza, Kz, 1
+<==        Row: ARS, null, Argentine peso, $, 1
+<==        Row: AUD, null, Australian dollar, $, 1
+<==        Row: AWG, null, Aruban florin, ƒ, 1
+<==        Row: AZN, null, Azerbaijani manat, ₼, 1
+<==        Row: BAM, null, Bosnia and Herzegovina convertible mark, KM, 1
+<==        Row: BBD, null, Barbadian dollar, $, 1
+<==        Row: BDT, null, Bangladeshi taka, ৳, 1
+<==        Row: BHD, null, Bahraini dinar, .د.ب, 1
+<==        Row: BIF, null, Burundian franc, Fr, 1
+<==        Row: BMD, null, Bermudian dollar, $, 1
+<==        Row: BND, null, Brunei dollar, $, 1
+<==        Row: BOB, null, Bolivian boliviano, Bs., 1
+<==        Row: BRL, null, Brazilian real, R$, 1
+<==        Row: BSD, null, Bahamian dollar, $, 1
+<==        Row: BTN, null, Bhutanese ngultrum, Nu., 1
+<==        Row: BWP, null, Botswana pula, P, 1
+<==        Row: BYN, null, Belarusian ruble, Br, 1
+<==        Row: BZD, null, Belize dollar, $, 1
+<==        Row: CAD, null, Canadian dollar, $, 1
+<==        Row: CDF, null, Congolese franc, FC, 1
+<==        Row: CHF, null, Swiss franc, Fr., 1
+<==        Row: CKD, null, Cook Islands dollar, $, 1
+<==        Row: CLP, null, Chilean peso, $, 1
+<==        Row: CNY, null, Chinese yuan, ¥, 1
+<==        Row: COP, null, Colombian peso, $, 1
+<==        Row: CRC, null, Costa Rican colón, ₡, 1
+<==        Row: CUC, null, Cuban convertible peso, $, 1
+<==        Row: CVE, null, Cape Verdean escudo, Esc, 1
+<==        Row: CZK, null, Czech koruna, Kč, 1
+<==        Row: DJF, null, Djiboutian franc, Fr, 1
+<==        Row: DKK, null, krone, kr., 1
+<==        Row: DOP, null, Dominican peso, $, 1
+<==        Row: DZD, null, Algerian dinar, دج, 1
+<==        Row: EGP, null, Egyptian pound, E£, 1
+<==        Row: ERN, null, Eritrean nakfa, Nfk, 1
+<==        Row: ETB, null, Ethiopian birr, Br, 1
+<==        Row: EUR, null, Euro, €, 1
+<==        Row: FJD, null, Fijian dollar, $, 1
+<==        Row: FKP, null, Falkland Islands pound, £, 1
+<==        Row: GBP, null, British pound, £, 1
+<==        Row: GEL, null, lari, ₾, 1
+<==        Row: GHS, null, Ghanaian cedi, ₵, 1
+<==        Row: GIP, null, Gibraltar pound, £, 1
+<==        Row: GMD, null, dalasi, D, 1
+<==        Row: GNF, null, Guinean franc, Fr, 1
+<==        Row: GTQ, null, Guatemalan quetzal, Q, 1
+<==        Row: GYD, null, Guyanese dollar, $, 1
+<==        Row: HKD, null, Hong Kong dollar, $, 1
+<==        Row: HNL, null, Honduran lempira, L, 1
+<==        Row: HTG, null, Haitian gourde, G, 1
+<==        Row: HUF, null, Hungarian forint, Ft, 1
+<==        Row: IDR, null, Indonesian rupiah, Rp, 1
+<==        Row: ILS, null, Israeli new shekel, ₪, 1
+<==        Row: INR, null, Indian rupee, ₹, 1
+<==        Row: IQD, null, Iraqi dinar, ع.د, 1
+<==        Row: IRR, null, Iranian rial, ﷼, 1
+<==        Row: ISK, null, Icelandic króna, kr, 1
+<==        Row: JMD, null, Jamaican dollar, $, 1
+<==        Row: JOD, null, Jordanian dinar, د.ا, 1
+<==        Row: JPY, null, Japanese yen, ¥, 1
+<==        Row: KES, null, Kenyan shilling, Sh, 1
+<==        Row: KGS, null, Kyrgyzstani som, с, 1
+<==        Row: KHR, null, Cambodian riel, ៛, 1
+<==        Row: KMF, null, Comorian franc, Fr, 1
+<==        Row: KPW, null, North Korean won, ₩, 1
+<==        Row: KRW, null, South Korean won, ₩, 1
+<==        Row: KWD, null, Kuwaiti dinar, د.ك, 1
+<==        Row: KYD, null, Cayman Islands dollar, $, 1
+<==        Row: KZT, null, Kazakhstani tenge, ₸, 1
+<==        Row: LAK, null, Lao kip, ₭, 1
+<==        Row: LBP, null, Lebanese pound, ل.ل, 1
+<==        Row: LKR, null, Sri Lankan rupee, Rs  රු, 1
+<==        Row: LRD, null, Liberian dollar, $, 1
+<==        Row: LSL, null, Lesotho loti, L, 1
+<==        Row: LYD, null, Libyan dinar, ل.د, 1
+<==        Row: MAD, null, Moroccan dirham, د.م., 1
+<==        Row: MDL, null, Moldovan leu, L, 1
+<==        Row: MGA, null, Malagasy ariary, Ar, 1
+<==        Row: MKD, null, denar, den, 1
+<==        Row: MMK, null, Burmese kyat, Ks, 1
+<==        Row: MNT, null, Mongolian tögrög, ₮, 1
+<==        Row: MOP, null, Macanese pataca, P, 1
+<==        Row: MRU, null, Mauritanian ouguiya, UM, 1
+<==        Row: MUR, null, Mauritian rupee, ₨, 1
+<==        Row: MVR, null, Maldivian rufiyaa, .ރ, 1
+<==        Row: MWK, null, Malawian kwacha, MK, 1
+<==        Row: MXN, null, Mexican peso, $, 1
+<==        Row: MYR, null, Malaysian ringgit, RM, 1
+<==        Row: MZN, null, Mozambican metical, MT, 1
+<==        Row: NAD, null, Namibian dollar, $, 1
+<==        Row: NGN, null, Nigerian naira, ₦, 1
+<==        Row: NIO, null, Nicaraguan córdoba, C$, 1
+<==        Row: NOK, null, krone, kr, 1
+<==        Row: NPR, null, Nepalese rupee, ₨, 1
+<==        Row: NZD, null, New Zealand dollar, $, 1
+<==        Row: OMR, null, Omani rial, ر.ع., 1
+<==        Row: PAB, null, Panamanian balboa, B/., 1
+<==        Row: PEN, null, Peruvian sol, S/ , 1
+<==        Row: PGK, null, Papua New Guinean kina, K, 1
+<==        Row: PHP, null, Philippine peso, ₱, 1
+<==        Row: PKR, null, Pakistani rupee, ₨, 1
+<==        Row: PLN, null, Polish złoty, zł, 1
+<==        Row: PYG, null, Paraguayan guaraní, ₲, 1
+<==        Row: QAR, null, Qatari riyal, ر.ق, 1
+<==        Row: RON, null, Romanian leu, lei, 1
+<==        Row: RSD, null, Serbian dinar, дин., 1
+<==        Row: RUB, null, Russian ruble, ₽, 1
+<==        Row: RWF, null, Rwandan franc, Fr, 1
+<==        Row: SAR, null, Saudi riyal, ر.س, 1
+<==        Row: SBD, null, Solomon Islands dollar, $, 1
+<==        Row: SCR, null, Seychellois rupee, ₨, 1
+<==        Row: SDG, null, Sudanese pound, ج.س, 1
+<==        Row: SEK, null, Swedish krona, kr, 1
+<==        Row: SGD, null, Singapore dollar, $, 1
+<==        Row: SLE, null, Leone, Le, 1
+<==        Row: SOS, null, Somali shilling, Sh, 1
+<==        Row: SRD, null, Surinamese dollar, $, 1
+<==        Row: SSP, null, South Sudanese pound, £, 1
+<==        Row: STN, null, São Tomé and Príncipe dobra, Db, 1
+<==        Row: SYP, null, Syrian pound, £, 1
+<==        Row: SZL, null, Swazi lilangeni, L, 1
+<==        Row: THB, null, Thai baht, ฿, 1
+<==        Row: TJS, null, Tajikistani somoni, ЅМ, 1
+<==        Row: TMT, null, Turkmenistan manat, m, 1
+<==        Row: TND, null, Tunisian dinar, د.ت, 1
+<==        Row: TOP, null, Tongan paʻanga, T$, 1
+<==        Row: TRY, null, Turkish lira, ₺, 1
+<==        Row: TTD, null, Trinidad and Tobago dollar, $, 1
+<==        Row: TWD, null, New Taiwan dollar, $, 1
+<==        Row: TZS, null, Tanzanian shilling, Sh, 1
+<==        Row: UAH, null, Ukrainian hryvnia, ₴, 1
+<==        Row: UGX, null, Ugandan shilling, Sh, 1
+<==        Row: USD, null, United States dollar, $, 1
+<==        Row: UYU, null, Uruguayan peso, $, 1
+<==        Row: UZS, null, Uzbekistani soʻm, so'm, 1
+<==        Row: VES, null, Venezuelan bolívar soberano, Bs.S., 1
+<==        Row: VND, null, Vietnamese đồng, ₫, 1
+<==        Row: VUV, null, Vanuatu vatu, Vt, 1
+<==        Row: WST, null, Samoan tālā, T, 1
+<==        Row: XAF, null, Central African CFA franc, Fr, 1
+<==        Row: XCD, null, Eastern Caribbean dollar, $, 1
+<==        Row: XOF, null, West African CFA franc, Fr, 1
+<==        Row: XPF, null, CFP franc, ₣, 1
+<==        Row: YER, null, Yemeni rial, ﷼, 1
+<==        Row: ZAR, null, South African rand, R, 1
+<==        Row: ZMW, null, Zambian kwacha, ZK, 1
+<==        Row: ZWL, null, Zimbabwean dollar, $, 1
+<==      Total: 153
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1547a04e]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c140618] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@812233274 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT type_code, type_name, remark FROM sys_property_dict_type ORDER BY type_code
+==> Parameters: 
+<==    Columns: type_code, type_name, remark
+<==        Row: audit_status, 审核状态, 草稿/待审核/通过/驳回
+<==        Row: decoration, 装修情况, 毛坯/简装/精装/豪装
+<==        Row: gas_supply, 供气, 管道燃气/罐装气/无
+<==        Row: heating_method, 供暖方式, 集中供暖/地暖/空调/燃气壁挂炉/无
+<==        Row: internet, 网络接入, 光纤/ADSL/有线通/无
+<==        Row: lease_term, 租期, 短租/长租
+<==        Row: orientation, 朝向, 房源朝向
+<==        Row: power_supply, 供电, 市政供电/自发电/太阳能
+<==        Row: property_label, 房源标签, 近地铁/公园旁/学区房/商圈等
+<==        Row: property_type, 房源类型, 住宅/办公/商业/工业
+<==        Row: publish_status, 发布状态, 草稿/已发布/已下架
+<==        Row: rental_area_unit, 面积单位, 平方米/平方英尺
+<==        Row: room_type, 户型, 开间/一室/两室/三室/四室以上
+<==        Row: tv_service, 电视服务, 有线电视/IPTV/卫星/无
+<==        Row: water_supply, 供水, 市政供水/井水/河水
+<==      Total: 15
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c140618]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69da6fa4] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@732527092 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: property_type(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: residential, 住宅, 1, 1
+<==        Row: office, 办公, 2, 1
+<==        Row: commercial, 商业, 3, 1
+<==        Row: industrial, 工业, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69da6fa4]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6646ebb5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1945531167 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: decoration(String), 1(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: rough, 毛坯, 1, 1
+<==        Row: simple, 简装, 2, 1
+<==        Row: hardcover, 精装, 3, 1
+<==        Row: luxury, 豪装, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6646ebb5]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55168dd9] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@171525022 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: orientation(String), 0(Integer), 南(String), 南(String), 南(String)
+<==    Columns: code, name, sort_order, status
+<==        Row: south, 南, 2, 1
+<==        Row: north_south, 南北, 5, 1
+<==        Row: south_north, 南北通透, 6, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55168dd9]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@8ae9e9e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1322149083 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND item_key = ? LIMIT 1
+==> Parameters: property_type(String), residential(String)
+<==    Columns: code, name, sort_order, status
+<==        Row: residential, 住宅, 1, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@8ae9e9e]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@da799f5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1826793655 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: decoration(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: rough, 毛坯, 1, 1
+<==        Row: simple, 简装, 2, 1
+<==        Row: hardcover, 精装, 3, 1
+<==        Row: luxury, 豪装, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@da799f5]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760a0a3f] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1216954350 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: heating_method(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: central, 集中供暖, 1, 1
+<==        Row: floor, 地暖, 2, 1
+<==        Row: ac, 空调, 3, 1
+<==        Row: gas, 燃气壁挂炉, 4, 1
+<==        Row: none, 无, 5, 1
+<==      Total: 5
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760a0a3f]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6e6e5f46] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1183045397 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: water_supply(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: municipal, 市政供水, 1, 1
+<==        Row: well, 井水, 2, 1
+<==        Row: river, 河水, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6e6e5f46]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@78a64ab3] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@282627300 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: power_supply(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: municipal, 市政供电, 1, 1
+<==        Row: self_gen, 自发电, 2, 1
+<==        Row: solar, 太阳能, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@78a64ab3]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@238ad2b6] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@790766617 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: gas_supply(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: pipeline, 管道燃气, 1, 1
+<==        Row: tank, 罐装气, 2, 1
+<==        Row: none, 无, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@238ad2b6]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69ec3f55] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1408359043 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: internet(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: fiber, 光纤, 1, 1
+<==        Row: adsl, ADSL, 2, 1
+<==        Row: cable, 有线通, 3, 1
+<==        Row: none, 无, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69ec3f55]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7ac400cb] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@730748773 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: tv_service(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: cable, 有线电视, 1, 1
+<==        Row: iptv, IPTV, 2, 1
+<==        Row: satellite, 卫星, 3, 1
+<==        Row: none, 无, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7ac400cb]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2f8b0a94] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1309811449 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: orientation(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: north, 北, 1, 1
+<==        Row: south, 南, 2, 1
+<==        Row: east, 东, 3, 1
+<==        Row: west, 西, 4, 1
+<==        Row: north_south, 南北, 5, 1
+<==        Row: south_north, 南北通透, 6, 1
+<==      Total: 6
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2f8b0a94]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70c6c879] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@216064657 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: room_type(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: studio, 开间, 1, 1
+<==        Row: 1br, 一室, 2, 1
+<==        Row: 2br, 两室, 3, 1
+<==        Row: 3br, 三室, 4, 1
+<==        Row: 4br+, 四室以上, 5, 1
+<==      Total: 5
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70c6c879]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2915b0d1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1671963675 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: rental_area_unit(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: sqm, 平方米, 1, 1
+<==        Row: sqft, 平方英尺, 2, 1
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2915b0d1]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32639875] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@62576637 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: lease_term(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: short, 短租, 1, 1
+<==        Row: long, 长租, 2, 1
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@32639875]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@39981af2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@535143436 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: publish_status(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: draft, 草稿, 1, 1
+<==        Row: published, 已发布, 2, 1
+<==        Row: offline, 已下架, 3, 1
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@39981af2]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@159025fc] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@161012839 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: audit_status(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: draft, 草稿, 1, 1
+<==        Row: pending, 待审核, 2, 1
+<==        Row: approved, 审核通过, 3, 1
+<==        Row: rejected, 驳回, 4, 1
+<==      Total: 4
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@159025fc]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c5bf904] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@912447470 wrapping com.mysql.cj.jdbc.ConnectionImpl@60453312] will not be managed by Spring
+==>  Preparing: SELECT item_key AS code, item_value AS name, sort_order, is_enabled AS status FROM sys_property_dict_item WHERE type_code = ? AND (is_enabled = 1 OR ? = 0) AND ((item_key LIKE CONCAT('%', ?, '%') OR item_value LIKE CONCAT('%', ?, '%')) OR ? IS NULL) ORDER BY sort_order, item_key
+==> Parameters: property_label(String), 0(Integer), null, null, null
+<==    Columns: code, name, sort_order, status
+<==        Row: near_subway, 近地铁, 1, 1
+<==        Row: park, 公园旁, 2, 1
+<==        Row: school, 学区房, 3, 1
+<==        Row: mall, 商圈, 4, 1
+<==        Row: river_view, 河景, 5, 1
+<==        Row: penthouse, 顶楼复式, 6, 1
+<==      Total: 6
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c5bf904]

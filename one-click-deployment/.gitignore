@@ -1,0 +1,11 @@
+*.tar.gz
+*.tar
+.env
+*.log
+.DS_Store
+Thumbs.db
+
+# 镜像分片文件需要提交（xss-images-*.tar.partNN）
+# 用于 Git 友好的大镜像分发
+# 50MB/片，共约 12 片，总计 ~570MB
+!xss-images-*.tar.part*

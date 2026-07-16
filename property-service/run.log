@@ -1,0 +1,676 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2026-07-10T02:29:40.121+08:00  INFO 25140 --- [property-service] [           main] c.x.p.PropertyServiceApplication         : Starting PropertyServiceApplication v0.0.1-SNAPSHOT using Java 21.0.10 with PID 25140 (C:\Users\75328\OneDrive\桌面\xss\property-service\target\property-service-0.0.1-SNAPSHOT.jar started by 75328 in C:\Users\75328\OneDrive\桌面\xss)
+2026-07-10T02:29:40.124+08:00  INFO 25140 --- [property-service] [           main] c.x.p.PropertyServiceApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-07-10T02:29:42.549+08:00  INFO 25140 --- [property-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2026-07-10T02:29:42.600+08:00  INFO 25140 --- [property-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-10T02:29:42.602+08:00  INFO 25140 --- [property-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2026-07-10T02:29:42.733+08:00  INFO 25140 --- [property-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-10T02:29:42.738+08:00  INFO 25140 --- [property-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2532 ms
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+Get /172.24.32.1 network interface 
+Get network interface info: name:ethernet_32778 (Hyper-V Virtual Ethernet Adapter #2)
+Initialization Sequence datacenterId:28 workerId:4
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.7 
+2026-07-10T02:29:45.850+08:00  INFO 25140 --- [property-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path '/'
+2026-07-10T02:29:45.858+08:00  INFO 25140 --- [property-service] [           main] c.x.p.PropertyServiceApplication         : Started PropertyServiceApplication in 6.269 seconds (process running for 6.943)
+2026-07-10T02:32:16.323+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-10T02:32:16.323+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-10T02:32:16.324+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-10T02:32:16.399+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-10T02:32:26.520+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1ae65783
+2026-07-10T02:32:26.521+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54]
+JDBC Connection [HikariProxyConnection@1587475577 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: INSERT INTO properties ( app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), ??????-20260710023216(String), residential(String), 5000(Long), 80(Integer), 2?1?(String), south(String), 5(String), 18(Integer), ????123?(String), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), ?????????(String), 13800138000(String), ?????(String), ?????(String), 13800138000(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54]
+2026-07-10T02:32:26.601+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [172.24.35.23:5672]
+2026-07-10T02:32:26.633+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3830f918:0/SimpleConnection@4cbb4da8 [delegate=amqp://guest@172.24.35.23:5672/, localPort=55912]
+2026-07-10T02:32:26.656+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=CREATE, propertyId=55, appId=my-backend-system
+2026-07-10T02:32:26.658+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_CREATE_NOTIFY, propertyId=55, receiver=redjanji@163.com, traceId=4c575f7e-84ca-4b6c-b989-102ab7afc5fd
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 55(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-20260710023216, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 55(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5645ad54]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d6be8df]
+JDBC Connection [HikariProxyConnection@1612774068 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 55(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-20260710023216, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d6be8df]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d6be8df] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 55(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d6be8df]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d6be8df]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d6be8df]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d6be8df]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+JDBC Connection [HikariProxyConnection@1536064022 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM properties WHERE (app_id = ? AND publish_status = ? AND status = ?)
+==> Parameters: my-backend-system(String), 1(Integer), 1(Integer)
+<==    Columns: total
+<==        Row: 6
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (app_id = ? AND publish_status = ? AND status = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 1(Integer), 1(Integer), 10(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 52, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 1, 0, 0, null, null, null, 2026-07-10 02:12:39, 2026-07-10 02:12:39
+<==        Row: 41, my-backend-system, MQ实时同步测试, residential, 555555, 55, 1室1厅, null, null, 0, 深圳市罗湖区, 22.555500, 114.123400, ws10kfn57cyy, 440000, 广东省, 440300, 深圳市, 440303, 罗湖区, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:19:15, 2026-07-09 02:19:15
+<==        Row: 40, my-backend-system, MQ同步测试2, residential, 888888, 88, 3室2厅, null, null, 0, 深圳市福田区, 22.543100, 113.941200, ws100zc7n6kt, 440000, 广东省, 440300, 深圳市, 440304, 福田区, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:15:07, 2026-07-09 02:15:07
+<==        Row: 39, my-backend-system, MQ同步测试房源, residential, 666666, 66, 2室1厅, null, null, 0, 深圳市南山区科技园, 22.543100, 113.941200, ws100zc7n6kt, 440000, 广东省, 440300, 深圳市, 440305, 南山区, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:13:54, 2026-07-09 02:13:54
+<==        Row: 38, my-backend-system, ??????2, residential, 900000, 90, 3?1?, null, null, 0, ???, 22.543100, 113.941200, ws100zc7n6kt, 440000, ???, 440300, ???, 440305, ???, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:03:47, 2026-07-09 02:03:47
+<==        Row: 37, my-backend-system, ??????-????, residential, 850000, 88, 2?1?, null, null, 0, ???????, 22.543100, 113.941200, ws100zc7n6kt, 440000, ???, 440300, ???, 440305, ???, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:01:55, 2026-07-09 02:01:55
+<==      Total: 6
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 52(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 41(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 40(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 39(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 38(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 37(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16650a11]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c0bb577]
+JDBC Connection [HikariProxyConnection@1563869004 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 55(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-20260710023216, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c0bb577]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c0bb577] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 55(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c0bb577]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c0bb577]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c0bb577]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c0bb577]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+JDBC Connection [HikariProxyConnection@772612432 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==> Parameters: 55(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-20260710023216, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846] from current transaction
+==>  Preparing: UPDATE properties SET app_id=?, title=?, type=?, price=?, lat=?, lng=?, geohash=?, publish_status=?, status=?, hot=?, featured=?, created_at=?, updated_at=? WHERE id=?
+==> Parameters: my-backend-system(String), ??????-???(String), residential(String), 6000(Long), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean), 2026-07-10T02:32:26(LocalDateTime), 2026-07-10T02:32:26(LocalDateTime), 55(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+2026-07-10T02:32:26.864+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-6] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=UPDATE, propertyId=55, appId=my-backend-system
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 55(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 55(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c014846]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@283b36cb]
+JDBC Connection [HikariProxyConnection@96042130 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==> Parameters: 55(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@283b36cb]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@283b36cb] from current transaction
+==>  Preparing: UPDATE properties SET app_id=?, title=?, type=?, price=?, rental_area=?, rooms=?, orientation=?, floor=?, total_floors=?, address=?, lat=?, lng=?, geohash=?, province_code=?, province_name=?, city_code=?, city_name=?, district_code=?, district_name=?, decoration=?, heating_method=?, water_supply=?, power_supply=?, gas_supply=?, internet=?, tv_service=?, description=?, contact_phone=?, agent_name=?, agent_title=?, agent_phone=?, publish_status=?, status=?, hot=?, featured=?, created_at=?, updated_at=? WHERE id=?
+==> Parameters: my-backend-system(String), ??????-???(String), residential(String), 6000(Long), 80(Integer), 2?1?(String), south(String), 5(String), 18(Integer), ????123?(String), 39.904200(BigDecimal), 116.407400(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), ?????????(String), 13800138000(String), ?????(String), ?????(String), 13800138000(String), 1(Integer), 0(Integer), false(Boolean), false(Boolean), 2026-07-10T02:32:26(LocalDateTime), 2026-07-10T02:32:26(LocalDateTime), 55(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@283b36cb]
+2026-07-10T02:32:26.894+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-7] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=UPDATE, propertyId=55, appId=my-backend-system
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@283b36cb]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@283b36cb]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@283b36cb]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@280d23ee]
+JDBC Connection [HikariProxyConnection@1718894940 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==> Parameters: 55(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@280d23ee]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@280d23ee] from current transaction
+==>  Preparing: UPDATE properties SET app_id=?, title=?, type=?, price=?, rental_area=?, rooms=?, orientation=?, floor=?, total_floors=?, address=?, lat=?, lng=?, geohash=?, province_code=?, province_name=?, city_code=?, city_name=?, district_code=?, district_name=?, decoration=?, heating_method=?, water_supply=?, power_supply=?, gas_supply=?, internet=?, tv_service=?, description=?, contact_phone=?, agent_name=?, agent_title=?, agent_phone=?, publish_status=?, status=?, hot=?, featured=?, created_at=?, updated_at=? WHERE id=?
+==> Parameters: my-backend-system(String), ??????-???(String), residential(String), 6000(Long), 80(Integer), 2?1?(String), south(String), 5(String), 18(Integer), ????123?(String), 39.904200(BigDecimal), 116.407400(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), ?????????(String), 13800138000(String), ?????(String), ?????(String), 13800138000(String), 1(Integer), 1(Integer), false(Boolean), false(Boolean), 2026-07-10T02:32:26(LocalDateTime), 2026-07-10T02:32:26(LocalDateTime), 55(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@280d23ee]
+2026-07-10T02:32:26.923+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-8] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=UPDATE, propertyId=55, appId=my-backend-system
+2026-07-10T02:32:26.924+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-8] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_AUDIT_NOTIFY, propertyId=55, receiver=redjanji@163.com, traceId=c999f042-9eee-4f4f-a430-fa6877d9bd5e
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@280d23ee]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@280d23ee]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@280d23ee]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745]
+JDBC Connection [HikariProxyConnection@955501621 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: INSERT INTO properties ( app_id, title, type, price, lat, lng, geohash, publish_status, status, hot, featured ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), ??????-20260710023226(String), residential(String), 9999(Long), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745]
+2026-07-10T02:32:26.948+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-9] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=CREATE, propertyId=56, appId=my-backend-system
+2026-07-10T02:32:26.948+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-9] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_CREATE_NOTIFY, propertyId=56, receiver=redjanji@163.com, traceId=d7a2766b-11c0-484e-839f-6f97b3b8e44a
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 56(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 56, my-backend-system, ??????-20260710023226, residential, 9999, 0, null, null, null, 0, null, 39.904200, 116.407400, wx4g0bm6c408, null, null, null, null, null, null, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 56(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@320ba745]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71fcee8c]
+JDBC Connection [HikariProxyConnection@2063894012 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 55(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 1, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71fcee8c]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71fcee8c] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 55(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71fcee8c]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71fcee8c]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71fcee8c]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71fcee8c]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4e1e3ddf]
+JDBC Connection [HikariProxyConnection@2021425076 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==> Parameters: 56(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 56, my-backend-system, ??????-20260710023226, residential, 9999, 0, null, null, null, 0, null, 39.904200, 116.407400, wx4g0bm6c408, null, null, null, null, null, null, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4e1e3ddf]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4e1e3ddf] from current transaction
+==>  Preparing: DELETE FROM properties WHERE id=?
+==> Parameters: 56(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4e1e3ddf]
+2026-07-10T02:32:26.993+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-1] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=DELETE, propertyId=56, appId=my-backend-system
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4e1e3ddf]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4e1e3ddf]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4e1e3ddf]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55a9209]
+JDBC Connection [HikariProxyConnection@2135496275 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 55(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 1, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55a9209]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55a9209] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 55(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55a9209]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55a9209]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55a9209]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@55a9209]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31b2625a]
+JDBC Connection [HikariProxyConnection@747930098 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 55(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 1, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31b2625a]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31b2625a] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 55(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31b2625a]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31b2625a]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31b2625a]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31b2625a]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a0547cf]
+JDBC Connection [HikariProxyConnection@1068099643 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 56(Long), my-backend-system(String)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a0547cf]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a0547cf]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a0547cf]
+2026-07-10T02:32:27.078+08:00  WARN 25140 --- [property-service] [0.1-8085-exec-4] c.x.p.config.GlobalExceptionHandler      : 业务异常: code=404, message=房源不存在
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937]
+JDBC Connection [HikariProxyConnection@279755854 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: INSERT INTO properties ( app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), MQ??????-20260710023236(String), residential(String), 8888(Long), 100(Integer), 3?2?(String), south(String), 8(String), 20(Integer), MQ????(String), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), MQ ???????(String), 13800138000(String), MQ?????(String), ?????(String), 13800138000(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937]
+2026-07-10T02:32:36.902+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-5] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=CREATE, propertyId=57, appId=my-backend-system
+2026-07-10T02:32:36.903+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-5] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_CREATE_NOTIFY, propertyId=57, receiver=redjanji@163.com, traceId=a75f3097-0da4-41f3-b48f-28b3d59e4076
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 57(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 57, my-backend-system, MQ??????-20260710023236, residential, 8888, 100, 3?2?, south, 8, 20, MQ????, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, MQ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:32:36, 2026-07-10 02:32:36
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 57(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@553d5937]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f9b0f95]
+JDBC Connection [HikariProxyConnection@351406082 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 57(Long), my-backend-system(String)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f9b0f95]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f9b0f95]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f9b0f95]
+2026-07-10T02:32:36.917+08:00  WARN 25140 --- [property-service] [0.1-8085-exec-6] c.x.p.config.GlobalExceptionHandler      : 业务异常: code=404, message=房源不存在
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc]
+JDBC Connection [HikariProxyConnection@1579805623 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: INSERT INTO properties ( app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), ??????-20260710024030(String), residential(String), 5000(Long), 80(Integer), 2?1?(String), south(String), 5(String), 18(Integer), ????123?(String), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), ?????????(String), 13800138000(String), ?????(String), ?????(String), 13800138000(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc]
+2026-07-10T02:40:30.222+08:00  INFO 25140 --- [property-service] [.1-8085-exec-10] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=CREATE, propertyId=58, appId=my-backend-system
+2026-07-10T02:40:30.223+08:00  INFO 25140 --- [property-service] [.1-8085-exec-10] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_CREATE_NOTIFY, propertyId=58, receiver=redjanji@163.com, traceId=4e08ef8f-8f54-444c-aa73-ba09eede125b
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 58(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-20260710024030, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 58(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff2cbfc]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@c0d0527]
+JDBC Connection [HikariProxyConnection@890374168 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 58(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-20260710024030, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@c0d0527]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@c0d0527] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 58(Long)
+<==      Total: 0
+Creating a new SqlSession
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@c0d0527]
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@77dad93b]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@c0d0527]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@c0d0527]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@c0d0527]
+JDBC Connection [HikariProxyConnection@1248406589 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 58(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-20260710024030, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@77dad93b]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@77dad93b] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 58(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@77dad93b]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@77dad93b]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@77dad93b]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@77dad93b]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+JDBC Connection [HikariProxyConnection@1964619473 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM properties WHERE (app_id = ? AND publish_status = ? AND status = ?)
+==> Parameters: my-backend-system(String), 1(Integer), 1(Integer)
+<==    Columns: total
+<==        Row: 7
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (app_id = ? AND publish_status = ? AND status = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 1(Integer), 1(Integer), 10(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 55, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 1, 0, 0, null, null, null, 2026-07-10 02:32:26, 2026-07-10 02:32:26
+<==        Row: 52, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 1, 0, 0, null, null, null, 2026-07-10 02:12:39, 2026-07-10 02:12:39
+<==        Row: 41, my-backend-system, MQ实时同步测试, residential, 555555, 55, 1室1厅, null, null, 0, 深圳市罗湖区, 22.555500, 114.123400, ws10kfn57cyy, 440000, 广东省, 440300, 深圳市, 440303, 罗湖区, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:19:15, 2026-07-09 02:19:15
+<==        Row: 40, my-backend-system, MQ同步测试2, residential, 888888, 88, 3室2厅, null, null, 0, 深圳市福田区, 22.543100, 113.941200, ws100zc7n6kt, 440000, 广东省, 440300, 深圳市, 440304, 福田区, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:15:07, 2026-07-09 02:15:07
+<==        Row: 39, my-backend-system, MQ同步测试房源, residential, 666666, 66, 2室1厅, null, null, 0, 深圳市南山区科技园, 22.543100, 113.941200, ws100zc7n6kt, 440000, 广东省, 440300, 深圳市, 440305, 南山区, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:13:54, 2026-07-09 02:13:54
+<==        Row: 38, my-backend-system, ??????2, residential, 900000, 90, 3?1?, null, null, 0, ???, 22.543100, 113.941200, ws100zc7n6kt, 440000, ???, 440300, ???, 440305, ???, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:03:47, 2026-07-09 02:03:47
+<==        Row: 37, my-backend-system, ??????-????, residential, 850000, 88, 2?1?, null, null, 0, ???????, 22.543100, 113.941200, ws100zc7n6kt, 440000, ???, 440300, ???, 440305, ???, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 1, 1, 0, 0, null, null, null, 2026-07-09 02:01:55, 2026-07-09 02:01:55
+<==      Total: 7
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 55(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 52(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 41(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 40(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 39(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 38(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ? AND is_cover = ?)
+==> Parameters: 37(Long), true(Boolean)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f107914]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+JDBC Connection [HikariProxyConnection@1570746215 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==> Parameters: 58(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-20260710024030, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d] from current transaction
+==>  Preparing: UPDATE properties SET app_id=?, title=?, type=?, price=?, lat=?, lng=?, geohash=?, publish_status=?, status=?, hot=?, featured=?, created_at=?, updated_at=? WHERE id=?
+==> Parameters: my-backend-system(String), ??????-???(String), residential(String), 6000(Long), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean), 2026-07-10T02:40:30(LocalDateTime), 2026-07-10T02:40:30(LocalDateTime), 58(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+2026-07-10T02:40:30.324+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-4] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=UPDATE, propertyId=58, appId=my-backend-system
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 58(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2e800151]
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+JDBC Connection [HikariProxyConnection@16209861 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 58(Long), my-backend-system(String)
+==> Parameters: 58(Long)
+<==      Total: 0
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+<==        Row: 58, my-backend-system, ??????-20260710024030, residential, 5000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+<==      Total: 1
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2e800151]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@68f2d31d]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2e800151] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 58(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2e800151]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2e800151]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2e800151]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2e800151]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@43e5113d]
+JDBC Connection [HikariProxyConnection@1497587621 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==> Parameters: 58(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@43e5113d]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@43e5113d] from current transaction
+==>  Preparing: UPDATE properties SET app_id=?, title=?, type=?, price=?, rental_area=?, rooms=?, orientation=?, floor=?, total_floors=?, address=?, lat=?, lng=?, geohash=?, province_code=?, province_name=?, city_code=?, city_name=?, district_code=?, district_name=?, decoration=?, heating_method=?, water_supply=?, power_supply=?, gas_supply=?, internet=?, tv_service=?, description=?, contact_phone=?, agent_name=?, agent_title=?, agent_phone=?, publish_status=?, status=?, hot=?, featured=?, created_at=?, updated_at=? WHERE id=?
+==> Parameters: my-backend-system(String), ??????-???(String), residential(String), 6000(Long), 80(Integer), 2?1?(String), south(String), 5(String), 18(Integer), ????123?(String), 39.904200(BigDecimal), 116.407400(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), ?????????(String), 13800138000(String), ?????(String), ?????(String), 13800138000(String), 1(Integer), 0(Integer), false(Boolean), false(Boolean), 2026-07-10T02:40:30(LocalDateTime), 2026-07-10T02:40:30(LocalDateTime), 58(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@43e5113d]
+2026-07-10T02:40:30.365+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-6] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=UPDATE, propertyId=58, appId=my-backend-system
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@43e5113d]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@43e5113d]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@43e5113d]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b4e91c0]
+JDBC Connection [HikariProxyConnection@232308103 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 58(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b4e91c0]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b4e91c0] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 58(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b4e91c0]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b4e91c0]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b4e91c0]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1b4e91c0]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ac2ad2a]
+JDBC Connection [HikariProxyConnection@1535819312 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==> Parameters: 58(Long)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ac2ad2a]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ac2ad2a] from current transaction
+==>  Preparing: UPDATE properties SET app_id=?, title=?, type=?, price=?, rental_area=?, rooms=?, orientation=?, floor=?, total_floors=?, address=?, lat=?, lng=?, geohash=?, province_code=?, province_name=?, city_code=?, city_name=?, district_code=?, district_name=?, decoration=?, heating_method=?, water_supply=?, power_supply=?, gas_supply=?, internet=?, tv_service=?, description=?, contact_phone=?, agent_name=?, agent_title=?, agent_phone=?, publish_status=?, status=?, hot=?, featured=?, created_at=?, updated_at=? WHERE id=?
+==> Parameters: my-backend-system(String), ??????-???(String), residential(String), 6000(Long), 80(Integer), 2?1?(String), south(String), 5(String), 18(Integer), ????123?(String), 39.904200(BigDecimal), 116.407400(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), ?????????(String), 13800138000(String), ?????(String), ?????(String), 13800138000(String), 1(Integer), 1(Integer), false(Boolean), false(Boolean), 2026-07-10T02:40:30(LocalDateTime), 2026-07-10T02:40:30(LocalDateTime), 58(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ac2ad2a]
+2026-07-10T02:40:30.386+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-8] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=UPDATE, propertyId=58, appId=my-backend-system
+2026-07-10T02:40:30.386+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-8] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_AUDIT_NOTIFY, propertyId=58, receiver=redjanji@163.com, traceId=946215cf-7487-43c4-a079-83d78e06031d
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ac2ad2a]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ac2ad2a]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ac2ad2a]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@975a2c8]
+JDBC Connection [HikariProxyConnection@428884863 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 58(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 58, my-backend-system, ??????-???, residential, 6000, 80, 2?1?, south, 5, 18, ????123?, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, ?????, ?????, 13800138000, 1, 1, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4]
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@975a2c8]
+JDBC Connection [HikariProxyConnection@1582795229 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+==>  Preparing: INSERT INTO properties ( app_id, title, type, price, lat, lng, geohash, publish_status, status, hot, featured ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@975a2c8] from current transaction
+==> Parameters: my-backend-system(String), ??????-20260710024030(String), residential(String), 9999(Long), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean)
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 58(Long)
+<==      Total: 0
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@975a2c8]
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@975a2c8]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@975a2c8]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@975a2c8]
+2026-07-10T02:40:30.408+08:00  INFO 25140 --- [property-service] [.1-8085-exec-10] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=CREATE, propertyId=59, appId=my-backend-system
+2026-07-10T02:40:30.408+08:00  INFO 25140 --- [property-service] [.1-8085-exec-10] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_CREATE_NOTIFY, propertyId=59, receiver=redjanji@163.com, traceId=a2de2089-7c29-4f68-adba-c6a714d06be7
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 59(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 59, my-backend-system, ??????-20260710024030, residential, 9999, 0, null, null, null, 0, null, 39.904200, 116.407400, wx4g0bm6c408, null, null, null, null, null, null, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 59(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c9143b4]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@27382c78]
+JDBC Connection [HikariProxyConnection@618775476 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 59(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 59, my-backend-system, ??????-20260710024030, residential, 9999, 0, null, null, null, 0, null, 39.904200, 116.407400, wx4g0bm6c408, null, null, null, null, null, null, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+<==      Total: 1
+Creating a new SqlSession
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@27382c78]
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d920fc5]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@27382c78] from current transaction
+JDBC Connection [HikariProxyConnection@1303742838 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE id=?
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 59(Long)
+==> Parameters: 59(Long)
+<==      Total: 0
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@27382c78]
+<==        Row: 59, my-backend-system, ??????-20260710024030, residential, 9999, 0, null, null, null, 0, null, 39.904200, 116.407400, wx4g0bm6c408, null, null, null, null, null, null, null, null, null, null, null, null, null, <<BLOB>>, null, null, null, null, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:30, 2026-07-10 02:40:30
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@27382c78]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@27382c78]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@27382c78]
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d920fc5]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d920fc5] from current transaction
+==>  Preparing: DELETE FROM properties WHERE id=?
+==> Parameters: 59(Long)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d920fc5]
+2026-07-10T02:40:30.435+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-2] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=DELETE, propertyId=59, appId=my-backend-system
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d920fc5]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d920fc5]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d920fc5]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02]
+JDBC Connection [HikariProxyConnection@1514006632 wrapping com.mysql.cj.jdbc.ConnectionImpl@1ae65783] will be managed by Spring
+==>  Preparing: INSERT INTO properties ( app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), MQ??????-20260710024033(String), residential(String), 8888(Long), 100(Integer), 3?2?(String), south(String), 8(String), 20(Integer), MQ????(String), 39.9042(BigDecimal), 116.4074(BigDecimal), wx4g0bm6c408(String), 110000(String), ???(String), 110100(String), ???(String), 110105(String), ???(String), fine(String), central(String), city(String), city(String), city(String), fiber(String), iptv(String), MQ ???????(String), 13800138000(String), MQ?????(String), ?????(String), 13800138000(String), 0(Integer), 0(Integer), false(Boolean), false(Boolean)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02]
+2026-07-10T02:40:33.613+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-3] c.x.p.service.impl.PropertyServiceImpl   : Published sync message: operation=CREATE, propertyId=60, appId=my-backend-system
+2026-07-10T02:40:33.613+08:00  INFO 25140 --- [property-service] [0.1-8085-exec-3] c.x.p.service.impl.PropertyServiceImpl   : Published notification message: templateCode=PROPERTY_CREATE_NOTIFY, propertyId=60, receiver=redjanji@163.com, traceId=e39b0634-af5e-4fe1-8060-0d3bc49e7760
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02] from current transaction
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 60(Long), my-backend-system(String)
+<==    Columns: id, app_id, title, type, price, rental_area, rooms, orientation, floor, total_floors, address, lat, lng, geohash, province_code, province_name, city_code, city_name, district_code, district_name, decoration, heating_method, water_supply, power_supply, gas_supply, internet, tv_service, description, contact_phone, agent_name, agent_title, agent_phone, publish_status, status, hot, featured, branch_id, building_id, owner_id, created_at, updated_at
+<==        Row: 60, my-backend-system, MQ??????-20260710024033, residential, 8888, 100, 3?2?, south, 8, 20, MQ????, 39.904200, 116.407400, wx4g0bm6c408, 110000, ???, 110100, ???, 110105, ???, fine, central, city, city, city, fiber, iptv, <<BLOB>>, 13800138000, MQ?????, ?????, 13800138000, 0, 0, 0, 0, null, null, null, 2026-07-10 02:40:33, 2026-07-10 02:40:33
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02] from current transaction
+==>  Preparing: SELECT id,property_id,image_id,is_cover,sort_order,created_at FROM property_images WHERE (property_id = ?) ORDER BY sort_order ASC
+==> Parameters: 60(Long)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1891df02]
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f82850f]
+JDBC Connection [HikariProxyConnection@1282014623 wrapping com.mysql.cj.jdbc.ConnectionImpl@56d91afe] will be managed by Spring
+==>  Preparing: SELECT id,app_id,title,type,price,rental_area,rooms,orientation,floor,total_floors,address,lat,lng,geohash,province_code,province_name,city_code,city_name,district_code,district_name,decoration,heating_method,water_supply,power_supply,gas_supply,internet,tv_service,description,contact_phone,agent_name,agent_title,agent_phone,publish_status,status,hot,featured,branch_id,building_id,owner_id,created_at,updated_at FROM properties WHERE (id = ? AND app_id = ?)
+==> Parameters: 60(Long), my-backend-system(String)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f82850f]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f82850f]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f82850f]
+2026-07-10T02:40:33.626+08:00  WARN 25140 --- [property-service] [0.1-8085-exec-4] c.x.p.config.GlobalExceptionHandler      : 业务异常: code=404, message=房源不存在

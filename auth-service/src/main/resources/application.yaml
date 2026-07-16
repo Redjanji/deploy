@@ -1,0 +1,79 @@
+spring:
+  application:
+    name: auth-service
+  config:
+    import: "optional:nacos:auth-service.yaml"
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 0.1
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:172.24.35.23}:3306/auth_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASS:root}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  data:
+    redis:
+      host: ${REDIS_HOST:172.24.35.23}
+      port: 6379
+      password: ${REDIS_PASSWORD:redisroot}
+      database: 0
+  rabbitmq:
+    host: ${RABBITMQ_HOST:172.24.35.23}
+    port: 5672
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+    connection-timeout: 10s
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+jwt:
+  # JWT 签名密钥（Base64 编码），必须与网关 gateway-service 配置相同
+  # 生产环境务必通过 JWT_SECRET 环境变量覆盖
+  # 生成示例：openssl rand -base64 32
+  secret-base64: ${JWT_SECRET:eW91ci0yNTYtYml0LXNlY3JldC1rZXktZm9yLWp3dC1zaWduaW5nLWRldi1vbmx5}
+  expiration: 7200000  # 2小时，单位毫秒
+
+# 统计事件 RabbitMQ 配置（发送到 analytics-service）
+analytics:
+  exchange: analytics.event.exchange
+  routing-key: analytics.event
+
+# Actuator 健康检查配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 0.1
+
+server:
+  port: 8083
+  address: 0.0.0.0

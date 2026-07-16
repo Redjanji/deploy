@@ -1,0 +1,496 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2026-07-10T02:39:49.632+08:00  INFO 14972 --- [analytics-service] [           main] c.x.a.AnalyticsServiceApplication        : Starting AnalyticsServiceApplication v0.0.1-SNAPSHOT using Java 21.0.10 with PID 14972 (C:\Users\75328\OneDrive\桌面\xss\analytics-service\target\analytics-service-0.0.1-SNAPSHOT.jar started by 75328 in C:\Users\75328\OneDrive\桌面\xss)
+2026-07-10T02:39:49.634+08:00  INFO 14972 --- [analytics-service] [           main] c.x.a.AnalyticsServiceApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-07-10T02:39:50.289+08:00  INFO 14972 --- [analytics-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-10T02:39:50.289+08:00  INFO 14972 --- [analytics-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-10T02:39:50.301+08:00  INFO 14972 --- [analytics-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2026-07-10T02:39:50.826+08:00  INFO 14972 --- [analytics-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8087 (http)
+2026-07-10T02:39:50.835+08:00  INFO 14972 --- [analytics-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-10T02:39:50.836+08:00  INFO 14972 --- [analytics-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2026-07-10T02:39:50.868+08:00  INFO 14972 --- [analytics-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-10T02:39:50.870+08:00  INFO 14972 --- [analytics-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1186 ms
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+Get /172.24.32.1 network interface 
+Get network interface info: name:ethernet_32778 (Hyper-V Virtual Ethernet Adapter #2)
+Initialization Sequence datacenterId:28 workerId:11
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.7 
+2026-07-10T02:39:52.727+08:00  INFO 14972 --- [analytics-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8087 (http) with context path '/'
+2026-07-10T02:39:52.730+08:00  INFO 14972 --- [analytics-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [172.24.35.23:5672]
+2026-07-10T02:39:52.761+08:00  INFO 14972 --- [analytics-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3350ab4:0/SimpleConnection@256a5df0 [delegate=amqp://guest@172.24.35.23:5672/, localPort=54465]
+2026-07-10T02:39:52.799+08:00  INFO 14972 --- [analytics-service] [           main] c.x.a.AnalyticsServiceApplication        : Started AnalyticsServiceApplication in 3.434 seconds (process running for 3.842)
+2026-07-10T02:40:00.003+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+2026-07-10T02:40:12.305+08:00  INFO 14972 --- [analytics-service] [0.1-8087-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-10T02:40:12.306+08:00  INFO 14972 --- [analytics-service] [0.1-8087-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-10T02:40:12.307+08:00  INFO 14972 --- [analytics-service] [0.1-8087-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@15743e03] was not registered for synchronization because synchronization is not active
+2026-07-10T02:40:12.372+08:00  INFO 14972 --- [analytics-service] [0.1-8087-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-10T02:40:22.445+08:00  INFO 14972 --- [analytics-service] [0.1-8087-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6994900
+2026-07-10T02:40:22.446+08:00  INFO 14972 --- [analytics-service] [0.1-8087-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+JDBC Connection [HikariProxyConnection@821580788 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@15743e03]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6457e735] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1975263748 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6457e735]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@47294e3e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1240377515 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@47294e3e]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@8d3a290] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@84296970 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@8d3a290]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12c2ecd6] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1469436611 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (app_id = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12c2ecd6]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@586da581] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1548892756 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@586da581]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@576380a6] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@845230980 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@576380a6]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@504430cf] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1585693879 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (event_type = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: USER_LOGIN(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@504430cf]
+2026-07-10T02:45:00.001+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+2026-07-10T02:50:00.000+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+2026-07-10T02:55:00.003+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5603af18] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1489259432 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5603af18]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@19f94193] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1380538075 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@19f94193]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d58fd0d] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@866063574 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (app_id = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d58fd0d]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@17a4d53b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@617900002 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@17a4d53b]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3ab4e18e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@879958184 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3ab4e18e]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7daeb7d8] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1761369567 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (event_type = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: USER_LOGIN(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7daeb7d8]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@52af2159] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1201033195 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@52af2159]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d77eec5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@679678279 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d77eec5]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7049e254] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1308692786 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7049e254]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1cf45d21] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@588269481 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1cf45d21]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@79d6bedc] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1639043251 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@79d6bedc]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31f45b1f] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2107122595 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@31f45b1f]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@72a21eed] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@141047073 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (app_id = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@72a21eed]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6f6a0e4d] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1582695318 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6f6a0e4d]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@754e1293] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1751852325 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@754e1293]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6eb21044] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1722448445 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (event_type = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: USER_LOGIN(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6eb21044]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4c4d7fe0] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1732459225 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4c4d7fe0]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5e53b416] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@431858728 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5e53b416]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@258ab7e6] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@848307381 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@258ab7e6]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@166eb3c6] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1714099050 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@166eb3c6]
+2026-07-10T03:00:00.001+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4fe7bba1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1112399372 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4fe7bba1]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1f563482] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@678536130 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: INSERT INTO stats_image_uploads ( app_id, upload_count, total_size, stats_date, stats_hour ) VALUES ( ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), 2(Long), 409600(Long), 2026-07-10(LocalDate), -1(Integer)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1f563482]
+2026-07-10T03:00:00.020+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16325727] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2140221891 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@16325727]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@939e8d8] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@221650359 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 2, 409600, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@939e8d8]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5dc3d1ea] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1392784418 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (app_id = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5dc3d1ea]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@385e8240] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@73874387 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 2, 409600, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@385e8240]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70badc2e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@311288226 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70badc2e]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@a382095] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1688000759 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,event_type,action_count,stats_date,stats_hour FROM stats_user_actions WHERE (event_type = ? AND stats_date BETWEEN ? AND ?) ORDER BY stats_date DESC
+==> Parameters: USER_LOGIN(String), 2026-07-10(LocalDate), 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@a382095]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@103eafc2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@358739420 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 2, 409600, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@103eafc2]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@187df458] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1723070243 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 2, 409600, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@187df458]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54423453] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@943163302 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,property_id,view_count,unique_visitors,stats_date,stats_hour,created_at FROM stats_property_views WHERE (stats_date = ?) ORDER BY view_count DESC LIMIT 10
+==> Parameters: 2026-07-10(LocalDate)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54423453]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@314ae232] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1953474788 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (stats_date = ?)
+==> Parameters: 2026-07-10(LocalDate)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 2, 409600, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@314ae232]
+2026-07-10T03:05:00.000+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4745e3c5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@153229380 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 2, 409600, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4745e3c5]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@665c9ecf] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@390385042 wrapping com.mysql.cj.jdbc.ConnectionImpl@6994900] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@665c9ecf]
+2026-07-10T03:05:00.014+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:10:00.001+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@236adde8] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1201283252 wrapping com.mysql.cj.jdbc.ConnectionImpl@29451779] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@236adde8]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d95dfa0] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@463261990 wrapping com.mysql.cj.jdbc.ConnectionImpl@29451779] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d95dfa0]
+2026-07-10T03:10:00.011+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:15:00.001+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6fdd6d1b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@305501223 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6fdd6d1b]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@690e649c] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1470382390 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@690e649c]
+2026-07-10T03:15:00.012+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:20:00.000+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@428f7872] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@43116246 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@428f7872]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@752a47bf] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@911213971 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@752a47bf]
+2026-07-10T03:20:00.010+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:25:00.000+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c45cf72] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1495111229 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c45cf72]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@62f1d3ba] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1624096457 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@62f1d3ba]
+2026-07-10T03:25:00.011+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:30:00.000+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2ff34c8a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@431597690 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2ff34c8a]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6241697e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1466171040 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6241697e]
+2026-07-10T03:30:00.012+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:35:00.000+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@64349290] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1761755945 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@64349290]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@305ea4ad] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1891500068 wrapping com.mysql.cj.jdbc.ConnectionImpl@17cc11f9] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@305ea4ad]
+2026-07-10T03:35:00.010+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:40:00.001+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@764f4ff1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1995497020 wrapping com.mysql.cj.jdbc.ConnectionImpl@d257875] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@764f4ff1]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d231034] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1305618578 wrapping com.mysql.cj.jdbc.ConnectionImpl@d257875] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d231034]
+2026-07-10T03:40:00.010+08:00  INFO 14972 --- [analytics-service] [   scheduling-2] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps
+2026-07-10T03:45:00.001+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushing stats to database for date: 2026-07-10
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54443b57] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@479873409 wrapping com.mysql.cj.jdbc.ConnectionImpl@748da35a] will not be managed by Spring
+==>  Preparing: SELECT id,app_id,upload_count,total_size,stats_date,stats_hour FROM stats_image_uploads WHERE (app_id = ? AND stats_date = ? AND stats_hour = ?)
+==> Parameters: my-backend-system(String), 2026-07-10(LocalDate), -1(Integer)
+<==    Columns: id, app_id, upload_count, total_size, stats_date, stats_hour
+<==        Row: 1, my-backend-system, 3, 614400, 2026-07-10, -1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54443b57]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@139ee1e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1335978489 wrapping com.mysql.cj.jdbc.ConnectionImpl@748da35a] will not be managed by Spring
+==>  Preparing: UPDATE stats_image_uploads SET app_id=?, upload_count=?, total_size=?, stats_date=?, stats_hour=? WHERE id=?
+==> Parameters: my-backend-system(String), 3(Long), 614400(Long), 2026-07-10(LocalDate), -1(Integer), 1(Long)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@139ee1e]
+2026-07-10T03:45:00.011+08:00  INFO 14972 --- [analytics-service] [   scheduling-1] c.x.a.service.StatsFlushService          : Flushed image uploads for 1 apps

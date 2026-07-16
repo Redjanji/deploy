@@ -1,0 +1,364 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2026-07-10T02:29:40.163+08:00  INFO 14512 --- [message-service] [           main] c.x.m.MessageServiceApplication          : Starting MessageServiceApplication v0.0.1-SNAPSHOT using Java 21.0.10 with PID 14512 (C:\Users\75328\OneDrive\桌面\xss\message-service\target\message-service-0.0.1-SNAPSHOT.jar started by 75328 in C:\Users\75328\OneDrive\桌面\xss)
+2026-07-10T02:29:40.166+08:00  INFO 14512 --- [message-service] [           main] c.x.m.MessageServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2026-07-10T02:29:42.282+08:00  INFO 14512 --- [message-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8088 (http)
+2026-07-10T02:29:42.307+08:00  INFO 14512 --- [message-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-10T02:29:42.308+08:00  INFO 14512 --- [message-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2026-07-10T02:29:42.376+08:00  INFO 14512 --- [message-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-10T02:29:42.378+08:00  INFO 14512 --- [message-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2117 ms
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+Get /172.24.32.1 network interface 
+Get network interface info: name:ethernet_32778 (Hyper-V Virtual Ethernet Adapter #2)
+Initialization Sequence datacenterId:28 workerId:13
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.7 
+2026-07-10T02:29:44.798+08:00  WARN 14512 --- [message-service] [           main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2026-07-10T02:29:45.319+08:00  INFO 14512 --- [message-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8088 (http) with context path '/'
+2026-07-10T02:29:45.325+08:00  INFO 14512 --- [message-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [172.24.35.23:5672]
+2026-07-10T02:29:45.378+08:00  INFO 14512 --- [message-service] [           main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#52621501:0/SimpleConnection@2cd3fc29 [delegate=amqp://guest@172.24.35.23:5672/, localPort=57276]
+2026-07-10T02:29:45.456+08:00  INFO 14512 --- [message-service] [           main] c.x.m.MessageServiceApplication          : Started MessageServiceApplication in 5.82 seconds (process running for 6.528)
+2026-07-10T02:32:26.696+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_CREATE_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@57457622] was not registered for synchronization because synchronization is not active
+2026-07-10T02:32:26.744+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-10T02:32:30.288+08:00  INFO 14512 --- [message-service] [0.1-8088-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-10T02:32:30.288+08:00  INFO 14512 --- [message-service] [0.1-8088-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-10T02:32:30.288+08:00  INFO 14512 --- [message-service] [0.1-8088-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@78d6bd2f] was not registered for synchronization because synchronization is not active
+2026-07-10T02:32:36.815+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@68d6cdac
+2026-07-10T02:32:36.816+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+JDBC Connection [HikariProxyConnection@325391299 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 6
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 1(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 22, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:43, 2026-07-10 02:12:43
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@78d6bd2f]
+JDBC Connection [HikariProxyConnection@1027419078 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_CREATE_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 3, PROPERTY_CREATE_NOTIFY, EMAIL, 房源创建通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@57457622]
+2026-07-10T02:32:37.641+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@20957c1d] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@636463595 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源创建成功</h1><p>您创建的房源「${propertyName}」已成功发布。</p><p>租金：5000</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:32:37.641442400(LocalDateTime), 2026-07-10T02:32:37.641442400(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@20957c1d]
+2026-07-10T02:32:37.657+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_AUDIT_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ab7172] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1404940093 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_AUDIT_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 4, PROPERTY_AUDIT_NOTIFY, EMAIL, 房源审核通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ab7172]
+2026-07-10T02:32:38.308+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7d5c67b6] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2055180768 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源审核${status}</h1><p>您的房源「${propertyName}」已${status}。</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:32:38.308919500(LocalDateTime), 2026-07-10T02:32:38.308919500(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7d5c67b6]
+2026-07-10T02:32:38.318+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_CREATE_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2d98703a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@737019128 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_CREATE_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 3, PROPERTY_CREATE_NOTIFY, EMAIL, 房源创建通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2d98703a]
+2026-07-10T02:32:38.947+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2f061592] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1425419265 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源创建成功</h1><p>您创建的房源「${propertyName}」已成功发布。</p><p>租金：9999</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:32:38.947970(LocalDateTime), 2026-07-10T02:32:38.947970(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2f061592]
+2026-07-10T02:32:38.959+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_CREATE_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ba5c90b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1851157082 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_CREATE_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 3, PROPERTY_CREATE_NOTIFY, EMAIL, 房源创建通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ba5c90b]
+2026-07-10T02:32:39.664+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3ebffcc1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@422439229 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源创建成功</h1><p>您创建的房源「${propertyName}」已成功发布。</p><p>租金：8888</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:32:39.664705900(LocalDateTime), 2026-07-10T02:32:39.664705900(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3ebffcc1]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@498fa2d3] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1131923875 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 10
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 10(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 27, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:40, 2026-07-10 02:32:40
+<==        Row: 26, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:39, 2026-07-10 02:32:39
+<==        Row: 24, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 25, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 22, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:43, 2026-07-10 02:12:43
+<==        Row: 21, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:41, 2026-07-10 02:12:41
+<==        Row: 19, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:40, 2026-07-10 02:12:40
+<==        Row: 20, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:40, 2026-07-10 02:12:40
+<==        Row: 17, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:01:59, 2026-07-10 02:01:59
+<==        Row: 16, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:01:58, 2026-07-10 02:01:58
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@498fa2d3]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6129fc43] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1808897843 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 10
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 10(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 27, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:40, 2026-07-10 02:32:40
+<==        Row: 26, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:39, 2026-07-10 02:32:39
+<==        Row: 24, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 25, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 22, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:43, 2026-07-10 02:12:43
+<==        Row: 21, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:41, 2026-07-10 02:12:41
+<==        Row: 19, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:40, 2026-07-10 02:12:40
+<==        Row: 20, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:40, 2026-07-10 02:12:40
+<==        Row: 17, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:01:59, 2026-07-10 02:01:59
+<==        Row: 16, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:01:58, 2026-07-10 02:01:58
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6129fc43]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@44a88289] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1313925625 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 10
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 10(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 27, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:40, 2026-07-10 02:32:40
+<==        Row: 26, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:39, 2026-07-10 02:32:39
+<==        Row: 24, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 25, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 22, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:43, 2026-07-10 02:12:43
+<==        Row: 21, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:41, 2026-07-10 02:12:41
+<==        Row: 19, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:40, 2026-07-10 02:12:40
+<==        Row: 20, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:40, 2026-07-10 02:12:40
+<==        Row: 17, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:01:59, 2026-07-10 02:01:59
+<==        Row: 16, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:01:58, 2026-07-10 02:01:58
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@44a88289]
+2026-07-10T02:32:41.977+08:00  INFO 14512 --- [message-service] [0.1-8088-exec-6] c.x.m.controller.MessageController       : Send test email to: test@example.com
+2026-07-10T02:32:42.697+08:00  INFO 14512 --- [message-service] [0.1-8088-exec-6] c.xss.messageservice.sender.EmailSender  : Email sent successfully to test@example.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@487d1166] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@381323762 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: test(String), EMAIL(String), test@example.com(String), <h1>message-service 测试邮件</h1><p>这是一封来自 message-service 的测试邮件。</p><p>应用名称: message-service</p><p>发送时间: 2026-07-10T02:32:41.978138200</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:32:42.697981100(LocalDateTime), 2026-07-10T02:32:42.697981100(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@487d1166]
+2026-07-10T02:40:30.226+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_CREATE_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d2d4688] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2067739153 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_CREATE_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 3, PROPERTY_CREATE_NOTIFY, EMAIL, 房源创建通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d2d4688]
+2026-07-10T02:40:30.921+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3074d9bf] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1232417160 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源创建成功</h1><p>您创建的房源「${propertyName}」已成功发布。</p><p>租金：5000</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:40:30.921659400(LocalDateTime), 2026-07-10T02:40:30.921659400(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3074d9bf]
+2026-07-10T02:40:30.933+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_AUDIT_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65e73573] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@92184886 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_AUDIT_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 4, PROPERTY_AUDIT_NOTIFY, EMAIL, 房源审核通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65e73573]
+2026-07-10T02:40:31.545+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@355521ea] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1526677372 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源审核${status}</h1><p>您的房源「${propertyName}」已${status}。</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:40:31.546580900(LocalDateTime), 2026-07-10T02:40:31.546580900(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@355521ea]
+2026-07-10T02:40:31.555+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_CREATE_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4989a9e7] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1789815669 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_CREATE_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 3, PROPERTY_CREATE_NOTIFY, EMAIL, 房源创建通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4989a9e7]
+2026-07-10T02:40:32.228+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1a7d16d1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1330616850 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源创建成功</h1><p>您创建的房源「${propertyName}」已成功发布。</p><p>租金：9999</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:40:32.228312300(LocalDateTime), 2026-07-10T02:40:32.228312300(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1a7d16d1]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7a1e7e1e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1894126958 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 13
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 1(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 31, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:32, 2026-07-10 02:40:32
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7a1e7e1e]
+2026-07-10T02:40:33.615+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.x.m.consumer.NotificationConsumer      : Received notification event: appId=my-backend-system, templateCode=PROPERTY_CREATE_NOTIFY, channel=EMAIL, receiver=redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@262310a5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@361730425 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT id,template_code,type,subject,content,is_enabled FROM message_templates WHERE (template_code = ? AND is_enabled = ?)
+==> Parameters: PROPERTY_CREATE_NOTIFY(String), true(Boolean)
+<==    Columns: id, template_code, type, subject, content, is_enabled
+<==        Row: 3, PROPERTY_CREATE_NOTIFY, EMAIL, 房源创建通知, <<BLOB>>, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@262310a5]
+2026-07-10T02:40:34.202+08:00  INFO 14512 --- [message-service] [ntContainer#0-1] c.xss.messageservice.sender.EmailSender  : Email sent successfully to redjanji@163.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3b7d4ab7] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@627895844 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: my-backend-system(String), EMAIL(String), redjanji@163.com(String), <h1>房源创建成功</h1><p>您创建的房源「${propertyName}」已成功发布。</p><p>租金：8888</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:40:34.203032500(LocalDateTime), 2026-07-10T02:40:34.203032500(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3b7d4ab7]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5de81ac8] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1460695480 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 14
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 10(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 32, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:34, 2026-07-10 02:40:34
+<==        Row: 30, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:32, 2026-07-10 02:40:32
+<==        Row: 31, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:32, 2026-07-10 02:40:32
+<==        Row: 29, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:31, 2026-07-10 02:40:31
+<==        Row: 27, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:40, 2026-07-10 02:32:40
+<==        Row: 26, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:39, 2026-07-10 02:32:39
+<==        Row: 24, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 25, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 22, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:43, 2026-07-10 02:12:43
+<==        Row: 21, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:41, 2026-07-10 02:12:41
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5de81ac8]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3635a64f] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1808018443 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 14
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 10(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 32, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:34, 2026-07-10 02:40:34
+<==        Row: 30, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:32, 2026-07-10 02:40:32
+<==        Row: 31, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:32, 2026-07-10 02:40:32
+<==        Row: 29, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:31, 2026-07-10 02:40:31
+<==        Row: 27, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:40, 2026-07-10 02:32:40
+<==        Row: 26, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:39, 2026-07-10 02:32:39
+<==        Row: 24, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 25, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 22, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:43, 2026-07-10 02:12:43
+<==        Row: 21, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:41, 2026-07-10 02:12:41
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3635a64f]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1a7c9bdb] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@148507648 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM message_records WHERE (app_id = ?)
+==> Parameters: my-backend-system(String)
+<==    Columns: total
+<==        Row: 14
+<==      Total: 1
+==>  Preparing: SELECT id,app_id,message_type,receiver,content,status,retry_count,error_message,created_at,updated_at FROM message_records WHERE (app_id = ?) ORDER BY created_at DESC LIMIT ?
+==> Parameters: my-backend-system(String), 10(Long)
+<==    Columns: id, app_id, message_type, receiver, content, status, retry_count, error_message, created_at, updated_at
+<==        Row: 32, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:34, 2026-07-10 02:40:34
+<==        Row: 30, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:32, 2026-07-10 02:40:32
+<==        Row: 31, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:32, 2026-07-10 02:40:32
+<==        Row: 29, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:40:31, 2026-07-10 02:40:31
+<==        Row: 27, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:40, 2026-07-10 02:32:40
+<==        Row: 26, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:39, 2026-07-10 02:32:39
+<==        Row: 24, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 25, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:32:38, 2026-07-10 02:32:38
+<==        Row: 22, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:43, 2026-07-10 02:12:43
+<==        Row: 21, my-backend-system, EMAIL, redjanji@163.com, <<BLOB>>, 1, 0, <<BLOB>>, 2026-07-10 02:12:41, 2026-07-10 02:12:41
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1a7c9bdb]
+2026-07-10T02:40:38.680+08:00  INFO 14512 --- [message-service] [0.1-8088-exec-3] c.x.m.controller.MessageController       : Send test email to: test@example.com
+2026-07-10T02:40:39.376+08:00  INFO 14512 --- [message-service] [0.1-8088-exec-3] c.xss.messageservice.sender.EmailSender  : Email sent successfully to test@example.com
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@a9c5716] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2081232221 wrapping com.mysql.cj.jdbc.ConnectionImpl@68d6cdac] will not be managed by Spring
+==>  Preparing: INSERT INTO message_records ( app_id, message_type, receiver, content, status, retry_count, created_at, updated_at ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+==> Parameters: test(String), EMAIL(String), test@example.com(String), <h1>message-service 测试邮件</h1><p>这是一封来自 message-service 的测试邮件。</p><p>应用名称: message-service</p><p>发送时间: 2026-07-10T02:40:38.681110500</p>(String), 1(Integer), 0(Integer), 2026-07-10T02:40:39.376915400(LocalDateTime), 2026-07-10T02:40:39.376915400(LocalDateTime)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@a9c5716]

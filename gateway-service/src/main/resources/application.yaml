@@ -1,0 +1,157 @@
+# =====================================================
+# 应用基础配置
+# =====================================================
+spring:
+  application:
+    name: gateway-service
+  config:
+    import: "optional:nacos:gateway-service.yaml"
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:nacos:8848}
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:nacos:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:nacos:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD:127.0.0.1:8718}
+        port: 8719
+        client-ip: ${SENTINEL_CLIENT_IP:127.0.0.1}
+      eager: true
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1.0
+    tracing:
+      sampling:
+        probability: 1.0
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 30MB
+
+# =====================================================
+# 服务端口与绑定地址
+# =====================================================
+server:
+  port: 8080
+  address: 0.0.0.0
+
+# =====================================================
+# JWT 配置
+# =====================================================
+jwt:
+  secret-base64: ${JWT_SECRET:eW91ci0yNTYtYml0LXNlY3JldC1rZXktZm9yLWp3dC1zaWduaW5nLWRldi1vbmx5}
+  user-public-key: ${JWT_USER_PUBLIC_KEY:}
+
+# =====================================================
+# IP 白名单（网络层安全）
+# =====================================================
+ip-whitelist:
+  enabled: ${IP_WHITELIST_ENABLED:false}
+  allowed-ips: ${IP_ALLOWED_IPS:127.0.0.1,::1,192.168.1.0/24}
+
+# =====================================================
+# 应用凭证（调用方身份认证）
+# =====================================================
+apps:
+  credentials:
+    my-backend-system: ${APP_SECRET_BACKEND:dev-secret-key-change-in-production}
+    my-data-dashboard: ${APP_SECRET_DASHBOARD:dev-secret-key-change-in-production}
+
+# =====================================================
+# 下游服务地址配置（通过 Nacos 服务发现解析服务名）
+# =====================================================
+services:
+  dict: ${SERVICE_DICT:http://dict-service}
+  image: ${SERVICE_IMAGE:http://image-service}
+  auth: ${SERVICE_AUTH:http://auth-service}
+  property: ${SERVICE_PROPERTY:http://property-service}
+  search: ${SERVICE_SEARCH:http://search-service}
+  analytics: ${SERVICE_ANALYTICS:http://analytics-service}
+  message: ${SERVICE_MESSAGE:http://message-service}
+  favorite: ${SERVICE_FAVORITE:http://favorite-service}
+  review: ${SERVICE_REVIEW:http://review-service}
+  booking: ${SERVICE_BOOKING:http://booking-service}
+
+# =====================================================
+# 资源服务路由表（网关转发规则）
+# =====================================================
+resource:
+  routes:
+    - prefix: /api/provinces
+      target: ${services.dict}
+    - prefix: /api/cities
+      target: ${services.dict}
+    - prefix: /api/districts
+      target: ${services.dict}
+    - prefix: /api/towns
+      target: ${services.dict}
+    - prefix: /api/villages
+      target: ${services.dict}
+    - prefix: /api/regions
+      target: ${services.dict}
+    - prefix: /api/countries
+      target: ${services.dict}
+    - prefix: /api/currencies
+      target: ${services.dict}
+    - prefix: /api/languages
+      target: ${services.dict}
+    - prefix: /api/timezones
+      target: ${services.dict}
+    - prefix: /api/dict
+      target: ${services.dict}
+    - prefix: /api/admin
+      target: ${services.dict}
+    - prefix: /api/images
+      target: ${services.image}
+    - prefix: /api/groups
+      target: ${services.image}
+    - prefix: /auth
+      target: ${services.auth}
+    - prefix: /api/properties
+      target: ${services.property}
+    - prefix: /api/search
+      target: ${services.search}
+    - prefix: /api/messages
+      target: ${services.message}
+    - prefix: /api/stats
+      target: ${services.analytics}
+    - prefix: /api/favorites
+      target: ${services.favorite}
+    - prefix: /api/reviews
+      target: ${services.review}
+    - prefix: /api/audit
+      target: ${services.review}
+    - prefix: /api/bookings
+      target: ${services.booking}
+
+# =====================================================
+# HMAC 签名配置
+# =====================================================
+hmac:
+  timestamp-tolerance: 300
+
+# =====================================================
+# Actuator 健康检查配置
+# =====================================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 1.0

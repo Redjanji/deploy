@@ -1,0 +1,43 @@
+package com.xss.imageservice.controller;
+
+import com.xss.imageservice.common.Result;
+import com.xss.imageservice.model.vo.ImageVO;
+import com.xss.imageservice.service.ImageService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/images")
+@RequiredArgsConstructor
+public class ImageController {
+
+    private final ImageService imageService;
+
+    @PostMapping("/upload")
+    public Result<ImageVO> upload(@RequestParam("file") MultipartFile file,
+                                  @RequestHeader(value = "X-App-Id", required = false) String appId,
+                                  @RequestHeader(value = "X-Owner-Id", required = false) Long ownerId) throws IOException {
+        ImageVO vo = imageService.upload(file, appId, ownerId);
+        return Result.success(vo);
+    }
+
+    @GetMapping
+    public Result<List<ImageVO>> list(@RequestHeader(value = "X-App-Id", required = false) String appId,
+                                      @RequestHeader(value = "X-Owner-Id", required = false) Long ownerId,
+                                      @RequestParam(defaultValue = "1") int page,
+                                      @RequestParam(defaultValue = "20") int size) {
+        return Result.success(imageService.listByApp(appId, ownerId, page, size));
+    }
+
+    @DeleteMapping("/{id}")
+    public Result<Void> delete(@PathVariable Long id,
+                               @RequestHeader(value = "X-App-Id", required = false) String appId,
+                               @RequestHeader(value = "X-Owner-Id", required = false) Long ownerId) {
+        imageService.delete(id, appId, ownerId);
+        return Result.success();
+    }
+}
