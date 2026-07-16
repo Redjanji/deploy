@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XSS 微服务 API 测试平台</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-card: #161b22;
+    --bg-hover: #1c2128;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #2f81f7;
+    --accent-hover: #1f6feb;
+    --green: #3fb950;
+    --red: #f85149;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --radius: 8px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 13px;
+  }
+
+  /* === 侧边栏 === */
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-header h1 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .sidebar-header p {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .sidebar-search {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-search input {
+    width: 100%;
+    padding: 6px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 12px;
+    outline: none;
+  }
+  .sidebar-search input:focus { border-color: var(--accent); }
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+  }
+  .service-group { margin-bottom: 2px; }
+  .service-header {
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .service-header:hover { color: var(--text); }
+  .service-header .dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  }
+  .endpoint-item {
+    padding: 5px 12px 5px 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    border-left: 2px solid transparent;
+    transition: background 0.1s;
+  }
+  .endpoint-item:hover { background: var(--bg-hover); }
+  .endpoint-item.active {
+    background: var(--bg-hover);
+    border-left-color: var(--accent);
+  }
+  .method-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    min-width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .method-GET { background: rgba(63,185,80,0.15); color: var(--green); }
+  .method-POST { background: rgba(47,129,247,0.15); color: var(--accent); }
+  .method-PUT { background: rgba(210,153,34,0.15); color: var(--yellow); }
+  .method-DELETE { background: rgba(248,81,73,0.15); color: var(--red); }
+  .endpoint-path {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-muted);
+  }
+  .endpoint-item.active .endpoint-path { color: var(--text); }
+
+  /* === 主区域 === */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* === 顶部配置栏 === */
+  .toolbar {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-card);
+    flex-wrap: wrap;
+  }
+  .toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .toolbar label {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .toolbar input, .toolbar select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 5px 8px;
+    font-size: 12px;
+    font-family: inherit;
+    outline: none;
+  }
+  .toolbar input:focus, .toolbar select:focus { border-color: var(--accent); }
+  .toolbar input[type="text"] { width: 200px; }
+  .btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-green {
+    background: var(--green);
+    border-color: var(--green);
+    color: #0d1117;
+  }
+  .btn-sm { padding: 3px 8px; font-size: 11px; }
+  .btn-loading { pointer-events: none; opacity: 0.6; }
+  .btn-loading::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 6px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    vertical-align: -2px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* === 请求面板 === */
+  .request-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+  }
+  .request-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .request-header .method-badge { font-size: 11px; padding: 3px 8px; }
+  .request-header .url {
+    font-size: 14px;
+    color: var(--text);
+    flex: 1;
+    word-break: break-all;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .params-table {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .params-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .params-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .params-table input, .params-table select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text);
+    padding: 4px 6px;
+    font-size: 12px;
+    font-family: inherit;
+    outline: none;
+  }
+  .params-table input:focus, .params-table select:focus { border-color: var(--accent); }
+  .body-editor {
+    width: 100%;
+    min-height: 180px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 10px;
+    font-size: 12px;
+    font-family: inherit;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 16px;
+  }
+  .body-editor:focus { border-color: var(--accent); }
+  .send-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  /* === 响应面板 === */
+  .response-panel {
+    border-top: 2px solid var(--border);
+    max-height: 45vh;
+    overflow-y: auto;
+    background: var(--bg-card);
+  }
+  .response-header {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    z-index: 1;
+  }
+  .response-status {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .status-2xx { background: rgba(63,185,80,0.15); color: var(--green); }
+  .status-4xx { background: rgba(210,153,34,0.15); color: var(--yellow); }
+  .status-5xx { background: rgba(248,81,73,0.15); color: var(--red); }
+  .response-time { font-size: 11px; color: var(--text-muted); }
+  .response-body {
+    padding: 12px 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* === 空状态 === */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+    gap: 12px;
+  }
+  .empty-state .icon { font-size: 48px; }
+  .empty-state .title { font-size: 16px; font-weight: 600; }
+  .empty-state .desc { font-size: 12px; text-align: center; max-width: 400px; }
+
+  /* === Token 状态 === */
+  .token-status {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .token-status .indicator {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--red);
+  }
+  .token-status.has-token .indicator { background: var(--green); }
+  .token-status .label { color: var(--text-muted); }
+  .token-status .value { color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .token-status button {
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .token-status button:hover { color: var(--text); }
+
+  /* === 滚动条 === */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- === 侧边栏 === -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h1>XSS 微服务 API</h1>
+    <p>11 个服务 · 50+ 接口</p>
+  </div>
+  <div class="token-status" id="tokenStatusBar">
+    <span class="indicator"></span>
+    <span class="label">Token:</span>
+    <span class="value" id="tokenValue">未获取</span>
+    <button onclick="clearToken()">清除</button>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" placeholder="搜索接口..." oninput="filterEndpoints(this.value)">
+  </div>
+  <div class="sidebar-nav" id="sidebarNav"></div>
+</div>
+
+<!-- === 主区域 === -->
+<div class="main">
+  <!-- 顶部配置栏 -->
+  <div class="toolbar">
+    <div class="toolbar-group">
+      <label>Base URL:</label>
+      <input type="text" id="baseUrl" value="http://42.193.174.175:8080" placeholder="http://ip:port">
+    </div>
+    <div class="toolbar-group">
+      <label>App ID:</label>
+      <input type="text" id="appId" value="my-backend-system" style="width:140px">
+    </div>
+    <div class="toolbar-group">
+      <label>App Secret:</label>
+      <input type="text" id="appSecret" value="XssBackend2026SecHmacKey8xYz" style="width:200px">
+    </div>
+    <button class="btn btn-primary" onclick="getAppToken()">获取 App Token</button>
+    <button class="btn btn-green" onclick="quickLogin()">快速登录</button>
+  </div>
+
+  <!-- 请求面板 -->
+  <div class="request-panel" id="requestPanel">
+    <div class="empty-state">
+      <div class="icon">&#128194;</div>
+      <div class="title">选择一个接口开始测试</div>
+      <div class="desc">从左侧选择需要测试的 API 接口，填写参数后发送请求。先获取 App Token 或登录获取用户 Token。</div>
+    </div>
+  </div>
+
+  <!-- 响应面板 -->
+  <div class="response-panel hidden" id="responsePanel">
+    <div class="response-header">
+      <span class="response-status" id="responseStatus">--</span>
+      <span class="response-time" id="responseTime">--</span>
+      <button class="btn btn-sm" onclick="copyResponse()">复制</button>
+    </div>
+    <div class="response-body" id="responseBody"></div>
+  </div>
+</div>
+
+<script>
+// =====================================================
+// API 接口定义
+// =====================================================
+const SERVICES = [
+  {
+    name: 'Gateway 网关', color: '#2f81f7', port: 8080,
+    endpoints: [
+      { method: 'POST', path: '/token', desc: '获取应用Token(HMAC签名)', group: '认证',
+        params: [
+          { name: 'appId', type: 'text', value: 'my-backend-system', required: true },
+          { name: 'appSecret', type: 'text', value: 'dev-secret-key-change-in-production', required: true, isBody: true }
+        ],
+        note: '简化版：直接用 appId+appSecret 换 token，无需 HMAC 签名' },
+      { method: 'GET', path: '/actuator/health', desc: '网关健康检查', group: '运维' },
+    ]
+  },
+  {
+    name: 'Auth 认证服务', color: '#3fb950', port: 8080,
+    endpoints: [
+      { method: 'POST', path: '/auth/register', desc: '用户注册', group: '用户',
+        body: { username: 'testuser', password: 'Test12345678', email: 'test@example.com', phone: '13800138000' } },
+      { method: 'POST', path: '/auth/login', desc: '用户登录', group: '用户',
+        body: { username: 'testuser', password: 'Test12345678' },
+        note: '登录成功后自动保存 token' },
+      { method: 'POST', path: '/auth/logout', desc: '用户登出', group: '用户', auth: true },
+      { method: 'POST', path: '/auth/refresh', desc: '刷新Token', group: '用户', auth: true },
+      { method: 'GET', path: '/auth/userinfo', desc: '获取用户信息', group: '用户', auth: true },
+    ]
+  },
+  {
+    name: 'Dict 字典服务', color: '#d29922', port: 8080,
+    endpoints: [
+      { method: 'GET', path: '/api/dict/types', desc: '获取所有字典类型', group: '字典', auth: true },
+      { method: 'GET', path: '/api/dict/{dictType}/list', desc: '获取字典列表', group: '字典', auth: true,
+        params: [
+          { name: 'dictType', type: 'text', value: 'property_type', required: true, isPath: true },
+          { name: 'status', type: 'text', value: '1', required: false },
+          { name: 'keyword', type: 'text', value: '', required: false }
+        ] },
+      { method: 'GET', path: '/api/dict/{dictType}/item/{code}', desc: '获取字典项', group: '字典', auth: true,
+        params: [
+          { name: 'dictType', type: 'text', value: 'property_type', required: true, isPath: true },
+          { name: 'code', type: 'text', value: 'residential', required: true, isPath: true }
+        ] },
+      { method: 'GET', path: '/api/dict/items', desc: '获取房产字典项', group: '房产字典', auth: true,
+        params: [
+          { name: 'type', type: 'text', value: 'property_type', required: true },
+          { name: 'status', type: 'text', value: '1', required: false },
+          { name: 'keyword', type: 'text', value: '', required: false }
+        ] },
+      { method: 'GET', path: '/api/dict/items/{type}/{itemKey}', desc: '获取单个房产字典项', group: '房产字典', auth: true,
+        params: [
+          { name: 'type', type: 'text', value: 'property_type', required: true, isPath: true },
+          { name: 'itemKey', type: 'text', value: 'residential', required: true, isPath: true }
+        ] },
+      { method: 'GET', path: '/api/dict/property-types', desc: '获取所有房产字典类型', group: '房产字典', auth: true },
+      { method: 'GET', path: '/api/dict/{dictType}/tree', desc: '获取树形字典', group: '字典', auth: true,
+        params: [
+          { name: 'dictType', type: 'text', value: 'region', required: true, isPath: true },
+          { name: 'parent_code', type: 'text', value: '', required: false },
+          { name: 'level', type: 'text', value: '', required: false },
+          { name: 'keyword', type: 'text', value: '', required: false }
+        ] },
+      { method: 'POST', path: '/api/dict/admin/refresh/{dictType}', desc: '刷新字典缓存', group: '管理', auth: true,
+        params: [
+          { name: 'dictType', type: 'text', value: 'property_type', required: true, isPath: true }
+        ] },
+      { method: 'POST', path: '/api/dict/admin/refresh-all', desc: '刷新所有字典缓存', group: '管理', auth: true },
+    ]
+  },
+  {
+    name: 'Property 房源服务', color: '#f85149', port: 8080,
+    endpoints: [
+      { method: 'POST', path: '/api/properties', desc: '创建房源', group: '房源管理', auth: true,
+        body: {
+          title: '精装两室一厅 南北通透 拎包入住',
+          description: '靠近地铁，交通便利，周边配套齐全',
+          price: 5800,
+          area: 89.5,
+          cityCode: '440300',
+          districtCode: '440305',
+          address: '深圳市南山区科技园',
+          latitude: 22.5431,
+          longitude: 113.9445,
+          bedrooms: 2,
+          bathrooms: 1,
+          floor: 15,
+          totalFloors: 32,
+          propertyType: 'residential'
+        } },
+      { method: 'PUT', path: '/api/properties/{id}', desc: '更新房源', group: '房源管理', auth: true,
+        params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }],
+        body: { title: '更新后的标题', price: 6000 } },
+      { method: 'GET', path: '/api/properties/{id}', desc: '获取房源详情', group: '房源管理', auth: true,
+        params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'GET', path: '/api/properties', desc: '搜索房源列表', group: '房源管理', auth: true,
+        params: [
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '10', required: false },
+          { name: 'cityCode', type: 'text', value: '440300', required: false },
+          { name: 'minPrice', type: 'text', value: '', required: false },
+          { name: 'maxPrice', type: 'text', value: '', required: false },
+          { name: 'keywords', type: 'text', value: '', required: false }
+        ] },
+      { method: 'DELETE', path: '/api/properties/{id}', desc: '删除房源', group: '房源管理', auth: true,
+        params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'PUT', path: '/api/properties/{id}/publish-status', desc: '更新发布状态', group: '房源管理', auth: true,
+        params: [
+          { name: 'id', type: 'text', value: '1', required: true, isPath: true },
+          { name: 'status', type: 'text', value: '1', required: true }
+        ] },
+      { method: 'PUT', path: '/api/properties/{id}/audit-status', desc: '更新审核状态', group: '房源管理', auth: true,
+        params: [
+          { name: 'id', type: 'text', value: '1', required: true, isPath: true },
+          { name: 'status', type: 'text', value: '1', required: true }
+        ] },
+    ]
+  },
+  {
+    name: 'Image 图片服务', color: '#bc8cff', port: 8080,
+    endpoints: [
+      { method: 'POST', path: '/api/images/upload', desc: '上传图片', group: '图片', auth: true,
+        isUpload: true,
+        params: [
+          { name: 'file', type: 'file', value: '', required: true }
+        ] },
+      { method: 'GET', path: '/api/images', desc: '图片列表', group: '图片', auth: true,
+        params: [
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '20', required: false }
+        ] },
+      { method: 'DELETE', path: '/api/images/{id}', desc: '删除图片', group: '图片', auth: true,
+        params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }] },
+    ]
+  },
+  {
+    name: 'Search 搜索服务', color: '#2f81f7', port: 8080,
+    endpoints: [
+      { method: 'GET', path: '/api/search/properties', desc: '搜索房源(ES)', group: '搜索', auth: true,
+        params: [
+          { name: 'keyword', type: 'text', value: '', required: false },
+          { name: 'cityCode', type: 'text', value: '440300', required: false },
+          { name: 'type', type: 'text', value: '', required: false },
+          { name: 'minPrice', type: 'text', value: '', required: false },
+          { name: 'maxPrice', type: 'text', value: '', required: false },
+          { name: 'sortBy', type: 'text', value: 'createdAt', required: false },
+          { name: 'sortDirection', type: 'select', value: 'desc', options: ['desc','asc'], required: false },
+          { name: 'centerLat', type: 'text', value: '', required: false },
+          { name: 'centerLng', type: 'text', value: '', required: false },
+          { name: 'radiusKm', type: 'text', value: '', required: false },
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '10', required: false }
+        ] },
+      { method: 'POST', path: '/api/search/admin/reindex', desc: '重建索引', group: '管理', auth: true },
+    ]
+  },
+  {
+    name: 'Analytics 统计服务', color: '#3fb950', port: 8080,
+    endpoints: [
+      { method: 'GET', path: '/api/stats/dashboard', desc: '数据看板', group: '统计', auth: true },
+      { method: 'GET', path: '/api/stats/property/views', desc: '房源浏览统计', group: '统计', auth: true,
+        params: [
+          { name: 'appId', type: 'text', value: 'default', required: true },
+          { name: 'startDate', type: 'text', value: '2026-01-01', required: true },
+          { name: 'endDate', type: 'text', value: '', required: false }
+        ] },
+      { method: 'GET', path: '/api/stats/image/upload-summary', desc: '图片上传统计', group: '统计', auth: true,
+        params: [{ name: 'appId', type: 'text', value: '', required: false }] },
+      { method: 'GET', path: '/api/stats/user/actions', desc: '用户行为统计', group: '统计', auth: true,
+        params: [
+          { name: 'appId', type: 'text', value: '', required: false },
+          { name: 'eventType', type: 'text', value: '', required: false },
+          { name: 'startDate', type: 'text', value: '', required: false },
+          { name: 'endDate', type: 'text', value: '', required: false }
+        ] },
+    ]
+  },
+  {
+    name: 'Message 消息服务', color: '#d29922', port: 8080,
+    endpoints: [
+      { method: 'GET', path: '/api/messages/records', desc: '消息记录列表', group: '消息', auth: true,
+        params: [
+          { name: 'status', type: 'text', value: '', required: false },
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '20', required: false }
+        ] },
+      { method: 'GET', path: '/api/messages/records/{id}', desc: '消息记录详情', group: '消息', auth: true,
+        params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'POST', path: '/api/messages/retry/{id}', desc: '重试发送消息', group: '消息', auth: true,
+        params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'POST', path: '/api/messages/send', desc: '发送消息(模板)', group: '消息', auth: true,
+        body: {
+          appId: 'my-backend-system',
+          templateCode: 'PROPERTY_CREATE_NOTIFY',
+          receiver: 'test@example.com',
+          channel: 'EMAIL',
+          subject: '测试邮件',
+          params: { propertyName: '测试房源', time: '2026-01-01' }
+        } },
+      { method: 'POST', path: '/api/messages/send-test', desc: '发送测试邮件', group: '消息', auth: true,
+        params: [{ name: 'email', type: 'text', value: 'test@example.com', required: true }] },
+    ]
+  },
+  {
+    name: 'Favorite 收藏服务', color: '#f85149', port: 8080,
+    endpoints: [
+      { method: 'GET', path: '/api/favorites', desc: '收藏列表', group: '收藏', auth: true },
+      { method: 'POST', path: '/api/favorites/{propertyId}', desc: '添加收藏', group: '收藏', auth: true,
+        params: [{ name: 'propertyId', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'GET', path: '/api/favorites/check/{propertyId}', desc: '检查是否已收藏', group: '收藏', auth: true,
+        params: [{ name: 'propertyId', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'DELETE', path: '/api/favorites/{propertyId}', desc: '取消收藏', group: '收藏', auth: true,
+        params: [{ name: 'propertyId', type: 'text', value: '1', required: true, isPath: true }] },
+    ]
+  },
+  {
+    name: 'Review 审核服务', color: '#bc8cff', port: 8080,
+    endpoints: [
+      { method: 'GET', path: '/api/audit/tasks', desc: '审核任务列表', group: '审核', auth: true,
+        params: [
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '10', required: false },
+          { name: 'status', type: 'text', value: '', required: false }
+        ] },
+      { method: 'GET', path: '/api/audit/tasks/{taskId}', desc: '审核任务详情', group: '审核', auth: true,
+        params: [{ name: 'taskId', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'POST', path: '/api/audit/tasks', desc: '创建审核任务', group: '审核', auth: true,
+        params: [
+          { name: 'propertyId', type: 'text', value: '1', required: true },
+          { name: 'taskType', type: 'text', value: 'MANUAL', required: false }
+        ] },
+      { method: 'POST', path: '/api/audit/manual', desc: '人工审核', group: '审核', auth: true,
+        body: { taskId: 1, result: 1, reason: '内容合规', auditorId: 1 } },
+    ]
+  },
+  {
+    name: 'Booking 预约服务', color: '#2f81f7', port: 8080,
+    endpoints: [
+      { method: 'POST', path: '/api/bookings', desc: '创建预约', group: '预约', auth: true,
+        body: {
+          propertyId: 1,
+          appointmentTime: '2026-07-20T14:00:00',
+          remark: '希望下午看房'
+        } },
+      { method: 'PUT', path: '/api/bookings/{bookingId}/confirm', desc: '确认预约(经纪人)', group: '预约', auth: true,
+        params: [{ name: 'bookingId', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'PUT', path: '/api/bookings/{bookingId}/complete', desc: '完成预约(经纪人)', group: '预约', auth: true,
+        params: [{ name: 'bookingId', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'PUT', path: '/api/bookings/{bookingId}/cancel/user', desc: '用户取消预约', group: '预约', auth: true,
+        params: [
+          { name: 'bookingId', type: 'text', value: '1', required: true, isPath: true },
+          { name: 'reason', type: 'text', value: '时间冲突', required: false }
+        ] },
+      { method: 'PUT', path: '/api/bookings/{bookingId}/cancel/agent', desc: '经纪人取消预约', group: '预约', auth: true,
+        params: [
+          { name: 'bookingId', type: 'text', value: '1', required: true, isPath: true },
+          { name: 'reason', type: 'text', value: '房源已租', required: false }
+        ] },
+      { method: 'GET', path: '/api/bookings/{bookingId}', desc: '预约详情', group: '预约', auth: true,
+        params: [
+          { name: 'bookingId', type: 'text', value: '1', required: true, isPath: true },
+          { name: 'isAgent', type: 'text', value: 'false', required: false }
+        ] },
+      { method: 'GET', path: '/api/bookings/user', desc: '用户预约列表', group: '预约', auth: true,
+        params: [
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '10', required: false }
+        ] },
+      { method: 'GET', path: '/api/bookings/agent', desc: '经纪人预约列表', group: '预约', auth: true,
+        params: [
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '10', required: false }
+        ] },
+    ]
+  },
+];
+
+// =====================================================
+// 状态管理
+// =====================================================
+let appToken = localStorage.getItem('xss_app_token') || '';
+let userToken = localStorage.getItem('xss_user_token') || '';
+let currentEndpoint = null;
+
+function updateTokenBar() {
+  const bar = document.getElementById('tokenStatusBar');
+  const val = document.getElementById('tokenValue');
+  if (userToken) {
+    bar.classList.add('has-token');
+    val.textContent = 'User: ' + userToken.substring(0, 20) + '...';
+  } else if (appToken) {
+    bar.classList.add('has-token');
+    val.textContent = 'App: ' + appToken.substring(0, 20) + '...';
+  } else {
+    bar.classList.remove('has-token');
+    val.textContent = '未获取';
+  }
+}
+
+function clearToken() {
+  appToken = '';
+  userToken = '';
+  localStorage.removeItem('xss_app_token');
+  localStorage.removeItem('xss_user_token');
+  updateTokenBar();
+}
+
+function getAuthToken() {
+  return userToken || appToken || '';
+}
+
+// =====================================================
+// HMAC-SHA256 签名（使用 Web Crypto API）
+// =====================================================
+async function hmacSha256(message, secret) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(message));
+  // Java 端使用 Base64 编码，不是 hex
+  return btoa(String.fromCharCode(...new Uint8Array(sig)));
+}
+
+// =====================================================
+// 获取 App Token（HMAC 签名认证）
+// =====================================================
+async function getAppToken() {
+  const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, '');
+  const appId = document.getElementById('appId').value;
+  const appSecret = document.getElementById('appSecret').value;
+  const timestamp = Math.floor(Date.now() / 1000);
+  const nonce = Date.now().toString() + Math.random().toString(36).substring(2, 8);
+
+  try {
+    // 计算 HMAC-SHA256 签名: HMAC(appId:timestamp:nonce, appSecret)
+    const payload = `${appId}:${timestamp}:${nonce}`;
+    const sign = await hmacSha256(payload, appSecret);
+
+    const resp = await fetch(`${baseUrl}/token?appId=${encodeURIComponent(appId)}&timestamp=${timestamp}&nonce=${encodeURIComponent(nonce)}&sign=${encodeURIComponent(sign)}`, {
+      method: 'POST'
+    });
+    const data = await resp.json();
+    if (data.code === 200 && data.data && data.data.token) {
+      appToken = data.data.token;
+      localStorage.setItem('xss_app_token', appToken);
+      updateTokenBar();
+      showResponse(resp.status, data, 0);
+    } else {
+      showResponse(resp.status, data, 0);
+    }
+  } catch (e) {
+    showResponse(0, { error: e.message }, 0);
+  }
+}
+
+// =====================================================
+// 快速登录
+// =====================================================
+async function quickLogin() {
+  const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, '');
+  const startTime = Date.now();
+  try {
+    // 先注册（用户已存在则忽略错误）
+    const regResp = await fetch(`${baseUrl}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: 'testuser', password: 'Test12345678', email: 'test@example.com' })
+    });
+    const regText = await regResp.text();
+    console.log('Register:', regResp.status, regText);
+
+    // 登录
+    const resp = await fetch(`${baseUrl}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: 'testuser', password: 'Test12345678' })
+    });
+    const elapsed = Date.now() - startTime;
+    const text = await resp.text();
+    let data;
+    try { data = JSON.parse(text); } catch { data = { raw: text, status: resp.status }; }
+
+    if (data && data.token) {
+      userToken = data.token;
+      localStorage.setItem('xss_user_token', userToken);
+      updateTokenBar();
+      showResponse(resp.status, data, elapsed);
+    } else {
+      // 登录失败，显示注册和登录的完整信息
+      showResponse(resp.status, { loginResponse: data, registerStatus: regResp.status, registerBody: regText }, elapsed);
+    }
+  } catch (e) {
+    const elapsed = Date.now() - startTime;
+    showResponse(0, { error: e.message }, elapsed);
+  }
+}
+
+// =====================================================
+// 渲染侧边栏
+// =====================================================
+function renderSidebar() {
+  const nav = document.getElementById('sidebarNav');
+  nav.innerHTML = SERVICES.map((svc, si) => `
+    <div class="service-group">
+      <div class="service-header" onclick="toggleGroup(${si})">
+        <span class="dot" style="background:${svc.color}"></span>
+        <span>${svc.name}</span>
+        <span style="margin-left:auto;font-size:10px;color:var(--text-muted)">${svc.endpoints.length}</span>
+      </div>
+      <div id="group-${si}">
+        ${svc.endpoints.map((ep, ei) => `
+          <div class="endpoint-item" id="ep-${si}-${ei}" onclick="selectEndpoint(${si}, ${ei})" data-search="${(ep.path + ' ' + ep.desc + ' ' + svc.name).toLowerCase()}">
+            <span class="method-badge method-${ep.method}">${ep.method}</span>
+            <span class="endpoint-path">${ep.path}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleGroup(si) {
+  const g = document.getElementById(`group-${si}`);
+  g.style.display = g.style.display === 'none' ? 'block' : 'none';
+}
+
+function filterEndpoints(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.endpoint-item').forEach(el => {
+    const match = el.dataset.search.includes(q);
+    el.style.display = match ? 'flex' : 'none';
+  });
+}
+
+// =====================================================
+// 选择接口 → 渲染请求面板
+// =====================================================
+function selectEndpoint(si, ei) {
+  document.querySelectorAll('.endpoint-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(`ep-${si}-${ei}`).classList.add('active');
+
+  const svc = SERVICES[si];
+  const ep = svc.endpoints[ei];
+  currentEndpoint = { svc, ep };
+
+  renderRequestPanel(svc, ep);
+}
+
+function renderRequestPanel(svc, ep) {
+  const panel = document.getElementById('requestPanel');
+  let html = `
+    <div class="request-header">
+      <span class="method-badge method-${ep.method}">${ep.method}</span>
+      <span class="url">${ep.path}</span>
+      <span style="font-size:12px;color:var(--text-muted)">${ep.desc || ''}</span>
+    </div>
+  `;
+
+  if (ep.note) {
+    html += `<div style="padding:8px 12px;background:rgba(47,129,247,0.08);border:1px solid rgba(47,129,247,0.2);border-radius:var(--radius);margin-bottom:16px;font-size:11px;color:var(--accent)">${ep.note}</div>`;
+  }
+
+  // 参数表
+  if (ep.params && ep.params.length > 0) {
+    html += `
+      <div class="section-title">参数</div>
+      <table class="params-table">
+        <thead>
+          <tr><th style="width:140px">名称</th><th style="width:100px">类型</th><th>值</th><th style="width:50px">必填</th></tr>
+        </thead>
+        <tbody>
+          ${ep.params.map((p, i) => `
+            <tr>
+              <td style="font-size:11px">${p.name}${p.isPath ? ' 🔑' : ''}</td>
+              <td style="font-size:11px;color:var(--text-muted)">${p.isBody ? 'body' : p.isPath ? 'path' : 'query'}</td>
+              <td>
+                ${p.type === 'file'
+                  ? `<input type="file" id="param-${i}" data-name="${p.name}">`
+                  : p.type === 'select'
+                  ? `<select id="param-${i}" data-name="${p.name}" data-is-path="${p.isPath||''}" data-is-body="${p.isBody||''}">${(p.options||[]).map(o=>`<option value="${o}" ${o===p.value?'selected':''}>${o}</option>`).join('')}</select>`
+                  : `<input type="text" id="param-${i}" value="${p.value||''}" data-name="${p.name}" data-is-path="${p.isPath||''}" data-is-body="${p.isBody||''}" placeholder="${p.required?'必填':'可选'}">`
+                }
+              </td>
+              <td style="font-size:11px;color:${p.required?'var(--red)':'var(--text-muted)'}">${p.required?'是':'否'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // Body 编辑器
+  if (ep.body) {
+    html += `
+      <div class="section-title">请求体 (JSON)</div>
+      <textarea class="body-editor" id="bodyEditor">${JSON.stringify(ep.body, null, 2)}</textarea>
+    `;
+  }
+
+  // 发送按钮
+  html += `
+    <div class="send-row">
+      <button class="btn btn-primary" onclick="sendRequest()">发送请求</button>
+      ${ep.auth ? '<span style="font-size:11px;color:var(--text-muted)">需要 Token 认证</span>' : ''}
+    </div>
+  `;
+
+  panel.innerHTML = html;
+  document.getElementById('responsePanel').classList.add('hidden');
+}
+
+// =====================================================
+// 发送请求
+// =====================================================
+async function sendRequest() {
+  if (!currentEndpoint) return;
+
+  const { svc, ep } = currentEndpoint;
+  const sendBtn = document.querySelector('.send-row .btn-primary');
+  if (sendBtn) {
+    sendBtn.classList.add('btn-loading');
+    sendBtn.disabled = true;
+  }
+  const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, '');
+  let path = ep.path;
+  let queryParams = [];
+  let bodyData = null;
+  let formData = null;
+
+  // 收集参数
+  if (ep.params) {
+    ep.params.forEach((p, i) => {
+      const el = document.getElementById(`param-${i}`);
+      if (!el) return;
+      const val = el.value;
+      if (p.isPath) {
+        path = path.replace(`{${p.name}}`, encodeURIComponent(val));
+      } else if (p.isBody) {
+        // body 参数（如 appSecret）
+      } else if (val !== '') {
+        queryParams.push(`${p.name}=${encodeURIComponent(val)}`);
+      }
+    });
+  }
+
+  // Body
+  if (ep.body) {
+    const editor = document.getElementById('bodyEditor');
+    if (editor && editor.value.trim()) {
+      try {
+        bodyData = JSON.parse(editor.value);
+      } catch(e) {
+        showResponse(0, { error: 'JSON 格式错误: ' + e.message }, 0);
+        return;
+      }
+    }
+  }
+
+  // 文件上传
+  if (ep.isUpload) {
+    formData = new FormData();
+    ep.params.forEach((p, i) => {
+      const el = document.getElementById(`param-${i}`);
+      if (el && el.files && el.files[0]) {
+        formData.append(p.name, el.files[0]);
+      }
+    });
+  }
+
+  // 构建完整 URL
+  let url = baseUrl + path;
+  if (queryParams.length > 0) url += '?' + queryParams.join('&');
+
+  // Headers
+  const headers = {};
+  if (ep.auth) {
+    const token = getAuthToken();
+    if (token) {
+      headers['Authorization'] = 'Bearer ' + token;
+    }
+  }
+  if (bodyData && !ep.isUpload) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  const options = { method: ep.method, headers };
+  if (bodyData) options.body = JSON.stringify(bodyData);
+  if (formData) options.body = formData;
+
+  const startTime = Date.now();
+
+  try {
+    const resp = await fetch(url, options);
+    const elapsed = Date.now() - startTime;
+    const text = await resp.text();
+    let data;
+    try { data = JSON.parse(text); } catch { data = text; }
+    showResponse(resp.status, data, elapsed);
+
+    // 登录成功自动保存 token
+    if (ep.path === '/auth/login' && data && data.token) {
+      userToken = data.token;
+      localStorage.setItem('xss_user_token', userToken);
+      updateTokenBar();
+    }
+  } catch (e) {
+    const elapsed = Date.now() - startTime;
+    showResponse(0, { error: e.message, url: url }, elapsed);
+  } finally {
+    if (sendBtn) {
+      sendBtn.classList.remove('btn-loading');
+      sendBtn.disabled = false;
+    }
+  }
+}
+
+// =====================================================
+// 显示响应
+// =====================================================
+function showResponse(status, data, time) {
+  const panel = document.getElementById('responsePanel');
+  const statusEl = document.getElementById('responseStatus');
+  const timeEl = document.getElementById('responseTime');
+  const bodyEl = document.getElementById('responseBody');
+
+  panel.classList.remove('hidden');
+
+  if (status === 0) {
+    statusEl.textContent = 'ERROR';
+    statusEl.className = 'response-status status-5xx';
+  } else {
+    statusEl.textContent = status;
+    statusEl.className = 'response-status ' + (status < 300 ? 'status-2xx' : status < 500 ? 'status-4xx' : 'status-5xx');
+  }
+  timeEl.textContent = time + 'ms';
+
+  let text;
+  if (typeof data === 'string') {
+    text = data;
+  } else {
+    text = JSON.stringify(data, null, 2);
+  }
+  bodyEl.textContent = text;
+
+  // 自动滚动到响应
+  panel.scrollTop = 0;
+}
+
+function copyResponse() {
+  const text = document.getElementById('responseBody').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '已复制';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+// =====================================================
+// 初始化
+// =====================================================
+renderSidebar();
+updateTokenBar();
+</script>
+</body>
+</html>
