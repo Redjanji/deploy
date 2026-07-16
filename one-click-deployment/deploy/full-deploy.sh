@@ -562,7 +562,7 @@ start_core() {
     step "5" "启动核心业务服务（core）"
 
     log_info "启动服务: gateway, auth, property, dict"
-    $COMPOSE_CMD --profile core up -d
+    $COMPOSE_CMD --profile infra --profile core up -d
 
     log_info "等待核心服务就绪（最长约 2 分钟）..."
     local core_services=("xss-gateway" "xss-auth" "xss-property" "xss-dict")
@@ -603,7 +603,7 @@ start_business() {
     step "6" "启动其他业务服务（business）"
 
     log_info "启动服务: image, search, analytics, message, favorite, review, booking"
-    $COMPOSE_CMD --profile business up -d
+    $COMPOSE_CMD --profile infra --profile core --profile business up -d
 
     log_info "等待业务服务启动中（约 1-2 分钟）..."
     # 不等待所有服务就绪（数量多，节省时间），直接给个固定等待
@@ -629,7 +629,7 @@ start_business() {
 start_nginx() {
     step "7" "启动 Nginx 反向代理"
 
-    $COMPOSE_CMD --profile nginx up -d
+    $COMPOSE_CMD --profile infra --profile core --profile business --profile nginx up -d
 
     local waited=0
     local max_wait=30
