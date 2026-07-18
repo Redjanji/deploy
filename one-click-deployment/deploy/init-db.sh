@@ -10,7 +10,11 @@
 
 set -uo pipefail
 
-DEPLOY_DIR=$(cd "$(dirname "$0")" && pwd)
+SCRIPT_PATH="${BASH_SOURCE[0]}"
+while [ -L "$SCRIPT_PATH" ]; do
+    SCRIPT_PATH=$(readlink -f "$SCRIPT_PATH")
+done
+DEPLOY_DIR=$(cd "$(dirname "$SCRIPT_PATH")" && pwd)
 SQL_DIR="$DEPLOY_DIR/sql"
 MYSQL_USER="root"
 
@@ -99,8 +103,8 @@ exec_sql_with_retry() {
             continue
         fi
 
-        # 执行 SQL
-        docker exec -e MYSQL_PWD="$MYSQL_PASSWORD" xss-mysql sh -c "mysql -u $MYSQL_USER < $tmp_file" 2>&1
+        # 执行 SQL（指定 utf8mb4 字符集避免中文乱码）
+        docker exec -e MYSQL_PWD="$MYSQL_PASSWORD" xss-mysql sh -c "mysql -u $MYSQL_USER --default-character-set=utf8mb4 < $tmp_file" 2>&1
         local ret=$?
         docker exec xss-mysql rm -f "$tmp_file" 2>/dev/null
 
@@ -133,6 +137,7 @@ scripts=(
     "09-review_db.sql"
     "10-booking_db.sql"
     "11-booking_templates.sql"
+    "99-test-data.sql"
 )
 
 echo -e "${CYAN}=========================================="
