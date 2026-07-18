@@ -17,14 +17,14 @@
 #   bash full-deploy.sh --no-pull    # 跳过远程拉取（已有 deploy 文件时）
 #
 # 服务器首次部署（一行命令）：
-#   curl -fsSL https://gitee.com/redjanji_admin/one-click-deployment/raw/master/one-click-deployment/deploy/full-deploy.sh | bash
+#   curl -fsSL https://gitee.com/redjanji_admin/deploy/raw/master/full-deploy.sh | bash
 # =====================================================
 
 set -euo pipefail
 
 # 远程仓库配置
-REMOTE_REPO="https://gitee.com/redjanji_admin/one-click-deployment.git"
-REMOTE_DEPLOY_PATH="one-click-deployment/deploy"
+REMOTE_REPO="https://gitee.com/redjanji_admin/deploy.git"
+REMOTE_DEPLOY_PATH="."
 
 # 颜色输出
 RED='\033[0;31m'
@@ -51,7 +51,7 @@ for arg in "$@"; do
             echo "  --no-pull    跳过远程拉取（当前目录已有 deploy 文件时使用）"
             echo ""
             echo "首次部署（一行命令）："
-            echo "  curl -fsSL https://gitee.com/redjanji_admin/one-click-deployment/raw/master/one-click-deployment/deploy/full-deploy.sh | bash"
+            echo "  curl -fsSL https://gitee.com/redjanji_admin/deploy/raw/master/full-deploy.sh | bash"
             exit 0
             ;;
         *)
@@ -106,10 +106,13 @@ pull_deploy_dir() {
         return 0
     fi
 
-    # 检查当前目录是否已有 deploy 必需文件
-    if [ -f "docker-compose.yml" ] && [ -f "full-deploy.sh" ]; then
-        log_ok "当前目录已有 deploy 文件，跳过拉取"
+    # 检查当前目录是否已有 deploy 必需文件（含 sql 目录）
+    if [ -f "docker-compose.yml" ] && [ -f "full-deploy.sh" ] && [ -d "sql" ] && [ "$(ls sql/*.sql 2>/dev/null | wc -l)" -gt 0 ]; then
+        log_ok "当前目录已有完整的 deploy 文件，跳过拉取"
         return 0
+    fi
+    if [ -f "docker-compose.yml" ] && [ -f "full-deploy.sh" ]; then
+        log_warn "当前目录有 deploy 文件但 sql 目录缺失或不完整，将重新拉取"
     fi
 
     step "-1" "从远程仓库拉取 deploy 目录"
@@ -125,25 +128,45 @@ pull_deploy_dir() {
     local deploy_target=""
     if [ "$SCRIPT_DIR" = "$home_dir" ] || [ "$SCRIPT_DIR" = "/root" ] || [[ "$SCRIPT_DIR" == /tmp/* ]]; then
         deploy_target="/opt/xss-deploy"
-        log_info "当前目录为 $SCRIPT_DIR，自动切换部署目录到: $deploy_target"
-        mkdir -p "$deploy_target"
-        cd "$deploy_target"
-        SCRIPT_DIR="$deploy_target"
+        log_info "当前目录为 $SCRIPT_DIR，尝试切换部署目录到: $deploy_target"
+        
+        if mkdir -p "$deploy_target" 2>/dev/null; then
+            cd "$deploy_target"
+            SCRIPT_DIR="$deploy_target"
+            log_ok "部署目录切换成功: $deploy_target"
+        else
+            deploy_target="$home_dir/xss-deploy"
+            log_warn "无法创建 $deploy_target（权限不足），尝试: $deploy_target"
+            mkdir -p "$deploy_target"
+            cd "$deploy_target"
+            SCRIPT_DIR="$deploy_target"
+            log_ok "部署目录切换成功: $deploy_target"
+        fi
     fi
 
     local tmp_clone="/tmp/xss-deploy-clone-$$"
-    log_info "使用 sparse checkout 只拉取 deploy 目录（不含源码）..."
+    log_info "拉取部署文件..."
     log_info "目标目录: $SCRIPT_DIR"
 
-    # 浅克隆 + sparse checkout
-    git clone --depth 1 --filter=blob:none --sparse "$REMOTE_REPO" "$tmp_clone"
-    cd "$tmp_clone"
-    git sparse-checkout set "$REMOTE_DEPLOY_PATH"
+    # 判断是否需要 sparse-checkout
+    if [ "$REMOTE_DEPLOY_PATH" = "." ] || [ -z "$REMOTE_DEPLOY_PATH" ]; then
+        # 整个仓库都是部署文件，直接浅克隆
+        log_info "直接克隆整个仓库（浅克隆）..."
+        git clone --depth 1 "$REMOTE_REPO" "$tmp_clone"
+        cd "$tmp_clone"
+        local src_dir="$tmp_clone"
+    else
+        log_info "使用 sparse checkout 只拉取 $REMOTE_DEPLOY_PATH 目录..."
+        # 浅克隆 + sparse checkout
+        git clone --depth 1 --sparse "$REMOTE_REPO" "$tmp_clone"
+        cd "$tmp_clone"
+        git sparse-checkout set "$REMOTE_DEPLOY_PATH"
+        local src_dir="$tmp_clone/$REMOTE_DEPLOY_PATH"
+    fi
 
     # 将 deploy 目录内容复制到脚本所在目录
-    local src_dir="$tmp_clone/$REMOTE_DEPLOY_PATH"
     if [ ! -d "$src_dir" ]; then
-        log_error "远程仓库中未找到 $REMOTE_DEPLOY_PATH 目录"
+        log_error "未找到部署目录: $src_dir"
         rm -rf "$tmp_clone"
         exit 1
     fi
@@ -164,12 +187,23 @@ pull_deploy_dir() {
         fi
     done
 
+    # 验证 SQL 目录
+    if [ ! -d "sql" ]; then
+        log_error "拉取后缺少 sql 目录"
+        exit 1
+    fi
+    local sql_count=$(ls sql/*.sql 2>/dev/null | wc -l)
+    if [ "$sql_count" -eq 0 ]; then
+        log_error "sql 目录为空，请检查远程仓库"
+        exit 1
+    fi
+
     # 统计拉取的文件
     local file_count=$(find . -type f | wc -l)
     local total_size=$(du -sh . | cut -f1)
     log_ok "拉取完成: $file_count 个文件, 总计 $total_size"
-    log_info "  - 镜像分片: $(ls xss-images-*.tar.part* 2>/dev/null | wc -l) 个"
-    log_info "  - SQL 脚本: $(ls sql/*.sql 2>/dev/null | wc -l) 个"
+    log_info "  - 镜像分片: $(ls xss-images-*.tar.*.part* 2>/dev/null | wc -l) 个"
+    log_info "  - SQL 脚本: $sql_count 个"
     log_info "  - 部署脚本: full-deploy.sh, deploy-all.sh, init-db.sh"
     log_info ""
     log_info "部署目录: $SCRIPT_DIR"
@@ -324,6 +358,7 @@ EOF
 # Step 1: Docker 环境检查
 # =====================================================
 check_docker() {
+    cd "$SCRIPT_DIR"
     step "1" "Docker 环境检查"
 
     if ! command -v docker &> /dev/null; then
@@ -341,15 +376,56 @@ check_docker() {
     # 检查 Docker 服务是否运行
     if ! docker info &> /dev/null; then
         log_warn "Docker 服务未运行，尝试启动..."
+        local docker_started=false
+        
         if command -v systemctl &> /dev/null; then
-            systemctl start docker
+            if systemctl start docker &> /dev/null; then
+                docker_started=true
+            elif sudo -n systemctl start docker &> /dev/null; then
+                docker_started=true
+            fi
         elif command -v service &> /dev/null; then
-            service docker start
+            if service docker start &> /dev/null; then
+                docker_started=true
+            elif sudo -n service docker start &> /dev/null; then
+                docker_started=true
+            fi
         fi
-        sleep 3
-        if ! docker info &> /dev/null; then
-            log_error "Docker 服务启动失败，请手动启动 Docker"
-            exit 1
+        
+        if [ "$docker_started" = true ]; then
+            sleep 3
+            if docker info &> /dev/null; then
+                log_ok "Docker 服务已启动"
+            else
+                docker_started=false
+            fi
+        fi
+        
+        if [ "$docker_started" = false ]; then
+            log_warn "Docker 服务启动失败（权限不足）"
+            log_warn "请在另一个终端中执行：sudo systemctl start docker"
+            log_warn "或使用 sudo 运行本脚本：sudo bash full-deploy.sh"
+            log_warn ""
+            log_warn "等待 Docker 服务启动..."
+            
+            local wait_count=0
+            while [ "$wait_count" -lt 120 ]; do
+                if docker info &> /dev/null; then
+                    log_ok "Docker 服务已启动"
+                    docker_started=true
+                    break
+                fi
+                if [ $((wait_count % 10)) -eq 0 ]; then
+                    log_info "等待中... ($((wait_count / 10))/12)"
+                fi
+                sleep 1
+                wait_count=$((wait_count + 1))
+            done
+            
+            if [ "$docker_started" = false ]; then
+                log_error "等待超时！请手动启动 Docker 后重新运行"
+                exit 1
+            fi
         fi
     fi
     log_ok "Docker 服务运行中"
@@ -384,6 +460,7 @@ check_docker() {
 # Step 2: 合并并加载 Docker 镜像
 # =====================================================
 load_images() {
+    cd "$SCRIPT_DIR"
     if [ "$SKIP_LOAD" = true ]; then
         step "2" "跳过镜像加载（--skip-load）"
         return 0
@@ -391,17 +468,19 @@ load_images() {
 
     step "2" "合并并加载 Docker 镜像"
 
-    # 查找分片文件
-    local part_files=($(ls -1 xss-images-*.tar.part* 2>/dev/null | sort))
+    # 查找分片文件（支持 .tar.part* 和 .tar.gz.part*）
+    local part_files=($(ls -1 xss-images-*.tar.*.part* 2>/dev/null | sort))
     local part_count=${#part_files[@]}
 
     if [ "$part_count" -eq 0 ]; then
-        # 检查是否有完整 tar
         if ls xss-images-*.tar &> /dev/null; then
             local tar_file=$(ls -1 xss-images-*.tar | head -1)
             log_info "找到完整镜像文件: $tar_file"
+        elif ls xss-images-*.tar.gz &> /dev/null; then
+            local tar_file=$(ls -1 xss-images-*.tar.gz | head -1)
+            log_info "找到完整镜像文件（压缩）: $tar_file"
         else
-            log_warn "未找到镜像分片文件（xss-images-*.tar.part*），跳过镜像加载"
+            log_warn "未找到镜像分片文件（xss-images-*.tar.part* 或 xss-images-*.tar.gz.part*），跳过镜像加载"
             log_warn "如果是首次部署，请确保镜像分片文件在 deploy/ 目录下"
             return 0
         fi
@@ -425,7 +504,13 @@ load_images() {
     # 加载镜像
     log_info "正在加载 Docker 镜像（可能需要 1-3 分钟）..."
     local load_start=$(date +%s)
-    docker load -i "$tar_file"
+    
+    if [[ "$tar_file" == *.tar.gz ]]; then
+        gzip -dc "$tar_file" | docker load
+    else
+        docker load -i "$tar_file"
+    fi
+    
     local load_end=$(date +%s)
     local load_duration=$((load_end - load_start))
 
@@ -439,7 +524,7 @@ load_images() {
 
     # 清理 tar 文件（释放磁盘空间）
     if [ "$part_count" -gt 0 ] && [ -f "$tar_file" ]; then
-        log_info "清理合并后的 tar 文件以释放磁盘空间..."
+        log_info "清理合并后的文件以释放磁盘空间..."
         rm -f "$tar_file"
         log_ok "已清理"
     fi
@@ -449,6 +534,7 @@ load_images() {
 # Step 3: 启动中间件层
 # =====================================================
 start_infra() {
+    cd "$SCRIPT_DIR"
     step "3" "启动中间件层（infra）"
 
     log_info "启动服务: mysql, redis, rabbitmq, elasticsearch, minio, nacos"
@@ -489,6 +575,7 @@ start_infra() {
 # Step 4: 初始化数据库和 Nacos 配置
 # =====================================================
 init_config() {
+    cd "$SCRIPT_DIR"
     step "4" "初始化数据库与配置"
 
     # 检查数据库是否已被 docker-entrypoint-initdb.d 自动初始化
@@ -559,6 +646,7 @@ init_config() {
 # Step 5: 启动核心业务服务
 # =====================================================
 start_core() {
+    cd "$SCRIPT_DIR"
     step "5" "启动核心业务服务（core）"
 
     log_info "启动服务: gateway, auth, property, dict"
@@ -600,6 +688,7 @@ start_core() {
 # Step 6: 启动其他业务服务
 # =====================================================
 start_business() {
+    cd "$SCRIPT_DIR"
     step "6" "启动其他业务服务（business）"
 
     log_info "启动服务: image, search, analytics, message, favorite, review, booking"
@@ -627,6 +716,7 @@ start_business() {
 # Step 7: 启动 Nginx
 # =====================================================
 start_nginx() {
+    cd "$SCRIPT_DIR"
     step "7" "启动 Nginx 反向代理"
 
     $COMPOSE_CMD --profile infra --profile core --profile business --profile nginx up -d
