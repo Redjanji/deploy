@@ -1,0 +1,724 @@
+#!/bin/bash
+# =====================================================
+# XSS 微服务集群 - 一键部署脚本 (增强幂等 + 环境自愈版)
+# =====================================================
+# 改动说明：
+#   - 每个启动步骤前自动 down 掉对应 profile，避免容器名冲突
+#   - 脚本开头强制清理所有 xss-* 容器（保留数据卷）
+#   - 增加网络诊断，拉取失败时给出明确指引
+#   - 自动修复 Docker 服务未运行、权限不足等问题
+# =====================================================
+
+set -euo pipefail
+
+# 远程仓库配置
+REMOTE_REPO="https://gitee.com/redjanji_admin/deploy.git"
+REMOTE_DEPLOY_PATH="."
+
+# 颜色输出
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# 参数解析
+SKIP_LOAD=false
+RESTART_ONLY=false
+NO_PULL=false
+for arg in "$@"; do
+    case "$arg" in
+        --skip-load) SKIP_LOAD=true ;;
+        --restart)   RESTART_ONLY=true ;;
+        --no-pull)   NO_PULL=true ;;
+        -h|--help)
+            echo "Usage: bash full-deploy.sh [--skip-load] [--restart] [--no-pull]"
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}Unknown option: $arg${NC}"
+            exit 1
+            ;;
+    esac
+done
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+# =====================================================
+# 工具函数
+# =====================================================
+log_info()  { echo -e "${BLUE}[INFO]${NC}  $1"; }
+log_ok()    { echo -e "${GREEN}[ OK ]${NC}  $1"; }
+log_warn()  { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+log_error() { echo -e "${RED}[FAIL]${NC}  $1"; }
+
+step() {
+    local step_num="$1"
+    local title="$2"
+    echo ""
+    echo "====================================================="
+    echo "  Step $step_num: $title"
+    echo "====================================================="
+}
+
+check_mem_mb() { free -m | awk '/^Mem:/ {print $2}'; }
+check_mem_available_mb() { free -m | awk '/^Mem:/ {print $7}'; }
+check_disk_gb() { df -BG "$SCRIPT_DIR" | awk 'NR==2 {gsub("G",""); print $4}'; }
+check_cpu_cores() { nproc; }
+
+# =====================================================
+# 新增：强制清理所有 xss- 相关容器（保留数据卷）
+# =====================================================
+force_clean_containers() {
+    local containers=$(docker ps -a --filter "name=xss-" -q 2>/dev/null)
+    if [ -n "$containers" ]; then
+        log_warn "检测到残留容器，正在清理（数据卷保留）..."
+        docker rm -f $containers >/dev/null 2>&1 || true
+        log_ok "残留容器已清理"
+    fi
+}
+
+# =====================================================
+# 新增：网络连通性诊断（快速失败并给出修复建议）
+# =====================================================
+network_diag() {
+    step "0.5" "网络连通性诊断"
+    local test_host="registry-1.docker.io"
+    local test_port=443
+    if timeout 3 bash -c "echo >/dev/tcp/$test_host/$test_port" 2>/dev/null; then
+        log_ok "Docker Hub 可达"
+    else
+        log_warn "无法连接 Docker Hub (registry-1.docker.io)"
+        log_warn "若后续拉取中间件镜像失败，请："
+        log_warn "  1. 检查 /etc/resolv.conf，临时改用 8.8.8.8"
+        log_warn "  2. 或确保已配置国内镜像加速（脚本已自动配置）"
+        log_warn "部署将继续，但拉取可能较慢或失败。"
+    fi
+}
+
+# =====================================================
+# Step -1: 从远程仓库拉取 deploy 目录
+# =====================================================
+# （保持原样，无需改动）
+pull_deploy_dir() {
+    if [ "$NO_PULL" = true ]; then return 0; fi
+    if [ -f "docker-compose.yml" ] && [ -f "full-deploy.sh" ] && [ -d "sql" ] && [ "$(ls sql/*.sql 2>/dev/null | wc -l)" -gt 0 ]; then
+        log_ok "当前目录已有完整的 deploy 文件，跳过拉取"
+        return 0
+    fi
+    if [ -f "docker-compose.yml" ] && [ -f "full-deploy.sh" ]; then
+        log_warn "当前目录有 deploy 文件但 sql 目录缺失或不完整，将重新拉取"
+    fi
+
+    step "-1" "从远程仓库拉取 deploy 目录"
+    if ! command -v git &> /dev/null; then
+        log_error "git 未安装，请先安装 git：apt install -y git"
+        exit 1
+    fi
+
+    local home_dir="$HOME"
+    local deploy_target=""
+    if [ "$SCRIPT_DIR" = "$home_dir" ] || [ "$SCRIPT_DIR" = "/root" ] || [[ "$SCRIPT_DIR" == /tmp/* ]]; then
+        deploy_target="/opt/xss-deploy"
+        log_info "当前目录为 $SCRIPT_DIR，尝试切换部署目录到: $deploy_target"
+        if mkdir -p "$deploy_target" 2>/dev/null; then
+            cd "$deploy_target"
+            SCRIPT_DIR="$deploy_target"
+            log_ok "部署目录切换成功: $deploy_target"
+        else
+            deploy_target="$home_dir/xss-deploy"
+            log_warn "无法创建 $deploy_target（权限不足），尝试: $deploy_target"
+            mkdir -p "$deploy_target"
+            cd "$deploy_target"
+            SCRIPT_DIR="$deploy_target"
+            log_ok "部署目录切换成功: $deploy_target"
+        fi
+    fi
+
+    local tmp_clone="/tmp/xss-deploy-clone-$$"
+    log_info "拉取部署文件..."
+    log_info "目标目录: $SCRIPT_DIR"
+    if [ "$REMOTE_DEPLOY_PATH" = "." ] || [ -z "$REMOTE_DEPLOY_PATH" ]; then
+        log_info "直接克隆整个仓库（浅克隆）..."
+        git clone --depth 1 "$REMOTE_REPO" "$tmp_clone"
+        cd "$tmp_clone"
+        local src_dir="$tmp_clone"
+    else
+        log_info "使用 sparse checkout 只拉取 $REMOTE_DEPLOY_PATH 目录..."
+        git clone --depth 1 --sparse "$REMOTE_REPO" "$tmp_clone"
+        cd "$tmp_clone"
+        git sparse-checkout set "$REMOTE_DEPLOY_PATH"
+        local src_dir="$tmp_clone/$REMOTE_DEPLOY_PATH"
+    fi
+
+    if [ ! -d "$src_dir" ]; then
+        log_error "未找到部署目录: $src_dir"
+        rm -rf "$tmp_clone"
+        exit 1
+    fi
+
+    log_info "复制部署文件到 $SCRIPT_DIR ..."
+    cp -r "$src_dir"/. "$SCRIPT_DIR/"
+    rm -rf "$tmp_clone"
+    cd "$SCRIPT_DIR"
+
+    local required_files=("docker-compose.yml" "full-deploy.sh" ".env.example")
+    for f in "${required_files[@]}"; do
+        if [ ! -f "$f" ]; then
+            log_error "拉取后缺少必需文件: $f"
+            exit 1
+        fi
+    done
+    if [ ! -d "sql" ]; then
+        log_error "拉取后缺少 sql 目录"
+        exit 1
+    fi
+    local sql_count=$(ls sql/*.sql 2>/dev/null | wc -l)
+    if [ "$sql_count" -eq 0 ]; then
+        log_error "sql 目录为空，请检查远程仓库"
+        exit 1
+    fi
+
+    local file_count=$(find . -type f | wc -l)
+    local total_size=$(du -sh . | cut -f1)
+    log_ok "拉取完成: $file_count 个文件, 总计 $total_size"
+    log_info "  - 镜像分片: $(ls xss-images-*.tar.*.part* 2>/dev/null | wc -l) 个"
+    log_info "  - SQL 脚本: $sql_count 个"
+    log_info "  - 部署脚本: full-deploy.sh, deploy-all.sh, init-db.sh"
+    log_info ""
+    log_info "部署目录: $SCRIPT_DIR"
+    log_info "后续可在此目录执行: bash full-deploy.sh --no-pull"
+}
+
+# =====================================================
+# Step 0: 系统资源检查
+# =====================================================
+check_system_resources() {
+    step "0" "系统资源检查"
+    local mem_total=$(check_mem_mb)
+    local mem_avail=$(check_mem_available_mb)
+    local disk_free=$(check_disk_gb)
+    local cpu_cores=$(check_cpu_cores)
+
+    log_info "内存总量: ${mem_total}MB | 可用: ${mem_avail}MB"
+    log_info "磁盘可用: ${disk_free}GB"
+    log_info "CPU 核心数: ${cpu_cores}"
+
+    local mem_min=2048
+    local disk_min=5
+    local cpu_min=2
+
+    if [ "$mem_total" -lt "$mem_min" ]; then
+        log_error "内存不足！最低要求 ${mem_min}MB，当前 ${mem_total}MB"
+        exit 1
+    fi
+    if [ "$disk_free" -lt "$disk_min" ]; then
+        log_error "磁盘空间不足！最低要求 ${disk_min}GB，当前 ${disk_free}GB"
+        exit 1
+    fi
+    if [ "$cpu_cores" -lt "$cpu_min" ]; then
+        log_error "CPU 核心数不足！最低要求 ${cpu_min}核，当前 ${cpu_cores}核"
+        exit 1
+    fi
+
+    if [ "$mem_avail" -lt 1024 ]; then
+        log_warn "可用内存低于 1GB，部署过程可能较慢，建议关闭其他程序"
+    fi
+    if [ "$mem_total" -lt 3584 ]; then
+        log_warn "内存低于 3.5GB，部分服务可能需要调整资源限制"
+    fi
+    log_ok "系统资源检查通过"
+}
+
+# =====================================================
+# 自动安装 Docker（国内镜像源）
+# =====================================================
+install_docker() {
+    log_info "检测到 Docker 未安装，正在自动安装..."
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        local os_id="$ID"
+    else
+        log_error "无法检测系统版本，请手动安装 Docker"
+        exit 1
+    fi
+
+    case "$os_id" in
+        ubuntu|debian)
+            apt-get update -y
+            apt-get install -y ca-certificates curl gnupg lsb-release
+            install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/$os_id/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+            chmod a+r /etc/apt/keyrings/docker.gpg
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://mirrors.aliyun.com/docker-ce/linux/$os_id $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+            apt-get update -y
+            apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            ;;
+        centos|rhel|rocky|almalinux)
+            if command -v dnf &> /dev/null; then
+                dnf install -y dnf-plugins-core
+                dnf config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+                dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            else
+                yum install -y yum-utils
+                yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+                yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            fi
+            systemctl enable docker
+            systemctl start docker
+            ;;
+        *)
+            log_error "不支持的系统: $os_id，请手动安装 Docker"
+            exit 1
+            ;;
+    esac
+
+    mkdir -p /etc/docker
+    cat > /etc/docker/daemon.json << 'EOF'
+{
+    "registry-mirrors": [
+        "https://registry.cn-hangzhou.aliyuncs.com",
+        "https://docker.m.daocloud.io",
+        "https://mirror.baidubce.com"
+    ]
+}
+EOF
+    systemctl daemon-reload
+    systemctl restart docker
+    sleep 3
+
+    if command -v docker &> /dev/null; then
+        log_ok "Docker 安装完成: $(docker --version | awk '{print $3}')"
+    else
+        log_error "Docker 安装失败"
+        exit 1
+    fi
+}
+
+# =====================================================
+# Step 1: Docker 环境检查（增强版）
+# =====================================================
+check_docker() {
+    cd "$SCRIPT_DIR"
+    step "1" "Docker 环境检查"
+
+    if ! command -v docker &> /dev/null; then
+        if [ "$(id -u)" -ne 0 ]; then
+            log_error "Docker 未安装，且当前非 root 用户。请使用 sudo 运行：sudo bash full-deploy.sh"
+            exit 1
+        fi
+        install_docker
+    else
+        log_ok "Docker 已安装: $(docker --version | awk '{print $3}')"
+    fi
+
+    # 确保 Docker 服务运行（自动尝试启动）
+    if ! docker info &> /dev/null; then
+        log_warn "Docker 服务未运行，尝试启动..."
+        if command -v systemctl &> /dev/null; then
+            sudo systemctl start docker &>/dev/null || true
+        elif command -v service &> /dev/null; then
+            sudo service docker start &>/dev/null || true
+        fi
+        sleep 3
+    fi
+
+    if ! docker info &> /dev/null; then
+        log_error "Docker 服务启动失败，请手动启动后重试"
+        exit 1
+    fi
+    log_ok "Docker 服务运行中"
+
+    if docker compose version &> /dev/null; then
+        COMPOSE_CMD="docker compose"
+        log_ok "Docker Compose V2: $(docker compose version | awk '{print $4}')"
+    elif command -v docker-compose &> /dev/null; then
+        COMPOSE_CMD="docker-compose"
+        log_ok "Docker Compose V1: $(docker-compose --version | awk '{print $3}')"
+    else
+        log_error "Docker Compose 未安装"
+        exit 1
+    fi
+
+    if [ ! -f .env ]; then
+        if [ -f .env.example ]; then
+            log_warn ".env 文件不存在，从 .env.example 复制默认配置"
+            cp .env.example .env
+        else
+            log_warn ".env 文件不存在，将使用 docker-compose.yml 中的默认值"
+        fi
+    else
+        log_ok ".env 配置文件已就绪"
+    fi
+
+    # 强制清理之前可能残留的 xss-* 容器（解决 Conflict 问题）
+    force_clean_containers
+}
+
+# =====================================================
+# Step 2: 加载业务镜像并拉取中间件镜像
+# =====================================================
+load_images() {
+    cd "$SCRIPT_DIR"
+    if [ "$SKIP_LOAD" = true ]; then
+        step "2" "跳过镜像加载（--skip-load）"
+        return 0
+    fi
+
+    step "2" "加载业务镜像并拉取中间件"
+
+    local middleware_images=(
+        "mysql:8.0"
+        "redis:7-alpine"
+        "rabbitmq:3.12-management-alpine"
+        "docker.elastic.co/elasticsearch/elasticsearch:8.11.0"
+        "minio/minio:latest"
+        "nacos/nacos-server:v2.3.2"
+        "nginx:1.27-alpine"
+    )
+
+    log_info "从官方仓库拉取中间件镜像（7个）..."
+    for img in "${middleware_images[@]}"; do
+        if docker image inspect "$img" &>/dev/null; then
+            log_ok "  已存在: $img"
+        else
+            log_info "  拉取: $img"
+            if docker pull "$img"; then
+                log_ok "  拉取成功"
+            else
+                log_warn "  拉取失败: $img（将在启动时重试）"
+            fi
+        fi
+    done
+
+    # 合并业务镜像分片（原逻辑不变）
+    local part_files=($(ls -1 xss-images-*.tar.*.part* 2>/dev/null | sort))
+    local part_count=${#part_files[@]}
+    local tar_file=""
+
+    if [ "$part_count" -eq 0 ]; then
+        if ls xss-images-*.tar &> /dev/null; then
+            tar_file=$(ls -1 xss-images-*.tar | head -1)
+            log_info "找到完整业务镜像文件: $tar_file"
+        elif ls xss-images-*.tar.gz &> /dev/null; then
+            tar_file=$(ls -1 xss-images-*.tar.gz | head -1)
+            log_info "找到完整业务镜像文件（压缩）: $tar_file"
+        else
+            log_warn "未找到业务镜像分片，业务镜像将通过 Docker Hub 或本地构建获取"
+            return 0
+        fi
+    else
+        log_info "找到 $part_count 个业务镜像分片文件"
+        local first_part="${part_files[0]}"
+        tar_file="${first_part%.part*}"
+        if [ -f "$tar_file" ]; then
+            log_info "业务镜像文件已存在: $tar_file，跳过合并"
+        else
+            log_info "正在合并分片到: $tar_file ..."
+            cat "${part_files[@]}" > "$tar_file"
+            log_ok "合并完成: $(du -h "$tar_file" | cut -f1)"
+        fi
+    fi
+
+    # 加载业务镜像
+    if [ -n "$tar_file" ] && [ -f "$tar_file" ]; then
+        log_info "正在加载业务 Docker 镜像..."
+        local load_start=$(date +%s)
+        if [[ "$tar_file" == *.tar.gz ]]; then
+            gzip -dc "$tar_file" | docker load
+        else
+            docker load -i "$tar_file"
+        fi
+        local load_end=$(date +%s)
+        log_ok "业务镜像加载完成，耗时 $((load_end - load_start)) 秒"
+
+        log_info "已加载的业务镜像:"
+        docker images --format "{{.Repository}}:{{.Tag}} {{.Size}}" | grep "^xss/" | sort | while read line; do echo "       $line"; done
+
+        # 清理合并后的文件
+        if [ "$part_count" -gt 0 ] && [ -f "$tar_file" ]; then
+            log_info "清理合并后的文件以释放磁盘空间..."
+            rm -f "$tar_file"
+            log_ok "已清理"
+        fi
+    fi
+}
+
+# =====================================================
+# Step 3: 启动中间件层（先 down 再 up，杜绝冲突）
+# =====================================================
+start_infra() {
+    cd "$SCRIPT_DIR"
+    step "3" "启动中间件层（infra）"
+
+    # 关键：先清理该 profile 下的旧容器
+    $COMPOSE_CMD --profile infra down --remove-orphans 2>/dev/null || true
+
+    log_info "启动服务: mysql, redis, rabbitmq, elasticsearch, minio, nacos"
+    $COMPOSE_CMD --profile infra up -d
+
+    log_info "等待中间件健康检查通过（最长约 3 分钟）..."
+    local infra_services=("xss-mysql" "xss-redis" "xss-rabbitmq" "xss-elasticsearch" "xss-minio" "xss-nacos")
+    local all_healthy=true
+    local max_wait=180
+
+    for svc in "${infra_services[@]}"; do
+        log_info "等待 $svc ..."
+        local waited=0
+        while [ "$waited" -lt "$max_wait" ]; do
+            if docker inspect --format='{{.State.Health.Status}}' "$svc" 2>/dev/null | grep -q "healthy"; then
+                log_ok "  $svc is healthy"
+                break
+            fi
+            sleep 5
+            waited=$((waited + 5))
+        done
+        if [ "$waited" -ge "$max_wait" ]; then
+            log_error "  $svc 超时未就绪"
+            all_healthy=false
+        fi
+    done
+
+    if [ "$all_healthy" = false ]; then
+        log_error "部分中间件服务未就绪，请检查日志: docker logs <container>"
+        exit 1
+    fi
+    log_ok "所有中间件服务已就绪"
+}
+
+# =====================================================
+# Step 4: 初始化数据库和 Nacos 配置
+# =====================================================
+init_config() {
+    cd "$SCRIPT_DIR"
+    step "4" "初始化数据库与配置"
+
+    local mysql_pwd="${MYSQL_ROOT_PASSWORD:-root}"
+    if [ -f .env ]; then
+        mysql_pwd=$(grep '^MYSQL_ROOT_PASSWORD=' .env | sed 's/^MYSQL_ROOT_PASSWORD=//' || echo "root")
+    fi
+
+    log_info "等待 MySQL 稳定运行..."
+    local waited=0
+    while [ "$waited" -lt 60 ]; do
+        if docker exec -e MYSQL_PWD="$mysql_pwd" xss-mysql mysql -uroot -e "SELECT 1" &>/dev/null; then
+            break
+        fi
+        sleep 5
+        waited=$((waited + 5))
+    done
+
+    local expected_dbs=("auth_db" "dict_db" "property_db" "image_db" "analytics_db" "message_db" "favorite_db" "review_db" "booking_db")
+    local db_count=0
+    for db in "${expected_dbs[@]}"; do
+        if docker exec -e MYSQL_PWD="$mysql_pwd" xss-mysql mysql -uroot -e "USE $db;" 2>/dev/null; then
+            db_count=$((db_count + 1))
+        fi
+    done
+
+    log_info "已初始化数据库: $db_count / ${#expected_dbs[@]}"
+
+    if [ "$db_count" -lt "${#expected_dbs[@]}" ]; then
+        log_warn "数据库未完全初始化，执行手动初始化..."
+        if [ -f "./init-db.sh" ]; then
+            chmod +x ./init-db.sh
+            bash ./init-db.sh
+        else
+            log_error "init-db.sh 不存在，无法初始化数据库"
+            exit 1
+        fi
+    else
+        log_ok "数据库已完全初始化"
+    fi
+
+    if [ -d "./nacos-config" ]; then
+        log_info "Nacos 配置目录已就绪"
+    fi
+    log_ok "配置初始化完成"
+}
+
+# =====================================================
+# Step 5: 启动核心业务服务
+# =====================================================
+start_core() {
+    cd "$SCRIPT_DIR"
+    step "5" "启动核心业务服务（core）"
+
+    # 清理可能残留的 core 相关容器
+    $COMPOSE_CMD --profile infra --profile core down --remove-orphans 2>/dev/null || true
+
+    log_info "启动服务: gateway, auth, property, dict"
+    $COMPOSE_CMD --profile infra --profile core up -d
+
+    log_info "等待核心服务就绪（最长约 2 分钟）..."
+    local core_services=("xss-gateway" "xss-auth" "xss-property" "xss-dict")
+    local max_wait=120
+
+    for svc in "${core_services[@]}"; do
+        log_info "等待 $svc ..."
+        local waited=0
+        while [ "$waited" -lt "$max_wait" ]; do
+            if docker inspect --format='{{.State.Health.Status}}' "$svc" 2>/dev/null | grep -q "healthy"; then
+                log_ok "  $svc is healthy"
+                break
+            fi
+            if docker inspect --format='{{.State.Running}}' "$svc" 2>/dev/null | grep -q "true"; then
+                if ! docker inspect --format='{{.State.Health}}' "$svc" 2>/dev/null | grep -q "Health:"; then
+                    log_ok "  $svc is running"
+                    break
+                fi
+            fi
+            sleep 5
+            waited=$((waited + 5))
+        done
+        if [ "$waited" -ge "$max_wait" ]; then
+            log_warn "  $svc 可能未完全就绪（继续后续步骤）"
+        fi
+    done
+    log_ok "核心业务服务启动完成"
+}
+
+# =====================================================
+# Step 6: 启动其他业务服务
+# =====================================================
+start_business() {
+    cd "$SCRIPT_DIR"
+    step "6" "启动其他业务服务（business）"
+
+    $COMPOSE_CMD --profile infra --profile core --profile business down --remove-orphans 2>/dev/null || true
+
+    log_info "启动服务: image, search, analytics, message, favorite, review, booking"
+    $COMPOSE_CMD --profile infra --profile core --profile business up -d
+
+    log_info "等待业务服务启动中（约 1-2 分钟）..."
+    sleep 30
+
+    local business_services=("xss-image" "xss-search" "xss-analytics" "xss-message" "xss-favorite" "xss-review" "xss-booking")
+    local running=0
+    for svc in "${business_services[@]}"; do
+        if docker inspect --format='{{.State.Running}}' "$svc" 2>/dev/null | grep -q "true"; then
+            running=$((running + 1))
+        else
+            log_warn "  $svc 未在运行"
+        fi
+    done
+    log_ok "业务服务启动完成: $running / ${#business_services[@]} 运行中"
+}
+
+# =====================================================
+# Step 7: 启动 Nginx
+# =====================================================
+start_nginx() {
+    cd "$SCRIPT_DIR"
+    step "7" "启动 Nginx 反向代理"
+
+    $COMPOSE_CMD --profile infra --profile core --profile business --profile nginx down --remove-orphans 2>/dev/null || true
+    $COMPOSE_CMD --profile infra --profile core --profile business --profile nginx up -d
+
+    local waited=0
+    while [ "$waited" -lt 30 ]; do
+        if docker inspect --format='{{.State.Health.Status}}' xss-nginx 2>/dev/null | grep -q "healthy"; then
+            break
+        fi
+        sleep 3
+        waited=$((waited + 3))
+    done
+
+    if docker inspect --format='{{.State.Running}}' xss-nginx 2>/dev/null | grep -q "true"; then
+        log_ok "Nginx 已启动"
+    else
+        log_warn "Nginx 启动失败"
+    fi
+}
+
+# =====================================================
+# Step 8: 部署结果汇总
+# =====================================================
+report_status() {
+    step "8" "部署结果汇总"
+    echo ""
+    echo "  容器状态："
+    echo "  ────────────────────────────────────────────────"
+    docker ps --format "table  {{.Names}}\t{{.Status}}\t{{.Size}}" | sort
+
+    local total=$(docker ps -a --filter "name=xss-" -q | wc -l)
+    local running=$(docker ps --filter "name=xss-" --filter "status=running" -q | wc -l)
+    local healthy=0
+    for c in $(docker ps --filter "name=xss-" -q); do
+        if docker inspect --format='{{.State.Health.Status}}' "$c" 2>/dev/null | grep -q "healthy"; then
+            healthy=$((healthy + 1))
+        fi
+    done
+
+    echo ""
+    echo "  汇总："
+    echo "    总容器数: $total"
+    echo "    运行中:   $running"
+    echo "    健康:     $healthy"
+    echo ""
+    echo "  访问入口："
+    echo "    API 网关:  http://<服务器IP>:8080"
+    echo "    Nginx:    http://<服务器IP>:80"
+    echo "    Nacos:    http://<服务器IP>:8848/nacos"
+    echo "    MinIO:    http://<服务器IP>:9001"
+    echo "    RabbitMQ: http://<服务器IP>:15672"
+    echo ""
+
+    if [ "$running" -eq "$total" ]; then
+        log_ok "所有容器运行中！部署成功 🎉"
+    else
+        log_warn "部分容器未运行，请检查日志排查问题"
+    fi
+}
+
+# =====================================================
+# 重启模式
+# =====================================================
+restart_all() {
+    step "重启" "重启所有服务"
+    check_docker
+    $COMPOSE_CMD --profile infra --profile core --profile business --profile nginx down --remove-orphans 2>/dev/null || true
+    sleep 5
+    start_infra
+    init_config
+    start_core
+    start_business
+    start_nginx
+    report_status
+}
+
+# =====================================================
+# 主流程
+# =====================================================
+main() {
+    echo ""
+    echo "╔══════════════════════════════════════════════════╗"
+    echo "║      XSS 微服务集群 - 一键部署脚本 (增强版)     ║"
+    echo "╚══════════════════════════════════════════════════╝"
+    echo ""
+    echo "  部署目录: $SCRIPT_DIR"
+    echo "  模式: $( [ "$RESTART_ONLY" = true ] && echo '重启' || echo '完整部署' )"
+    echo "  跳过镜像加载: $SKIP_LOAD"
+    echo "  跳过远程拉取: $NO_PULL"
+    echo ""
+
+    if [ "$RESTART_ONLY" = true ]; then
+        restart_all
+        exit 0
+    fi
+
+    pull_deploy_dir
+    check_system_resources
+    network_diag
+    check_docker
+    load_images
+    start_infra
+    init_config
+    start_core
+    start_business
+    start_nginx
+    report_status
+}
+
+main "$@"
