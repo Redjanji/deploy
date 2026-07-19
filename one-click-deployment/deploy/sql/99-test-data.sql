@@ -11,9 +11,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 USE `auth_db`;
 
 INSERT INTO `users` (`id`, `username`, `password_hash`, `email`, `phone`, `created_at`) VALUES
-(1, 'testuser', '$2a$10$N9qo8uLOickgx2ZMRZoMye.IjzqAKL9xL5jvMFVdNJHvGCgTq/VEq', 'test@example.com', '13800138000', '2026-07-01 10:00:00'),
-(2, 'agent001', '$2a$10$N9qo8uLOickgx2ZMRZoMye.IjzqAKL9xL5jvMFVdNJHvGCgTq/VEq', 'agent@example.com', '13900139000', '2026-07-01 11:00:00'),
-(3, 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMye.IjzqAKL9xL5jvMFVdNJHvGCgTq/VEq', 'admin@example.com', '13700137000', '2026-07-01 09:00:00');
+(1, 'testuser', '$2a$10$xVvf6b/52y3hatdSjA1W3u8PALfH99kUgkTqtO/b4K0YCk7PYrR1S', 'test@example.com', '13800138000', '2026-07-01 10:00:00'),
+(2, 'agent001', '$2a$10$xVvf6b/52y3hatdSjA1W3u8PALfH99kUgkTqtO/b4K0YCk7PYrR1S', 'agent@example.com', '13900139000', '2026-07-01 11:00:00'),
+(3, 'admin', '$2a$10$xVvf6b/52y3hatdSjA1W3u8PALfH99kUgkTqtO/b4K0YCk7PYrR1S', 'admin@example.com', '13700137000', '2026-07-01 09:00:00');
 
 -- ============================================================
 -- property_db - 房源数据
