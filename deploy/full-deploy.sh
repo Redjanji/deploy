@@ -12,7 +12,7 @@
 set -euo pipefail
 
 # 远程仓库配置
-REMOTE_REPO="https://gitee.com/redjanji_admin/deploy.git"
+REMOTE_REPO="https://github.com/Redjanji/deploy.git"
 REMOTE_DEPLOY_PATH="."
 
 # 颜色输出
