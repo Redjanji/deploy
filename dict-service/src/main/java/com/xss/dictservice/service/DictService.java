@@ -44,6 +44,21 @@ public class DictService {
         DICT_TABLES.put("unit", new DictTableConfig("sys_unit", "code", "name", "sort_order", true));
         DICT_TABLES.put("common_status", new DictTableConfig("sys_common_status", "code", "name", "sort_order", true));
         DICT_TABLES.put("payment_method", new DictTableConfig("sys_payment_method", "code", "name", "sort_order", true));
+        DICT_TABLES.put("property_type", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("decoration", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("heating_method", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("water_supply", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("power_supply", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("gas_supply", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("internet", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("tv_service", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("orientation", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("room_type", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("rental_area_unit", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("lease_term", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("publish_status", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("audit_status", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("property_label", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
     }
 
     public DictService(JdbcTemplate jdbcTemplate, StringRedisTemplate redisTemplate,
@@ -55,12 +70,17 @@ public class DictService {
     }
 
     public List<Map<String, Object>> getDictList(String dictType, Integer status, String keyword) {
-        DictTableConfig config = getConfig(dictType);
         String st = status != null ? String.valueOf(status) : "all";
         String kw = keyword != null ? keyword : "all";
         String cacheKey = "dict:" + dictType + ":list:" + st + ":" + kw;
 
         return queryListWithCache(cacheKey, () -> {
+            if ("sys_property_dict_item".equals(getConfig(dictType).tableName)) {
+                int enabledOnly = (status != null && status == 1) ? 1 : 0;
+                return itemMapper.selectByTypeCode(dictType, enabledOnly, keyword);
+            }
+
+            DictTableConfig config = getConfig(dictType);
             StringBuilder sql = new StringBuilder("SELECT ");
             sql.append(config.codeColumn).append(" AS code, ");
             sql.append(config.nameColumn).append(" AS name, ");

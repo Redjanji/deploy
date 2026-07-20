@@ -228,11 +228,14 @@ services:
       NACOS_AUTH_TOKEN: ${NACOS_AUTH_TOKEN:-SecretKey012345678901234567890123456789012345678901234567890123456789}
       NACOS_AUTH_IDENTITY_KEY: ${NACOS_AUTH_IDENTITY_KEY:-nacos}
       NACOS_AUTH_IDENTITY_VALUE: ${NACOS_AUTH_IDENTITY_VALUE:-nacos}
-      JVM_XMS: 128m
-      JVM_XMX: 192m
-      JVM_XMN: 96m
+      JVM_XMS: 256m
+      JVM_XMX: 384m
+      JVM_XMN: 192m
       NACOS_DEBUG: "n"
       TOMCAT_ACCESSLOG_ENABLED: "false"
+      NACOS_SERVER_PORT: 8848
+      NACOS_GRPC_PORT: 9848
+      NACOS_GRPC_TLS_PORT: 9849
     ports:
       - "${NACOS_PORT:-8848}:8848"
       - "9848:9848"
@@ -247,17 +250,17 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.6'
-          memory: 256M
+          cpus: '0.8'
+          memory: 512M
         reservations:
-          cpus: '0.2'
-          memory: 192M
+          cpus: '0.3'
+          memory: 384M
     healthcheck:
-      test: ["CMD-SHELL", "curl -s http://127.0.0.1:8848/nacos/v1/console/health/readiness > /dev/null 2>&1 || exit 1"]
+      test: ["CMD-SHELL", "curl -s http://127.0.0.1:8848/nacos/v1/console/health/readiness > /dev/null 2>&1 && curl -s http://127.0.0.1:8848/nacos/v1/ns/service/list?pageNo=1&pageSize=10 > /dev/null 2>&1 || exit 1"]
       interval: 15s
       timeout: 10s
       retries: 20
-      start_period: 60s
+      start_period: 90s
 
   # =====================================================
   # 二、核心业务服务（第2批）
@@ -273,6 +276,8 @@ services:
       - JWT_SECRET=${JWT_SECRET:-eW91ci0yNTYtYml0LXNlY3JldC1rZXktZm9yLWp3dC1zaWduaW5nLWRldi1vbmx5}
       - APP_SECRET_BACKEND=${APP_SECRET_BACKEND:-dev-secret-key-change-in-production}
       - APP_SECRET_DASHBOARD=${APP_SECRET_DASHBOARD:-dev-secret-key-change-in-production}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms64m -Xmx128m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError
     ports:
       - "${GATEWAY_PORT:-8080}:8080"
@@ -314,6 +319,8 @@ services:
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
       - JWT_SECRET=${JWT_SECRET:-eW91ci0yNTYtYml0LXNlY3JldC1rZXktZm9yLWp3dC1zaWduaW5nLWRldi1vbmx5}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms64m -Xmx128m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -356,6 +363,8 @@ services:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms64m -Xmx128m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -395,6 +404,8 @@ services:
       - MYSQL_PASS=${MYSQL_ROOT_PASSWORD:-root}
       - REDIS_HOST=redis
       - REDIS_PASSWORD=${REDIS_PASSWORD:-redisroot}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -442,6 +453,8 @@ services:
       - MINIO_ENDPOINT=http://minio:9000
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minioadmin}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -476,6 +489,8 @@ services:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -512,6 +527,8 @@ services:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -550,6 +567,8 @@ services:
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
       - MAIL_USERNAME=${MAIL_USERNAME:-753280878@qq.com}
       - MAIL_PASSWORD=${MAIL_PASSWORD:-ufhravxbjladbeig}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -582,6 +601,8 @@ services:
       - MYSQL_PORT=3306
       - MYSQL_USER=root
       - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx64m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -617,6 +638,8 @@ services:
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
       - REVIEW_INTERNAL_TOKEN=${REVIEW_INTERNAL_TOKEN:-internal-token-review-xxx}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
@@ -654,6 +677,8 @@ services:
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
       - MESSAGE_NOTIFY_ADMIN_EMAIL=${MESSAGE_NOTIFY_ADMIN_EMAIL:-redjanji@163.com}
+      - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
+      - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net

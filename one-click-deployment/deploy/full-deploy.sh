@@ -1,17 +1,20 @@
 #!/bin/bash
 # =====================================================
-# XSS 微服务集群 - 一键部署脚本 (增强幂等 + 环境自愈版)
+# XSS 微服务集群 - 一键部署脚本 (增强幂等 + 环境自愈 + 自动更新版)
 # =====================================================
-# 改动说明：
-#   - 每个启动步骤前自动 down 掉对应 profile，避免容器名冲突
-#   - 脚本开头强制清理所有 xss-* 容器（保留数据卷）
-#   - 增加网络诊断，拉取失败时给出明确指引
-#   - 自动修复 Docker 服务未运行、权限不足等问题
+# 特性：
+#   - 自动检测并拉取远程仓库更新（git pull）
+#   - 自动安装 Docker 及 Compose，配置国内镜像加速
+#   - 强制清理残留容器、自动修复 Docker 服务
+#   - 端口占用检查与警告
+#   - 支持 --skip-load / --restart / --no-pull 参数
+#   - 启动前自动 down 对应 profile，杜绝容器名冲突
+#   - 加载业务镜像后自动清理分片文件，释放磁盘
 # =====================================================
 
 set -euo pipefail
 
-# 远程仓库配置
+# 远程仓库配置（Gitee）
 REMOTE_REPO="https://gitee.com/redjanji_admin/deploy.git"
 REMOTE_DEPLOY_PATH="."
 
@@ -22,7 +25,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-# 参数解析
+# ===================== 参数解析 =====================
 SKIP_LOAD=false
 RESTART_ONLY=false
 NO_PULL=false
@@ -32,7 +35,7 @@ for arg in "$@"; do
         --restart)   RESTART_ONLY=true ;;
         --no-pull)   NO_PULL=true ;;
         -h|--help)
-            echo "Usage: bash full-deploy.sh [--skip-load] [--restart] [--no-pull]"
+            echo "Usage: sudo bash full-deploy.sh [--skip-load] [--restart] [--no-pull]"
             exit 0
             ;;
         *)
@@ -42,12 +45,16 @@ for arg in "$@"; do
     esac
 done
 
+# 必须使用 root 运行
+if [ "$(id -u)" -ne 0 ]; then
+    echo -e "${RED}[FAIL] 请使用 sudo 运行：sudo bash $0${NC}"
+    exit 1
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# =====================================================
-# 工具函数
-# =====================================================
+# ===================== 工具函数 =====================
 log_info()  { echo -e "${BLUE}[INFO]${NC}  $1"; }
 log_ok()    { echo -e "${GREEN}[ OK ]${NC}  $1"; }
 log_warn()  { echo -e "${YELLOW}[WARN]${NC}  $1"; }
@@ -67,9 +74,7 @@ check_mem_available_mb() { free -m | awk '/^Mem:/ {print $7}'; }
 check_disk_gb() { df -BG "$SCRIPT_DIR" | awk 'NR==2 {gsub("G",""); print $4}'; }
 check_cpu_cores() { nproc; }
 
-# =====================================================
-# 新增：强制清理所有 xss- 相关容器（保留数据卷）
-# =====================================================
+# ===================== 强制清理残留容器 =====================
 force_clean_containers() {
     local containers=$(docker ps -a --filter "name=xss-" -q 2>/dev/null)
     if [ -n "$containers" ]; then
@@ -79,9 +84,7 @@ force_clean_containers() {
     fi
 }
 
-# =====================================================
-# 新增：网络连通性诊断（快速失败并给出修复建议）
-# =====================================================
+# ===================== 网络连通性诊断 =====================
 network_diag() {
     step "0.5" "网络连通性诊断"
     local test_host="registry-1.docker.io"
@@ -90,27 +93,75 @@ network_diag() {
         log_ok "Docker Hub 可达"
     else
         log_warn "无法连接 Docker Hub (registry-1.docker.io)"
-        log_warn "若后续拉取中间件镜像失败，请："
-        log_warn "  1. 检查 /etc/resolv.conf，临时改用 8.8.8.8"
-        log_warn "  2. 或确保已配置国内镜像加速（脚本已自动配置）"
+        log_warn "若后续拉取中间件镜像失败，请检查网络或代理配置"
         log_warn "部署将继续，但拉取可能较慢或失败。"
     fi
 }
 
-# =====================================================
-# Step -1: 从远程仓库拉取 deploy 目录
-# =====================================================
-# （保持原样，无需改动）
+# ===================== 关键文件检查 =====================
+check_required_files() {
+    local required_files=("docker-compose.yml" "full-deploy.sh")
+    local missing=()
+    for f in "${required_files[@]}"; do
+        [ -f "$f" ] || missing+=("$f")
+    done
+    if [ ! -d "sql" ]; then
+        missing+=("sql/")
+    elif [ "$(ls sql/*.sql 2>/dev/null | wc -l)" -eq 0 ]; then
+        missing+=("sql/ (空)")
+    fi
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        log_error "缺少必需文件或目录: ${missing[*]}"
+        return 1
+    fi
+    return 0
+}
+
+# ===================== Step -1: 拉取/更新部署文件 =====================
 pull_deploy_dir() {
-    if [ "$NO_PULL" = true ]; then return 0; fi
-    if [ -f "docker-compose.yml" ] && [ -f "full-deploy.sh" ] && [ -d "sql" ] && [ "$(ls sql/*.sql 2>/dev/null | wc -l)" -gt 0 ]; then
+    if [ "$NO_PULL" = true ]; then
+        log_info "--no-pull 模式，跳过远程拉取"
+        check_required_files || exit 1
+        return 0
+    fi
+
+    # --- 情况1：当前目录已经是 Git 仓库，且 remote 匹配，尝试 git pull 更新 ---
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        local current_remote=$(git remote get-url origin 2>/dev/null || true)
+        if [ "$current_remote" = "$REMOTE_REPO" ]; then
+            step "-1" "更新部署代码 (git pull)"
+            log_info "检测到本地仓库，尝试拉取最新代码..."
+            if git pull --ff-only 2>&1 | tee /dev/stderr; then
+                log_ok "代码已更新到最新"
+                check_required_files || exit 1
+                log_info "部署目录: $SCRIPT_DIR"
+                return 0
+            else
+                log_warn "git pull 失败（可能网络问题或存在冲突）"
+                # 如果本地文件完整则继续使用，否则报错退出
+                if check_required_files 2>/dev/null; then
+                    log_warn "将使用现有文件继续部署（可能不是最新版本）"
+                    return 0
+                else
+                    log_error "本地文件不完整且无法拉取，部署终止"
+                    exit 1
+                fi
+            fi
+        else
+            log_warn "当前目录是 Git 仓库但 remote 不匹配 ($current_remote)"
+            log_warn "将忽略该仓库，重新克隆部署文件"
+            # 避免文件污染，可选择移动到备份或直接继续? 这里选择重新克隆到临时目录再复制
+        fi
+    fi
+
+    # --- 情况2：不是 Git 仓库，但已有完整文件，直接跳过 ---
+    if [ ! -d .git ] && check_required_files 2>/dev/null; then
         log_ok "当前目录已有完整的 deploy 文件，跳过拉取"
         return 0
     fi
-    if [ -f "docker-compose.yml" ] && [ -f "full-deploy.sh" ]; then
-        log_warn "当前目录有 deploy 文件但 sql 目录缺失或不完整，将重新拉取"
-    fi
 
+    # --- 情况3：需要全新克隆 ---
     step "-1" "从远程仓库拉取 deploy 目录"
     if ! command -v git &> /dev/null; then
         log_error "git 未安装，请先安装 git：apt install -y git"
@@ -119,6 +170,7 @@ pull_deploy_dir() {
 
     local home_dir="$HOME"
     local deploy_target=""
+    # 若当前在 HOME 或 /root 或 /tmp 下，尝试转到 /opt/xss-deploy
     if [ "$SCRIPT_DIR" = "$home_dir" ] || [ "$SCRIPT_DIR" = "/root" ] || [[ "$SCRIPT_DIR" == /tmp/* ]]; then
         deploy_target="/opt/xss-deploy"
         log_info "当前目录为 $SCRIPT_DIR，尝试切换部署目录到: $deploy_target"
@@ -128,7 +180,7 @@ pull_deploy_dir() {
             log_ok "部署目录切换成功: $deploy_target"
         else
             deploy_target="$home_dir/xss-deploy"
-            log_warn "无法创建 $deploy_target（权限不足），尝试: $deploy_target"
+            log_warn "无法创建 $deploy_target，尝试: $deploy_target"
             mkdir -p "$deploy_target"
             cd "$deploy_target"
             SCRIPT_DIR="$deploy_target"
@@ -163,37 +215,18 @@ pull_deploy_dir() {
     rm -rf "$tmp_clone"
     cd "$SCRIPT_DIR"
 
-    local required_files=("docker-compose.yml" "full-deploy.sh" ".env.example")
-    for f in "${required_files[@]}"; do
-        if [ ! -f "$f" ]; then
-            log_error "拉取后缺少必需文件: $f"
-            exit 1
-        fi
-    done
-    if [ ! -d "sql" ]; then
-        log_error "拉取后缺少 sql 目录"
-        exit 1
-    fi
-    local sql_count=$(ls sql/*.sql 2>/dev/null | wc -l)
-    if [ "$sql_count" -eq 0 ]; then
-        log_error "sql 目录为空，请检查远程仓库"
-        exit 1
-    fi
+    check_required_files || exit 1
 
     local file_count=$(find . -type f | wc -l)
     local total_size=$(du -sh . | cut -f1)
     log_ok "拉取完成: $file_count 个文件, 总计 $total_size"
     log_info "  - 镜像分片: $(ls xss-images-*.tar.*.part* 2>/dev/null | wc -l) 个"
-    log_info "  - SQL 脚本: $sql_count 个"
-    log_info "  - 部署脚本: full-deploy.sh, deploy-all.sh, init-db.sh"
-    log_info ""
+    log_info "  - SQL 脚本: $(ls sql/*.sql 2>/dev/null | wc -l) 个"
     log_info "部署目录: $SCRIPT_DIR"
-    log_info "后续可在此目录执行: bash full-deploy.sh --no-pull"
+    log_info "后续可在此目录执行: sudo bash full-deploy.sh --no-pull"
 }
 
-# =====================================================
-# Step 0: 系统资源检查
-# =====================================================
+# ===================== Step 0: 系统资源检查 =====================
 check_system_resources() {
     step "0" "系统资源检查"
     local mem_total=$(check_mem_mb)
@@ -231,9 +264,7 @@ check_system_resources() {
     log_ok "系统资源检查通过"
 }
 
-# =====================================================
-# 自动安装 Docker（国内镜像源）
-# =====================================================
+# ===================== 自动安装 Docker =====================
 install_docker() {
     log_info "检测到 Docker 未安装，正在自动安装..."
     if [ -f /etc/os-release ]; then
@@ -296,31 +327,21 @@ EOF
     fi
 }
 
-# =====================================================
-# Step 1: Docker 环境检查（增强版）
-# =====================================================
+# ===================== Step 1: Docker 环境检查 =====================
 check_docker() {
     cd "$SCRIPT_DIR"
     step "1" "Docker 环境检查"
 
     if ! command -v docker &> /dev/null; then
-        if [ "$(id -u)" -ne 0 ]; then
-            log_error "Docker 未安装，且当前非 root 用户。请使用 sudo 运行：sudo bash full-deploy.sh"
-            exit 1
-        fi
         install_docker
     else
         log_ok "Docker 已安装: $(docker --version | awk '{print $3}')"
     fi
 
-    # 确保 Docker 服务运行（自动尝试启动）
+    # 确保 Docker 服务运行
     if ! docker info &> /dev/null; then
         log_warn "Docker 服务未运行，尝试启动..."
-        if command -v systemctl &> /dev/null; then
-            sudo systemctl start docker &>/dev/null || true
-        elif command -v service &> /dev/null; then
-            sudo service docker start &>/dev/null || true
-        fi
+        systemctl start docker &>/dev/null || service docker start &>/dev/null || true
         sleep 3
     fi
 
@@ -352,13 +373,39 @@ check_docker() {
         log_ok ".env 配置文件已就绪"
     fi
 
-    # 强制清理之前可能残留的 xss-* 容器（解决 Conflict 问题）
     force_clean_containers
 }
 
-# =====================================================
-# Step 2: 加载业务镜像并拉取中间件镜像
-# =====================================================
+# ===================== 端口占用检查 =====================
+check_port_conflicts() {
+    step "1.5" "端口占用检查"
+    local ports=(3306 6379 5672 9200 9000 9001 8848 8080 80)
+    local occupied=()
+    local cmd=""
+    if command -v ss &> /dev/null; then
+        cmd="ss -tlnp"
+    elif command -v netstat &> /dev/null; then
+        cmd="netstat -tlnp"
+    else
+        log_warn "无法检查端口占用（缺少 ss 或 netstat）"
+        return
+    fi
+
+    for p in "${ports[@]}"; do
+        if $cmd 2>/dev/null | grep -q ":$p "; then
+            occupied+=("$p")
+        fi
+    done
+
+    if [ ${#occupied[@]} -gt 0 ]; then
+        log_warn "以下端口已被占用: ${occupied[*]}"
+        log_warn "可能导致对应服务启动失败，请关闭占用进程或修改 docker-compose.yml 端口映射"
+    else
+        log_ok "所有关键端口空闲"
+    fi
+}
+
+# ===================== Step 2: 加载镜像 =====================
 load_images() {
     cd "$SCRIPT_DIR"
     if [ "$SKIP_LOAD" = true ]; then
@@ -392,7 +439,7 @@ load_images() {
         fi
     done
 
-    # 合并业务镜像分片（原逻辑不变）
+    # 业务镜像处理
     local part_files=($(ls -1 xss-images-*.tar.*.part* 2>/dev/null | sort))
     local part_count=${#part_files[@]}
     local tar_file=""
@@ -405,7 +452,7 @@ load_images() {
             tar_file=$(ls -1 xss-images-*.tar.gz | head -1)
             log_info "找到完整业务镜像文件（压缩）: $tar_file"
         else
-            log_warn "未找到业务镜像分片，业务镜像将通过 Docker Hub 或本地构建获取"
+            log_warn "未找到业务镜像文件，业务镜像将通过构建或远程仓库获取"
             return 0
         fi
     else
@@ -421,7 +468,6 @@ load_images() {
         fi
     fi
 
-    # 加载业务镜像
     if [ -n "$tar_file" ] && [ -f "$tar_file" ]; then
         log_info "正在加载业务 Docker 镜像..."
         local load_start=$(date +%s)
@@ -436,25 +482,27 @@ load_images() {
         log_info "已加载的业务镜像:"
         docker images --format "{{.Repository}}:{{.Tag}} {{.Size}}" | grep "^xss/" | sort | while read line; do echo "       $line"; done
 
-        # 清理合并后的文件
-        if [ "$part_count" -gt 0 ] && [ -f "$tar_file" ]; then
-            log_info "清理合并后的文件以释放磁盘空间..."
+        # 清理合并后的 tar 文件（如 xss-images-xxx.tar 或 .tar.gz）
+        if [ -f "$tar_file" ]; then
+            log_info "清理合并后的镜像文件以释放磁盘..."
             rm -f "$tar_file"
-            log_ok "已清理"
+            log_ok "已删除 $tar_file"
+        fi
+
+        # 清理所有分片文件
+        if [ "$part_count" -gt 0 ]; then
+            log_info "清理业务镜像分片文件..."
+            rm -f xss-images-*.tar.*.part*
+            log_ok "分片文件已删除"
         fi
     fi
 }
 
-# =====================================================
-# Step 3: 启动中间件层（先 down 再 up，杜绝冲突）
-# =====================================================
+# ===================== Step 3-7: 启动各个服务层 =====================
 start_infra() {
     cd "$SCRIPT_DIR"
     step "3" "启动中间件层（infra）"
-
-    # 关键：先清理该 profile 下的旧容器
     $COMPOSE_CMD --profile infra down --remove-orphans 2>/dev/null || true
-
     log_info "启动服务: mysql, redis, rabbitmq, elasticsearch, minio, nacos"
     $COMPOSE_CMD --profile infra up -d
 
@@ -487,13 +535,9 @@ start_infra() {
     log_ok "所有中间件服务已就绪"
 }
 
-# =====================================================
-# Step 4: 初始化数据库和 Nacos 配置
-# =====================================================
 init_config() {
     cd "$SCRIPT_DIR"
     step "4" "初始化数据库与配置"
-
     local mysql_pwd="${MYSQL_ROOT_PASSWORD:-root}"
     if [ -f .env ]; then
         mysql_pwd=$(grep '^MYSQL_ROOT_PASSWORD=' .env | sed 's/^MYSQL_ROOT_PASSWORD=//' || echo "root")
@@ -516,7 +560,6 @@ init_config() {
             db_count=$((db_count + 1))
         fi
     done
-
     log_info "已初始化数据库: $db_count / ${#expected_dbs[@]}"
 
     if [ "$db_count" -lt "${#expected_dbs[@]}" ]; then
@@ -538,23 +581,16 @@ init_config() {
     log_ok "配置初始化完成"
 }
 
-# =====================================================
-# Step 5: 启动核心业务服务
-# =====================================================
 start_core() {
     cd "$SCRIPT_DIR"
     step "5" "启动核心业务服务（core）"
-
-    # 清理可能残留的 core 相关容器
     $COMPOSE_CMD --profile infra --profile core down --remove-orphans 2>/dev/null || true
-
     log_info "启动服务: gateway, auth, property, dict"
     $COMPOSE_CMD --profile infra --profile core up -d
 
     log_info "等待核心服务就绪（最长约 2 分钟）..."
     local core_services=("xss-gateway" "xss-auth" "xss-property" "xss-dict")
     local max_wait=120
-
     for svc in "${core_services[@]}"; do
         log_info "等待 $svc ..."
         local waited=0
@@ -579,21 +615,15 @@ start_core() {
     log_ok "核心业务服务启动完成"
 }
 
-# =====================================================
-# Step 6: 启动其他业务服务
-# =====================================================
 start_business() {
     cd "$SCRIPT_DIR"
     step "6" "启动其他业务服务（business）"
-
     $COMPOSE_CMD --profile infra --profile core --profile business down --remove-orphans 2>/dev/null || true
-
     log_info "启动服务: image, search, analytics, message, favorite, review, booking"
     $COMPOSE_CMD --profile infra --profile core --profile business up -d
 
     log_info "等待业务服务启动中（约 1-2 分钟）..."
     sleep 30
-
     local business_services=("xss-image" "xss-search" "xss-analytics" "xss-message" "xss-favorite" "xss-review" "xss-booking")
     local running=0
     for svc in "${business_services[@]}"; do
@@ -606,13 +636,9 @@ start_business() {
     log_ok "业务服务启动完成: $running / ${#business_services[@]} 运行中"
 }
 
-# =====================================================
-# Step 7: 启动 Nginx
-# =====================================================
 start_nginx() {
     cd "$SCRIPT_DIR"
     step "7" "启动 Nginx 反向代理"
-
     $COMPOSE_CMD --profile infra --profile core --profile business --profile nginx down --remove-orphans 2>/dev/null || true
     $COMPOSE_CMD --profile infra --profile core --profile business --profile nginx up -d
 
@@ -632,9 +658,7 @@ start_nginx() {
     fi
 }
 
-# =====================================================
-# Step 8: 部署结果汇总
-# =====================================================
+# ===================== Step 8: 部署结果汇总 =====================
 report_status() {
     step "8" "部署结果汇总"
     echo ""
@@ -672,9 +696,7 @@ report_status() {
     fi
 }
 
-# =====================================================
-# 重启模式
-# =====================================================
+# ===================== 重启模式 =====================
 restart_all() {
     step "重启" "重启所有服务"
     check_docker
@@ -688,9 +710,7 @@ restart_all() {
     report_status
 }
 
-# =====================================================
-# 主流程
-# =====================================================
+# ===================== 主流程 =====================
 main() {
     echo ""
     echo "╔══════════════════════════════════════════════════╗"
@@ -712,6 +732,7 @@ main() {
     check_system_resources
     network_diag
     check_docker
+    check_port_conflicts
     load_images
     start_infra
     init_config
