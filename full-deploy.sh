@@ -464,7 +464,7 @@ check_port_conflicts() {
 # ===================== 智能拉取镜像（超时控制 + 备用仓库） =====================
 smart_pull() {
     local image="$1"
-    local timeout_sec=60
+    local timeout_sec=300
     local fallback_images=()
 
     case "$image" in
@@ -489,7 +489,7 @@ smart_pull() {
     # 主镜像拉取（带超时）
     for i in {1..3}; do
         log_info "拉取 $image (尝试 $i/3, 超时 ${timeout_sec}s)..."
-        if timeout ${timeout_sec} docker pull "$image" 2>/dev/null; then
+        if timeout ${timeout_sec} docker pull "$image"; then
             return 0
         fi
         log_warn "拉取失败或超时，重试..."
@@ -499,7 +499,7 @@ smart_pull() {
     # 备用仓库拉取
     for fallback in "${fallback_images[@]}"; do
         log_info "尝试备用仓库: $fallback (超时 ${timeout_sec}s)..."
-        if timeout ${timeout_sec} docker pull "$fallback" 2>/dev/null; then
+        if timeout ${timeout_sec} docker pull "$fallback"; then
             docker tag "$fallback" "$image"
             log_ok "已通过备用仓库获取 $image"
             return 0
