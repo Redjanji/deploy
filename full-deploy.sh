@@ -528,10 +528,9 @@ load_images() {
         "docker.elastic.co/elasticsearch/elasticsearch:8.11.0"
         "minio/minio:latest"
         "nacos/nacos-server:v2.3.2"
-        "nginx:1.27-alpine"
     )
 
-    log_info "从官方仓库拉取中间件镜像（7个）..."
+    log_info "从官方仓库拉取中间件镜像（6个，nginx已随业务镜像打包）..."
     for img in "${middleware_images[@]}"; do
         if docker image inspect "$img" &>/dev/null; then
             log_ok "  已存在: $img"
@@ -613,7 +612,6 @@ verify_middleware_images() {
         "docker.elastic.co/elasticsearch/elasticsearch:8.11.0"
         "minio/minio:latest"
         "nacos/nacos-server:v2.3.2"
-        "nginx:1.27-alpine"
     )
     local missing=()
     for img in "${required_images[@]}"; do
