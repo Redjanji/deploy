@@ -1,9 +1,9 @@
 #!/bin/bash
 # =====================================================
-# XSS 微服务集群 - 一键部署脚本 (增强版 v2.1)
+# XSS 微服务集群 - 一键部署脚本 (增强版 v2.2)
 # =====================================================
 # 特性：
-#   - 自动配置 Docker 镜像加速器（国内源）
+#   - 自动配置 Docker 镜像加速器（使用已验证的8个国内高速源）
 #   - 镜像拉取自动重试 + 超时控制 + 备用仓库切换
 #   - 启动前强制校验必需镜像存在，避免无限卡死
 #   - 网络诊断扩展（检查镜像加速器可达性）
@@ -318,13 +318,19 @@ install_docker() {
     fi
 }
 
-# ===================== 确保镜像加速器配置 =====================
+# ===================== 确保镜像加速器配置（使用已验证的高速源） =====================
 ensure_registry_mirrors() {
     local daemon_file="/etc/docker/daemon.json"
+    # 与 Windows 端相同的一组镜像加速器（已验证可成功拉取 nginx:1.27-alpine）
     local mirrors=(
-        "https://registry.cn-hangzhou.aliyuncs.com"
+        "https://docker.211678.top"
+        "https://docker.1panel.live"
+        "https://hub.rat.dev"
         "https://docker.m.daocloud.io"
-        "https://mirror.baidubce.com"
+        "https://do.nark.eu.org"
+        "https://dockerpull.com"
+        "https://dockerproxy.cn"
+        "https://docker.awsl9527.cn"
     )
 
     local mirrors_json=""
@@ -349,7 +355,7 @@ EOF
         systemctl daemon-reload
         systemctl restart docker
         sleep 3
-        log_ok "镜像加速配置已写入"
+        log_ok "镜像加速配置已写入（8个高速源）"
         return 0
     fi
 
@@ -370,7 +376,7 @@ EOF
         systemctl daemon-reload
         systemctl restart docker
         sleep 3
-        log_ok "镜像加速已添加并生效"
+        log_ok "镜像加速已添加并生效（8个高速源）"
     else
         log_ok "镜像加速器已配置"
     fi
@@ -458,7 +464,7 @@ check_port_conflicts() {
 # ===================== 智能拉取镜像（超时控制 + 备用仓库） =====================
 smart_pull() {
     local image="$1"
-    local timeout_sec=60   # 每次拉取超时秒数
+    local timeout_sec=60
     local fallback_images=()
 
     case "$image" in
@@ -480,7 +486,7 @@ smart_pull() {
             ;;
     esac
 
-    # 尝试主镜像，每次超时自动终止
+    # 主镜像拉取（带超时）
     for i in {1..3}; do
         log_info "拉取 $image (尝试 $i/3, 超时 ${timeout_sec}s)..."
         if timeout ${timeout_sec} docker pull "$image" 2>/dev/null; then
@@ -490,7 +496,7 @@ smart_pull() {
         sleep 2
     done
 
-    # 备用仓库
+    # 备用仓库拉取
     for fallback in "${fallback_images[@]}"; do
         log_info "尝试备用仓库: $fallback (超时 ${timeout_sec}s)..."
         if timeout ${timeout_sec} docker pull "$fallback" 2>/dev/null; then
