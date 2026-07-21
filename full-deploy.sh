@@ -1,11 +1,11 @@
 #!/bin/bash
 # =====================================================
-# XSS 微服务集群 - 一键部署脚本 (增强版 v2.0)
+# XSS 微服务集群 - 一键部署脚本 (增强版 v2.1)
 # =====================================================
-# 新增自愈特性：
-#   - 自动配置 Docker 镜像加速器
-#   - 镜像拉取重试 + 备用仓库切换
-#   - 启动前强制校验必需镜像存在
+# 特性：
+#   - 自动配置 Docker 镜像加速器（国内源）
+#   - 镜像拉取自动重试 + 超时控制 + 备用仓库切换
+#   - 启动前强制校验必需镜像存在，避免无限卡死
 #   - 网络诊断扩展（检查镜像加速器可达性）
 # =====================================================
 
@@ -310,7 +310,6 @@ install_docker() {
             ;;
     esac
 
-    # 安装后统一写入镜像加速器（函数后面会调用 ensure_registry_mirrors）
     if command -v docker &> /dev/null; then
         log_ok "Docker 安装完成: $(docker --version | awk '{print $3}')"
     else
@@ -328,17 +327,15 @@ ensure_registry_mirrors() {
         "https://mirror.baidubce.com"
     )
 
-    # 构建 JSON 数组字符串
     local mirrors_json=""
     if command -v jq &> /dev/null; then
         mirrors_json=$(printf '%s\n' "${mirrors[@]}" | jq -R . | jq -s -c .)
     else
-        # 简单手动拼接 JSON 数组
         mirrors_json="["
         for m in "${mirrors[@]}"; do
             mirrors_json+="\"$m\", "
         done
-        mirrors_json="${mirrors_json%, }]"  # 去掉末尾逗号和空格
+        mirrors_json="${mirrors_json%, }]"
     fi
 
     if [ ! -f "$daemon_file" ]; then
@@ -356,7 +353,6 @@ EOF
         return 0
     fi
 
-    # 检查是否已有 registry-mirrors
     if ! grep -q '"registry-mirrors"' "$daemon_file"; then
         log_warn "daemon.json 未配置 registry-mirrors，正在自动添加..."
         cp "$daemon_file" "$daemon_file.bak.$(date +%s)"
@@ -366,10 +362,8 @@ EOF
                '. + {"registry-mirrors": $mirrors}' "$daemon_file" > "$tmp_file"
             mv "$tmp_file" "$daemon_file"
         else
-            # 无 jq 时简单合并（假设原文件是合法 JSON，此处直接追加）
-            # 更稳妥的方式是备份后重写，但可能丢失原有高级配置，此处警告
             log_warn "未安装 jq，将直接覆盖 daemon.json 并保留原有内容（请手动验证）"
-            local tmp_content=$(sed '$d' "$daemon_file")  # 删除最后一个 }
+            local tmp_content=$(sed '$d' "$daemon_file")
             tmp_content+=", \"registry-mirrors\": $mirrors_json }"
             echo "$tmp_content" > "$daemon_file"
         fi
@@ -393,7 +387,6 @@ check_docker() {
         log_ok "Docker 已安装: $(docker --version | awk '{print $3}')"
     fi
 
-    # 确保 Docker 服务运行
     if ! docker info &> /dev/null; then
         log_warn "Docker 服务未运行，尝试启动..."
         systemctl start docker &>/dev/null || service docker start &>/dev/null || true
@@ -406,7 +399,6 @@ check_docker() {
     fi
     log_ok "Docker 服务运行中"
 
-    # 确保镜像加速配置
     ensure_registry_mirrors
 
     if docker compose version &> /dev/null; then
@@ -463,10 +455,10 @@ check_port_conflicts() {
     fi
 }
 
-# ===================== 智能拉取镜像（重试+备用仓库） =====================
+# ===================== 智能拉取镜像（超时控制 + 备用仓库） =====================
 smart_pull() {
     local image="$1"
-    # 定义备用镜像列表（格式：备用镜像名）
+    local timeout_sec=60   # 每次拉取超时秒数
     local fallback_images=()
 
     case "$image" in
@@ -476,46 +468,40 @@ smart_pull() {
         minio/minio:*)
             fallback_images+=("quay.io/minio/minio:latest")
             fallback_images+=("registry.cn-hangzhou.aliyuncs.com/minio/minio:latest")
+            fallback_images+=("docker.m.daocloud.io/minio/minio:latest")
             ;;
         nacos/nacos-server:*)
             fallback_images+=("registry.cn-hangzhou.aliyuncs.com/nacos/nacos-server:v2.3.2")
+            fallback_images+=("docker.m.daocloud.io/nacos/nacos-server:v2.3.2")
             ;;
         docker.elastic.co/*)
             fallback_images+=("registry.cn-hangzhou.aliyuncs.com/elastic/elasticsearch:8.11.0")
+            fallback_images+=("docker.m.daocloud.io/elasticsearch/elasticsearch:8.11.0")
             ;;
     esac
 
-    # 尝试拉取主镜像（最多重试3次）
+    # 尝试主镜像，每次超时自动终止
     for i in {1..3}; do
-        # 临时禁用 set -e，避免拉取失败导致脚本退出
-        set +e
-        docker pull "$image" 2>/dev/null
-        local ret=$?
-        set -e
-        if [ $ret -eq 0 ]; then
+        log_info "拉取 $image (尝试 $i/3, 超时 ${timeout_sec}s)..."
+        if timeout ${timeout_sec} docker pull "$image" 2>/dev/null; then
             return 0
         fi
-        log_warn "拉取 $image 失败，重试 $i/3 ..."
-        sleep 5
+        log_warn "拉取失败或超时，重试..."
+        sleep 2
     done
 
-    # 备用仓库拉取
+    # 备用仓库
     for fallback in "${fallback_images[@]}"; do
-        log_info "尝试从备用仓库拉取: $fallback"
-        for i in {1..3}; do
-            set +e
-            docker pull "$fallback" 2>/dev/null
-            local ret=$?
-            set -e
-            if [ $ret -eq 0 ]; then
-                docker tag "$fallback" "$image"
-                log_ok "已通过备用仓库获取 $image"
-                return 0
-            fi
-            sleep 5
-        done
+        log_info "尝试备用仓库: $fallback (超时 ${timeout_sec}s)..."
+        if timeout ${timeout_sec} docker pull "$fallback" 2>/dev/null; then
+            docker tag "$fallback" "$image"
+            log_ok "已通过备用仓库获取 $image"
+            return 0
+        fi
+        log_warn "备用仓库拉取失败或超时: $fallback"
     done
 
+    log_error "所有源拉取失败: $image"
     return 1
 }
 
@@ -603,7 +589,7 @@ load_images() {
             log_ok "已删除 $tar_file"
         fi
 
-        # 清理所有分片文件
+        # 清理分片文件
         if [ "$part_count" -gt 0 ]; then
             log_info "清理业务镜像分片文件..."
             rm -f xss-images-*.tar.*.part*
@@ -642,7 +628,6 @@ verify_middleware_images() {
 start_infra() {
     cd "$SCRIPT_DIR"
     step "3" "启动中间件层（infra）"
-    # 启动前强制校验
     verify_middleware_images
 
     $COMPOSE_CMD --profile infra down --remove-orphans 2>/dev/null || true
