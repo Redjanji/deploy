@@ -1,15 +1,12 @@
 #!/bin/bash
 # =====================================================
-# XSS 微服务集群 - 一键部署脚本 (增强幂等 + 环境自愈 + 自动更新版)
+# XSS 微服务集群 - 一键部署脚本 (增强版 v2.0)
 # =====================================================
-# 特性：
-#   - 自动检测并拉取远程仓库更新（git pull）
-#   - 自动安装 Docker 及 Compose，配置国内镜像加速
-#   - 强制清理残留容器、自动修复 Docker 服务
-#   - 端口占用检查与警告
-#   - 支持 --skip-load / --restart / --no-pull 参数
-#   - 启动前自动 down 对应 profile，杜绝容器名冲突
-#   - 加载业务镜像后自动清理分片文件，释放磁盘
+# 新增自愈特性：
+#   - 自动配置 Docker 镜像加速器
+#   - 镜像拉取重试 + 备用仓库切换
+#   - 启动前强制校验必需镜像存在
+#   - 网络诊断扩展（检查镜像加速器可达性）
 # =====================================================
 
 set -euo pipefail
@@ -84,7 +81,7 @@ force_clean_containers() {
     fi
 }
 
-# ===================== 网络连通性诊断 =====================
+# ===================== 网络连通性诊断（增强版） =====================
 network_diag() {
     step "0.5" "网络连通性诊断"
     local test_host="registry-1.docker.io"
@@ -93,9 +90,23 @@ network_diag() {
         log_ok "Docker Hub 可达"
     else
         log_warn "无法连接 Docker Hub (registry-1.docker.io)"
-        log_warn "若后续拉取中间件镜像失败，请检查网络或代理配置"
-        log_warn "部署将继续，但拉取可能较慢或失败。"
     fi
+
+    # 检查已配置的镜像加速器连通性
+    local mirrors=$(docker info 2>/dev/null | awk -F ': ' '/Registry Mirrors/{getline; while($0 ~ /^ /) {print $1; getline}}')
+    if [ -n "$mirrors" ]; then
+        for mirror in $mirrors; do
+            local host=$(echo "$mirror" | awk -F/ '{print $3}')
+            if timeout 3 bash -c "echo >/dev/tcp/$host/443" 2>/dev/null; then
+                log_ok "镜像加速器可达: $mirror"
+            else
+                log_warn "镜像加速器不可达: $mirror"
+            fi
+        done
+    else
+        log_warn "未检测到镜像加速器配置，后续将自动配置"
+    fi
+    log_warn "若镜像拉取失败，部署将继续但可能较慢或失败。"
 }
 
 # ===================== 关键文件检查 =====================
@@ -126,7 +137,6 @@ pull_deploy_dir() {
         return 0
     fi
 
-    # --- 情况1：当前目录已经是 Git 仓库，且 remote 匹配，尝试 git pull 更新 ---
     if git rev-parse --git-dir > /dev/null 2>&1; then
         local current_remote=$(git remote get-url origin 2>/dev/null || true)
         if [ "$current_remote" = "$REMOTE_REPO" ]; then
@@ -139,7 +149,6 @@ pull_deploy_dir() {
                 return 0
             else
                 log_warn "git pull 失败（可能网络问题或存在冲突）"
-                # 如果本地文件完整则继续使用，否则报错退出
                 if check_required_files 2>/dev/null; then
                     log_warn "将使用现有文件继续部署（可能不是最新版本）"
                     return 0
@@ -151,17 +160,14 @@ pull_deploy_dir() {
         else
             log_warn "当前目录是 Git 仓库但 remote 不匹配 ($current_remote)"
             log_warn "将忽略该仓库，重新克隆部署文件"
-            # 避免文件污染，可选择移动到备份或直接继续? 这里选择重新克隆到临时目录再复制
         fi
     fi
 
-    # --- 情况2：不是 Git 仓库，但已有完整文件，直接跳过 ---
     if [ ! -d .git ] && check_required_files 2>/dev/null; then
         log_ok "当前目录已有完整的 deploy 文件，跳过拉取"
         return 0
     fi
 
-    # --- 情况3：需要全新克隆 ---
     step "-1" "从远程仓库拉取 deploy 目录"
     if ! command -v git &> /dev/null; then
         log_error "git 未安装，请先安装 git：apt install -y git"
@@ -170,7 +176,6 @@ pull_deploy_dir() {
 
     local home_dir="$HOME"
     local deploy_target=""
-    # 若当前在 HOME 或 /root 或 /tmp 下，尝试转到 /opt/xss-deploy
     if [ "$SCRIPT_DIR" = "$home_dir" ] || [ "$SCRIPT_DIR" = "/root" ] || [[ "$SCRIPT_DIR" == /tmp/* ]]; then
         deploy_target="/opt/xss-deploy"
         log_info "当前目录为 $SCRIPT_DIR，尝试切换部署目录到: $deploy_target"
@@ -264,7 +269,7 @@ check_system_resources() {
     log_ok "系统资源检查通过"
 }
 
-# ===================== 自动安装 Docker =====================
+# ===================== 自动安装 Docker（含镜像加速） =====================
 install_docker() {
     log_info "检测到 Docker 未安装，正在自动安装..."
     if [ -f /etc/os-release ]; then
@@ -305,25 +310,75 @@ install_docker() {
             ;;
     esac
 
-    mkdir -p /etc/docker
-    cat > /etc/docker/daemon.json << 'EOF'
-{
-    "registry-mirrors": [
-        "https://registry.cn-hangzhou.aliyuncs.com",
-        "https://docker.m.daocloud.io",
-        "https://mirror.baidubce.com"
-    ]
-}
-EOF
-    systemctl daemon-reload
-    systemctl restart docker
-    sleep 3
-
+    # 安装后统一写入镜像加速器（函数后面会调用 ensure_registry_mirrors）
     if command -v docker &> /dev/null; then
         log_ok "Docker 安装完成: $(docker --version | awk '{print $3}')"
     else
         log_error "Docker 安装失败"
         exit 1
+    fi
+}
+
+# ===================== 确保镜像加速器配置 =====================
+ensure_registry_mirrors() {
+    local daemon_file="/etc/docker/daemon.json"
+    local mirrors=(
+        "https://registry.cn-hangzhou.aliyuncs.com"
+        "https://docker.m.daocloud.io"
+        "https://mirror.baidubce.com"
+    )
+
+    # 构建 JSON 数组字符串
+    local mirrors_json=""
+    if command -v jq &> /dev/null; then
+        mirrors_json=$(printf '%s\n' "${mirrors[@]}" | jq -R . | jq -s -c .)
+    else
+        # 简单手动拼接 JSON 数组
+        mirrors_json="["
+        for m in "${mirrors[@]}"; do
+            mirrors_json+="\"$m\", "
+        done
+        mirrors_json="${mirrors_json%, }]"  # 去掉末尾逗号和空格
+    fi
+
+    if [ ! -f "$daemon_file" ]; then
+        log_info "未找到 /etc/docker/daemon.json，自动创建并配置镜像加速..."
+        mkdir -p /etc/docker
+        cat > "$daemon_file" <<-EOF
+{
+    "registry-mirrors": $mirrors_json
+}
+EOF
+        systemctl daemon-reload
+        systemctl restart docker
+        sleep 3
+        log_ok "镜像加速配置已写入"
+        return 0
+    fi
+
+    # 检查是否已有 registry-mirrors
+    if ! grep -q '"registry-mirrors"' "$daemon_file"; then
+        log_warn "daemon.json 未配置 registry-mirrors，正在自动添加..."
+        cp "$daemon_file" "$daemon_file.bak.$(date +%s)"
+        if command -v jq &> /dev/null; then
+            local tmp_file=$(mktemp)
+            jq --argjson mirrors "$mirrors_json" \
+               '. + {"registry-mirrors": $mirrors}' "$daemon_file" > "$tmp_file"
+            mv "$tmp_file" "$daemon_file"
+        else
+            # 无 jq 时简单合并（假设原文件是合法 JSON，此处直接追加）
+            # 更稳妥的方式是备份后重写，但可能丢失原有高级配置，此处警告
+            log_warn "未安装 jq，将直接覆盖 daemon.json 并保留原有内容（请手动验证）"
+            local tmp_content=$(sed '$d' "$daemon_file")  # 删除最后一个 }
+            tmp_content+=", \"registry-mirrors\": $mirrors_json }"
+            echo "$tmp_content" > "$daemon_file"
+        fi
+        systemctl daemon-reload
+        systemctl restart docker
+        sleep 3
+        log_ok "镜像加速已添加并生效"
+    else
+        log_ok "镜像加速器已配置"
     fi
 }
 
@@ -350,6 +405,9 @@ check_docker() {
         exit 1
     fi
     log_ok "Docker 服务运行中"
+
+    # 确保镜像加速配置
+    ensure_registry_mirrors
 
     if docker compose version &> /dev/null; then
         COMPOSE_CMD="docker compose"
@@ -405,6 +463,62 @@ check_port_conflicts() {
     fi
 }
 
+# ===================== 智能拉取镜像（重试+备用仓库） =====================
+smart_pull() {
+    local image="$1"
+    # 定义备用镜像列表（格式：备用镜像名）
+    local fallback_images=()
+
+    case "$image" in
+        mysql:*|redis:*|rabbitmq:*|nginx:*)
+            fallback_images+=("registry.cn-hangzhou.aliyuncs.com/library/${image}")
+            ;;
+        minio/minio:*)
+            fallback_images+=("quay.io/minio/minio:latest")
+            fallback_images+=("registry.cn-hangzhou.aliyuncs.com/minio/minio:latest")
+            ;;
+        nacos/nacos-server:*)
+            fallback_images+=("registry.cn-hangzhou.aliyuncs.com/nacos/nacos-server:v2.3.2")
+            ;;
+        docker.elastic.co/*)
+            fallback_images+=("registry.cn-hangzhou.aliyuncs.com/elastic/elasticsearch:8.11.0")
+            ;;
+    esac
+
+    # 尝试拉取主镜像（最多重试3次）
+    for i in {1..3}; do
+        # 临时禁用 set -e，避免拉取失败导致脚本退出
+        set +e
+        docker pull "$image" 2>/dev/null
+        local ret=$?
+        set -e
+        if [ $ret -eq 0 ]; then
+            return 0
+        fi
+        log_warn "拉取 $image 失败，重试 $i/3 ..."
+        sleep 5
+    done
+
+    # 备用仓库拉取
+    for fallback in "${fallback_images[@]}"; do
+        log_info "尝试从备用仓库拉取: $fallback"
+        for i in {1..3}; do
+            set +e
+            docker pull "$fallback" 2>/dev/null
+            local ret=$?
+            set -e
+            if [ $ret -eq 0 ]; then
+                docker tag "$fallback" "$image"
+                log_ok "已通过备用仓库获取 $image"
+                return 0
+            fi
+            sleep 5
+        done
+    done
+
+    return 1
+}
+
 # ===================== Step 2: 加载镜像 =====================
 load_images() {
     cd "$SCRIPT_DIR"
@@ -431,7 +545,7 @@ load_images() {
             log_ok "  已存在: $img"
         else
             log_info "  拉取: $img"
-            if docker pull "$img"; then
+            if smart_pull "$img"; then
                 log_ok "  拉取成功"
             else
                 log_warn "  拉取失败: $img（将在启动时重试）"
@@ -482,7 +596,7 @@ load_images() {
         log_info "已加载的业务镜像:"
         docker images --format "{{.Repository}}:{{.Tag}} {{.Size}}" | grep "^xss/" | sort | while read line; do echo "       $line"; done
 
-        # 清理合并后的 tar 文件（如 xss-images-xxx.tar 或 .tar.gz）
+        # 清理合并后的 tar 文件
         if [ -f "$tar_file" ]; then
             log_info "清理合并后的镜像文件以释放磁盘..."
             rm -f "$tar_file"
@@ -498,10 +612,39 @@ load_images() {
     fi
 }
 
+# ===================== 启动前校验中间件镜像 =====================
+verify_middleware_images() {
+    local required_images=(
+        "mysql:8.0"
+        "redis:7-alpine"
+        "rabbitmq:3.12-management-alpine"
+        "docker.elastic.co/elasticsearch/elasticsearch:8.11.0"
+        "minio/minio:latest"
+        "nacos/nacos-server:v2.3.2"
+        "nginx:1.27-alpine"
+    )
+    local missing=()
+    for img in "${required_images[@]}"; do
+        if ! docker image inspect "$img" &>/dev/null; then
+            missing+=("$img")
+        fi
+    done
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        log_error "以下中间件镜像缺失，无法继续: ${missing[*]}"
+        log_error "请检查网络或手动导入镜像后重试。"
+        exit 1
+    fi
+    log_ok "所有中间件镜像已就绪"
+}
+
 # ===================== Step 3-7: 启动各个服务层 =====================
 start_infra() {
     cd "$SCRIPT_DIR"
     step "3" "启动中间件层（infra）"
+    # 启动前强制校验
+    verify_middleware_images
+
     $COMPOSE_CMD --profile infra down --remove-orphans 2>/dev/null || true
     log_info "启动服务: mysql, redis, rabbitmq, elasticsearch, minio, nacos"
     $COMPOSE_CMD --profile infra up -d
