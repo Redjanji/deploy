@@ -20,29 +20,29 @@ public class ChinaRegionController {
     }
 
     @GetMapping("/cities")
-    public Result<List<Map<String, Object>>> getCities(@RequestParam(required = false) String province_code) {
-        return Result.ok(regionService.getCities(province_code));
+    public Result<List<Map<String, Object>>> getCities(@RequestParam(required = false) String provinceCode) {
+        return Result.ok(regionService.getCities(provinceCode));
     }
 
     @GetMapping("/districts")
-    public Result<List<Map<String, Object>>> getDistricts(@RequestParam(required = false) String city_code) {
-        return Result.ok(regionService.getDistricts(city_code));
+    public Result<List<Map<String, Object>>> getDistricts(@RequestParam(required = false) String cityCode) {
+        return Result.ok(regionService.getDistricts(cityCode));
     }
 
     @GetMapping("/towns")
-    public Result<List<Map<String, Object>>> getTowns(@RequestParam(required = false) String district_code) {
-        return Result.ok(regionService.getTowns(district_code));
+    public Result<List<Map<String, Object>>> getTowns(@RequestParam(required = false) String districtCode) {
+        return Result.ok(regionService.getTowns(districtCode));
     }
 
     @GetMapping("/villages")
-    public Result<List<Map<String, Object>>> getVillages(@RequestParam(required = false) String town_code) {
-        return Result.ok(regionService.getVillages(town_code));
+    public Result<List<Map<String, Object>>> getVillages(@RequestParam(required = false) String townCode) {
+        return Result.ok(regionService.getVillages(townCode));
     }
 
     @GetMapping("/regions/path")
-    public Result<List<Map<String, Object>>> getPath(@RequestParam(required = false) String region_code,
-                                                     @RequestParam(required = false) Integer region_level) {
-        return Result.ok(regionService.getPath(region_code, region_level));
+    public Result<List<Map<String, Object>>> getPath(@RequestParam(required = false) String regionCode,
+                                                     @RequestParam(required = false) Integer regionLevel) {
+        return Result.ok(regionService.getPath(regionCode, regionLevel));
     }
 
     @PostMapping("/admin/refresh-regions")

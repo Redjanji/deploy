@@ -127,9 +127,21 @@ public class DictService {
     }
 
     public List<Map<String, Object>> getTreeDictList(String dictType, String parentCode, Integer level, String keyword) {
-        DictTableConfig config = getTreeConfig(dictType);
+        TreeDictTableConfig config = getTreeConfig(dictType);
+
+        final Integer resolvedLevel;
+        boolean hasNoFilter = (parentCode == null || parentCode.isEmpty())
+                && level == null
+                && (keyword == null || keyword.isEmpty());
+
+        if (hasNoFilter && "region".equals(dictType)) {
+            resolvedLevel = 1;
+        } else {
+            resolvedLevel = level;
+        }
+
         String pc = parentCode != null ? parentCode : "all";
-        String lv = level != null ? String.valueOf(level) : "all";
+        String lv = resolvedLevel != null ? String.valueOf(resolvedLevel) : "all";
         String kw = keyword != null ? keyword : "all";
         String cacheKey = "dict:" + dictType + ":tree:" + pc + ":" + lv + ":" + kw;
 
@@ -137,18 +149,20 @@ public class DictService {
             StringBuilder sql = new StringBuilder("SELECT ");
             sql.append(config.codeColumn).append(" AS code, ");
             sql.append(config.nameColumn).append(" AS name, ");
-            sql.append("parent_code, level, ").append(config.sortColumn).append(" AS sort_order, status");
+            sql.append(config.parentColumn).append(" AS parent_code, ");
+            sql.append(config.levelColumn).append(" AS level, ");
+            sql.append(config.sortColumn).append(" AS sort_order, status");
             sql.append(" FROM ").append(config.tableName);
             sql.append(" WHERE 1=1");
 
             List<Object> params = new ArrayList<>();
             if (parentCode != null && !parentCode.isEmpty()) {
-                sql.append(" AND parent_code = ?");
+                sql.append(" AND ").append(config.parentColumn).append(" = ?");
                 params.add(parentCode);
             }
-            if (level != null) {
-                sql.append(" AND level = ?");
-                params.add(level);
+            if (resolvedLevel != null) {
+                sql.append(" AND ").append(config.levelColumn).append(" = ?");
+                params.add(resolvedLevel);
             }
             if (keyword != null && !keyword.isEmpty()) {
                 sql.append(" AND (").append(config.nameColumn).append(" LIKE ? OR ")
@@ -237,12 +251,18 @@ public class DictService {
         return config;
     }
 
-    private DictTableConfig getTreeConfig(String dictType) {
+    private TreeDictTableConfig getTreeConfig(String dictType) {
         if ("industry_category".equals(dictType)) {
-            return new DictTableConfig("sys_industry_category", "code", "name", "sort_order", true);
+            return new TreeDictTableConfig("sys_industry_category", "code", "name", "sort_order", true,
+                    "parent_code", "level");
         }
         if ("occupation".equals(dictType)) {
-            return new DictTableConfig("sys_occupation", "code", "name", "sort_order", true);
+            return new TreeDictTableConfig("sys_occupation", "code", "name", "sort_order", true,
+                    "parent_code", "level");
+        }
+        if ("region".equals(dictType)) {
+            return new TreeDictTableConfig("sys_china_region", "region_code", "region_name", "sort_order", true,
+                    "parent_code", "region_level");
         }
         throw new IllegalArgumentException("不支持的树形字典类型: " + dictType);
     }
@@ -308,6 +328,18 @@ public class DictService {
             this.nameColumn = nameColumn;
             this.sortColumn = sortColumn;
             this.hasStatus = hasStatus;
+        }
+    }
+
+    private static class TreeDictTableConfig extends DictTableConfig {
+        final String parentColumn;
+        final String levelColumn;
+
+        TreeDictTableConfig(String tableName, String codeColumn, String nameColumn, String sortColumn, boolean hasStatus,
+                            String parentColumn, String levelColumn) {
+            super(tableName, codeColumn, nameColumn, sortColumn, hasStatus);
+            this.parentColumn = parentColumn;
+            this.levelColumn = levelColumn;
         }
     }
 }

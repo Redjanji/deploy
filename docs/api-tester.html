@@ -382,7 +382,7 @@
 <div class="sidebar">
   <div class="sidebar-header">
     <h1>XSS 微服务 API</h1>
-    <p>11 个服务 · 50+ 接口</p>
+    <p>11 个服务 · 76 个接口</p>
   </div>
   <div class="token-status" id="tokenStatusBar">
     <span class="indicator"></span>
@@ -402,7 +402,7 @@
   <div class="toolbar">
     <div class="toolbar-group">
       <label>Base URL:</label>
-      <input type="text" id="baseUrl" value="http://localhost" placeholder="http://ip:port">
+      <input type="text" id="baseUrl" value="http://42.193.174.175" placeholder="http://ip:port">
     </div>
     <div class="toolbar-group">
       <label>App ID:</label>
@@ -420,8 +420,25 @@
   <div class="request-panel" id="requestPanel">
     <div class="empty-state">
       <div class="icon">&#128194;</div>
-      <div class="title">选择一个接口开始测试</div>
-      <div class="desc">从左侧选择需要测试的 API 接口，填写参数后发送请求。先获取 App Token 或登录获取用户 Token。</div>
+      <div class="title">XSS 微服务 API 测试平台</div>
+      <div class="desc">从左侧选择需要测试的 API 接口，填写参数后发送请求。</div>
+      <div style="margin-top:20px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;max-width:600px;text-align:left;font-size:12px;line-height:1.8;">
+        <div style="font-weight:600;color:var(--accent);margin-bottom:8px;">快速开始</div>
+        <div style="color:var(--text-muted)">1. 点击顶部「获取 App Token」按钮（HMAC-SHA256 自动签名）</div>
+        <div style="color:var(--text-muted)">2. 点击「快速登录」按钮（自动注册随机用户并获取 User Token）</div>
+        <div style="color:var(--text-muted)">3. 从左侧选择接口，填写参数后点击「发送请求」</div>
+        <div style="font-weight:600;color:var(--green);margin:12px 0 6px;">认证说明</div>
+        <div style="color:var(--text-muted)">• App Token: 服务间调用认证（HMAC 签名，5分钟有效期）</div>
+        <div style="color:var(--text-muted)">• User Token: 用户 JWT 认证（登录后获取，Bearer 头）</div>
+        <div style="color:var(--text-muted)">• 需要用户权限的接口会自动携带 User Token</div>
+        <div style="font-weight:600;color:var(--yellow);margin:12px 0 6px;">响应格式</div>
+        <div style="color:var(--text-muted)">统一格式: <code style="color:var(--purple)">{ "code": 200, "message": "success", "data": ... }</code></div>
+        <div style="color:var(--text-muted)">分页格式: <code style="color:var(--purple)">{ "records": [], "total": 0, "size": 20, "current": 1 }</code></div>
+        <div style="font-weight:600;color:var(--red);margin:12px 0 6px;">注意事项</div>
+        <div style="color:var(--text-muted)">• 本页面需通过 HTTP 服务器访问（非 file:// 协议）</div>
+        <div style="color:var(--text-muted)">• 服务端时间戳验证有 ±5 分钟容差，本地时钟需准确</div>
+        <div style="color:var(--text-muted)">• 文件上传接口使用 multipart/form-data</div>
+      </div>
     </div>
   </div>
 
@@ -445,11 +462,7 @@ const SERVICES = [
     name: 'Gateway 网关', color: '#2f81f7', port: 8080,
     endpoints: [
       { method: 'POST', path: '/token', desc: '获取应用Token(HMAC签名)', group: '认证',
-        params: [
-          { name: 'appId', type: 'text', value: 'my-backend-system', required: true },
-          { name: 'appSecret', type: 'text', value: 'dev-secret-key-change-in-production', required: true, isBody: true }
-        ],
-        note: '简化版：直接用 appId+appSecret 换 token，无需 HMAC 签名' },
+        note: '点击顶部「获取 App Token」按钮自动签名获取，无需手动填写参数' },
       { method: 'GET', path: '/actuator/health', desc: '网关健康检查', group: '运维' },
     ]
   },
@@ -469,18 +482,28 @@ const SERVICES = [
   {
     name: 'Dict 字典服务', color: '#d29922', port: 8080,
     endpoints: [
-      { method: 'GET', path: '/api/dict/types', desc: '获取所有字典类型', group: '字典', auth: true },
-      { method: 'GET', path: '/api/dict/{dictType}/list', desc: '获取字典列表', group: '字典', auth: true,
+      // 通用字典
+      { method: 'GET', path: '/api/dict/types', desc: '获取所有字典类型', group: '通用字典', auth: true,
+        note: '返回: ["audit_status","decoration","property_type",...]' },
+      { method: 'GET', path: '/api/dict/{dictType}/list', desc: '获取字典列表', group: '通用字典', auth: true,
         params: [
           { name: 'dictType', type: 'text', value: 'property_type', required: true, isPath: true },
           { name: 'status', type: 'text', value: '1', required: false },
           { name: 'keyword', type: 'text', value: '', required: false }
         ] },
-      { method: 'GET', path: '/api/dict/{dictType}/item/{code}', desc: '获取字典项', group: '字典', auth: true,
+      { method: 'GET', path: '/api/dict/{dictType}/item/{code}', desc: '获取字典项', group: '通用字典', auth: true,
         params: [
           { name: 'dictType', type: 'text', value: 'property_type', required: true, isPath: true },
           { name: 'code', type: 'text', value: 'residential', required: true, isPath: true }
         ] },
+      { method: 'GET', path: '/api/dict/{dictType}/tree', desc: '获取树形字典', group: '通用字典', auth: true,
+        params: [
+          { name: 'dictType', type: 'text', value: 'region', required: true, isPath: true },
+          { name: 'parent_code', type: 'text', value: '', required: false },
+          { name: 'level', type: 'text', value: '', required: false },
+          { name: 'keyword', type: 'text', value: '', required: false }
+        ] },
+      // 房产字典
       { method: 'GET', path: '/api/dict/items', desc: '获取房产字典项', group: '房产字典', auth: true,
         params: [
           { name: 'type', type: 'text', value: 'property_type', required: true },
@@ -493,18 +516,41 @@ const SERVICES = [
           { name: 'itemKey', type: 'text', value: 'residential', required: true, isPath: true }
         ] },
       { method: 'GET', path: '/api/dict/property-types', desc: '获取所有房产字典类型', group: '房产字典', auth: true },
-      { method: 'GET', path: '/api/dict/{dictType}/tree', desc: '获取树形字典', group: '字典', auth: true,
-        params: [
-          { name: 'dictType', type: 'text', value: 'region', required: true, isPath: true },
-          { name: 'parent_code', type: 'text', value: '', required: false },
-          { name: 'level', type: 'text', value: '', required: false },
-          { name: 'keyword', type: 'text', value: '', required: false }
-        ] },
+      // 中国行政区划
+      { method: 'GET', path: '/api/provinces', desc: '省份列表', group: '行政区划', auth: true },
+      { method: 'GET', path: '/api/cities', desc: '城市列表', group: '行政区划', auth: true,
+        params: [{ name: 'provinceCode', type: 'text', value: '440000', required: false }] },
+      { method: 'GET', path: '/api/districts', desc: '区县列表', group: '行政区划', auth: true,
+        params: [{ name: 'cityCode', type: 'text', value: '440300', required: false }] },
+      { method: 'GET', path: '/api/towns', desc: '乡镇街道列表', group: '行政区划', auth: true,
+        params: [{ name: 'districtCode', type: 'text', value: '440305', required: false }] },
+      { method: 'GET', path: '/api/villages', desc: '村居委会列表', group: '行政区划', auth: true,
+        params: [{ name: 'townCode', type: 'text', value: '', required: false }] },
+      { method: 'GET', path: '/api/regions/path', desc: '获取区域完整路径', group: '行政区划', auth: true,
+        params: [{ name: 'code', type: 'text', value: '440305', required: true }] },
+      // 国际化数据
+      { method: 'GET', path: '/api/countries', desc: '国家列表', group: '国际化', auth: true },
+      { method: 'GET', path: '/api/countries/{country_code}', desc: '国家详情', group: '国际化', auth: true,
+        params: [{ name: 'country_code', type: 'text', value: 'CN', required: true, isPath: true }] },
+      { method: 'GET', path: '/api/currencies', desc: '货币列表', group: '国际化', auth: true },
+      { method: 'GET', path: '/api/currencies/{currency_code}', desc: '货币详情', group: '国际化', auth: true,
+        params: [{ name: 'currency_code', type: 'text', value: 'CNY', required: true, isPath: true }] },
+      { method: 'GET', path: '/api/languages', desc: '语言列表', group: '国际化', auth: true },
+      { method: 'GET', path: '/api/languages/{lang_code}', desc: '语言详情', group: '国际化', auth: true,
+        params: [{ name: 'lang_code', type: 'text', value: 'zh', required: true, isPath: true }] },
+      { method: 'GET', path: '/api/timezones', desc: '时区列表', group: '国际化', auth: true },
+      { method: 'GET', path: '/api/timezones/detail', desc: '时区详情', group: '国际化', auth: true,
+        params: [{ name: 'timezoneId', type: 'text', value: 'Asia/Shanghai', required: false }] },
+      // 管理接口
       { method: 'POST', path: '/api/dict/admin/refresh/{dictType}', desc: '刷新字典缓存', group: '管理', auth: true,
         params: [
           { name: 'dictType', type: 'text', value: 'property_type', required: true, isPath: true }
         ] },
       { method: 'POST', path: '/api/dict/admin/refresh-all', desc: '刷新所有字典缓存', group: '管理', auth: true },
+      { method: 'POST', path: '/api/admin/refresh-countries', desc: '刷新国家缓存', group: '管理', auth: true },
+      { method: 'POST', path: '/api/admin/refresh-currencies', desc: '刷新货币缓存', group: '管理', auth: true },
+      { method: 'POST', path: '/api/admin/refresh-languages', desc: '刷新语言缓存', group: '管理', auth: true },
+      { method: 'POST', path: '/api/admin/refresh-regions', desc: '刷新行政区划缓存', group: '管理', auth: true },
     ]
   },
   {
@@ -513,19 +559,22 @@ const SERVICES = [
       { method: 'POST', path: '/api/properties', desc: '创建房源', group: '房源管理', auth: true,
         body: {
           title: '精装两室一厅 南北通透 拎包入住',
+          type: 'residential',
           description: '靠近地铁，交通便利，周边配套齐全',
           price: 5800,
-          area: 89.5,
+          rentalArea: 89.5,
+          rooms: '2室1厅1卫',
+          orientation: '南北',
+          floor: '15',
+          totalFloors: 32,
+          address: '深圳市南山区科技园',
+          lat: 22.5431,
+          lng: 113.9445,
+          provinceCode: '440000',
           cityCode: '440300',
           districtCode: '440305',
-          address: '深圳市南山区科技园',
-          latitude: 22.5431,
-          longitude: 113.9445,
-          bedrooms: 2,
-          bathrooms: 1,
-          floor: 15,
-          totalFloors: 32,
-          propertyType: 'residential'
+          decoration: '精装',
+          contactPhone: '13800138000'
         } },
       { method: 'PUT', path: '/api/properties/{id}', desc: '更新房源', group: '房源管理', auth: true,
         params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }],
@@ -553,6 +602,13 @@ const SERVICES = [
           { name: 'id', type: 'text', value: '1', required: true, isPath: true },
           { name: 'status', type: 'text', value: '1', required: true }
         ] },
+      { method: 'GET', path: '/api/properties/{id}/exists', desc: '检查房源是否存在', group: '房源管理', auth: true,
+        params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }] },
+      { method: 'GET', path: '/api/properties/brief', desc: '房源简要列表', group: '房源管理', auth: true,
+        params: [
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '10', required: false }
+        ] },
     ]
   },
   {
@@ -570,6 +626,19 @@ const SERVICES = [
         ] },
       { method: 'DELETE', path: '/api/images/{id}', desc: '删除图片', group: '图片', auth: true,
         params: [{ name: 'id', type: 'text', value: '1', required: true, isPath: true }] },
+      // 图片分组
+      { method: 'POST', path: '/api/groups', desc: '创建图片组', group: '图片组', auth: true,
+        body: { name: '房源图片组', description: '某房源的所有图片' } },
+      { method: 'GET', path: '/api/groups', desc: '图片组列表', group: '图片组', auth: true,
+        params: [
+          { name: 'page', type: 'text', value: '1', required: false },
+          { name: 'size', type: 'text', value: '20', required: false }
+        ] },
+      { method: 'POST', path: '/api/groups/{groupId}/images', desc: '添加图片到组', group: '图片组', auth: true,
+        params: [{ name: 'groupId', type: 'text', value: '1', required: true, isPath: true }],
+        body: { imageIds: [1, 2, 3] } },
+      { method: 'GET', path: '/api/groups/{groupId}/images', desc: '获取组内图片', group: '图片组', auth: true,
+        params: [{ name: 'groupId', type: 'text', value: '1', required: true, isPath: true }] },
     ]
   },
   {
@@ -799,12 +868,13 @@ async function getAppToken() {
 async function quickLogin() {
   const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, '');
   const startTime = Date.now();
+  const testUser = 'tester_' + Date.now();
   try {
-    // 先注册（用户已存在则忽略错误）
+    // 先注册（使用随机用户名避免冲突）
     const regResp = await fetch(`${baseUrl}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: 'testuser', password: 'Test12345678', email: 'test@example.com' })
+      body: JSON.stringify({ username: testUser, password: 'Test12345678', email: testUser + '@example.com', phone: '13800138000' })
     });
     const regText = await regResp.text();
     console.log('Register:', regResp.status, regText);
@@ -813,7 +883,7 @@ async function quickLogin() {
     const resp = await fetch(`${baseUrl}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: 'testuser', password: 'Test12345678' })
+      body: JSON.stringify({ username: testUser, password: 'Test12345678' })
     });
     const elapsed = Date.now() - startTime;
     const text = await resp.text();

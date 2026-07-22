@@ -19,14 +19,14 @@ public class ImageGroupController {
     private final ImageGroupService groupService;
 
     @PostMapping
-    public Result<ImageGroupEntity> create(@RequestHeader("X-App-Id") String appId,
+    public Result<ImageGroupEntity> create(@RequestHeader(value = "X-App-Id", required = false, defaultValue = "default") String appId,
                                            @RequestBody GroupRequest req) {
         return Result.success(groupService.create(appId, req.getName(), req.getDescription()));
     }
 
     @PostMapping("/{groupId}/images")
     public Result<Void> addImage(@PathVariable Long groupId,
-                                 @RequestHeader("X-App-Id") String appId,
+                                 @RequestHeader(value = "X-App-Id", required = false, defaultValue = "default") String appId,
                                  @RequestHeader(value = "X-Owner-Id", required = false) Long ownerId,
                                  @RequestBody AddImageRequest req) {
         groupService.addImage(groupId, appId, ownerId, req.getImageId(), req.getSortOrder());
@@ -35,14 +35,14 @@ public class ImageGroupController {
 
     @GetMapping("/{groupId}/images")
     public Result<GroupVO> getGroupImages(@PathVariable Long groupId,
-                                          @RequestHeader("X-App-Id") String appId,
+                                          @RequestHeader(value = "X-App-Id", required = false, defaultValue = "default") String appId,
                                           @RequestHeader(value = "X-Owner-Id", required = false) Long ownerId,
                                           @RequestParam(defaultValue = "large") String sizeType) {
         return Result.success(groupService.getGroupWithImages(groupId, appId, ownerId, sizeType));
     }
 
     @GetMapping
-    public Result<List<ImageGroupEntity>> list(@RequestHeader("X-App-Id") String appId) {
+    public Result<List<ImageGroupEntity>> list(@RequestHeader(value = "X-App-Id", required = false, defaultValue = "default") String appId) {
         return Result.success(groupService.listByApp(appId));
     }
 }

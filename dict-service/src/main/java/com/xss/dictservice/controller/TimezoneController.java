@@ -20,7 +20,7 @@ public class TimezoneController {
     }
 
     @GetMapping("/timezones/detail")
-    public Result<Map<String, Object>> getTimezone(@RequestParam("timezone_id") String timezoneId) {
+    public Result<Map<String, Object>> getTimezone(@RequestParam String timezoneId) {
         return Result.ok(timezoneService.getTimezone(timezoneId));
     }
 

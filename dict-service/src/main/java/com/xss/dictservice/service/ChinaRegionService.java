@@ -32,27 +32,47 @@ public class ChinaRegionService {
     }
 
     public List<Map<String, Object>> getCities(String provinceCode) {
-        String cacheKey = "regions:cities:" + (provinceCode != null ? provinceCode : "all");
+        // 省份代码为空时不查询，防止全表扫描（全国约300+城市）
+        if (provinceCode == null || provinceCode.isBlank()) {
+            return List.of();
+        }
+        String cacheKey = "regions:cities:" + provinceCode;
         return queryWithCache(cacheKey, () -> regionMapper.selectCities(provinceCode));
     }
 
     public List<Map<String, Object>> getDistricts(String cityCode) {
-        String cacheKey = "regions:districts:" + (cityCode != null ? cityCode : "all");
+        // 城市代码为空时不查询，防止全表扫描（全国约3000+区县）
+        if (cityCode == null || cityCode.isBlank()) {
+            return List.of();
+        }
+        String cacheKey = "regions:districts:" + cityCode;
         return queryWithCache(cacheKey, () -> regionMapper.selectDistricts(cityCode));
     }
 
     public List<Map<String, Object>> getTowns(String districtCode) {
-        String cacheKey = "regions:towns:" + (districtCode != null ? districtCode : "all");
+        // 区县代码为空时不查询，防止全表扫描导致OOM（全国约40万+乡镇/街道）
+        if (districtCode == null || districtCode.isBlank()) {
+            return List.of();
+        }
+        String cacheKey = "regions:towns:" + districtCode;
         return queryWithCache(cacheKey, () -> regionMapper.selectTowns(districtCode));
     }
 
     public List<Map<String, Object>> getVillages(String townCode) {
-        String cacheKey = "regions:villages:" + (townCode != null ? townCode : "all");
+        // 乡镇代码为空时不查询，防止全表扫描导致OOM（全国约60万+村/居委会）
+        if (townCode == null || townCode.isBlank()) {
+            return List.of();
+        }
+        String cacheKey = "regions:villages:" + townCode;
         return queryWithCache(cacheKey, () -> regionMapper.selectVillages(townCode));
     }
 
     public List<Map<String, Object>> getPath(String regionCode, Integer level) {
-        String cacheKey = "regions:path:" + (regionCode != null ? regionCode : "all") + ":" + (level != null ? level : "all");
+        // 区域代码为空时不查询，防止全表扫描
+        if (regionCode == null || regionCode.isBlank()) {
+            return List.of();
+        }
+        String cacheKey = "regions:path:" + regionCode + ":" + (level != null ? level : "all");
         return queryWithCache(cacheKey, () -> regionMapper.selectPath(regionCode, level));
     }
 

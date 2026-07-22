@@ -1,0 +1,12 @@
+# 镜像文件（太大，不纳入版本控制）
+xss-images-*.tar
+xss-images-*.tar.gz
+xss-images-*.tar.*.part*
+
+# 日志文件
+*.log
+服务器日志.txt
+
+# 临时文件
+*.tmp
+*.bak
