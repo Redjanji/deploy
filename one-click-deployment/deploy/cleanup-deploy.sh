@@ -273,13 +273,13 @@ if [ "$CLEAN_ONLY" = false ]; then
         # 彻底重来模式：从远程拉取
         log_info "从远程拉取部署文件..."
         echo ""
-        curl -fsSL https://gitee.com/redjanji_admin/deploy/raw/master/full-deploy.sh | bash
+        curl -fsSL https://raw.githubusercontent.com/Redjanji/deploy/master/full-deploy.sh | bash
     fi
 else
     log_info "如需重新部署，执行:"
     if [ "$PURGE_DEPLOY" = false ] && [ -f "$SCRIPT_DIR/full-deploy.sh" ]; then
         log_info "  cd $SCRIPT_DIR && bash full-deploy.sh --no-pull --skip-load"
     else
-        log_info "  curl -fsSL https://gitee.com/redjanji_admin/deploy/raw/master/full-deploy.sh | bash"
+        log_info "  curl -fsSL https://raw.githubusercontent.com/Redjanji/deploy/master/full-deploy.sh | bash"
     fi
 fi

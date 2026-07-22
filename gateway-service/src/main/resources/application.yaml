@@ -8,12 +8,12 @@ spring:
     import: "optional:nacos:gateway-service.yaml"
   cloud:
     nacos:
-      server-addr: ${NACOS_SERVER_ADDR:nacos:8848}
+      server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
       discovery:
-        server-addr: ${NACOS_SERVER_ADDR:nacos:8848}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
         namespace: ${NACOS_NAMESPACE:public}
       config:
-        server-addr: ${NACOS_SERVER_ADDR:nacos:8848}
+        server-addr: ${NACOS_SERVER_ADDR:127.0.0.1:8848}
         namespace: ${NACOS_NAMESPACE:public}
         group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
         file-extension: yaml
@@ -65,7 +65,7 @@ ip-whitelist:
 # =====================================================
 apps:
   credentials:
-    my-backend-system: ${APP_SECRET_BACKEND:dev-secret-key-change-in-production}
+    my-backend-system: ${APP_SECRET_BACKEND:XssBackend2026SecHmacKey8xYz}
     my-data-dashboard: ${APP_SECRET_DASHBOARD:dev-secret-key-change-in-production}
 
 # =====================================================

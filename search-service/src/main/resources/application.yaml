@@ -26,7 +26,7 @@ spring:
     sampler:
       probability: 0.1
   elasticsearch:
-    uris: ${ES_URIS:http://172.24.35.23:9200}
+    uris: ${ES_URIS:http://127.0.0.1:9200}
     connection-timeout: 5s
     socket-timeout: 30s
     rest-client:
@@ -37,7 +37,7 @@ spring:
           enable: true
           max-attempts: 3
   rabbitmq:
-    host: ${RABBITMQ_HOST:172.24.35.23}
+    host: ${RABBITMQ_HOST:127.0.0.1}
     port: 5672
     username: ${RABBITMQ_USER:guest}
     password: ${RABBITMQ_PASS:guest}

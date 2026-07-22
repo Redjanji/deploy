@@ -21,13 +21,13 @@ spring:
   zipkin:
     base-url: http://localhost:9411
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:172.24.35.23}:3306/analytics_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/analytics_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: ${MYSQL_USER:root}
     password: ${MYSQL_PASS:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
-      host: ${REDIS_HOST:172.24.35.23}
+      host: ${REDIS_HOST:127.0.0.1}
       port: 6379
       password: ${REDIS_PASSWORD:redisroot}
       timeout: 10000ms
@@ -38,7 +38,7 @@ spring:
           max-idle: 8
           min-idle: 0
   rabbitmq:
-    host: ${RABBITMQ_HOST:172.24.35.23}
+    host: ${RABBITMQ_HOST:127.0.0.1}
     port: 5672
     username: ${RABBITMQ_USER:guest}
     password: ${RABBITMQ_PASS:guest}

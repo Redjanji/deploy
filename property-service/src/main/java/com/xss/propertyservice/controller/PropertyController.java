@@ -12,6 +12,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/properties")
 @RequiredArgsConstructor
@@ -70,5 +72,19 @@ public class PropertyController {
                                           @RequestHeader(value = "X-App-Id", required = false, defaultValue = "default") String appId) {
         propertyService.updateAuditStatus(id, status, appId);
         return Result.success();
+    }
+
+    @GetMapping("/{id}/exists")
+    public Result<Boolean> exists(@PathVariable Long id) {
+        return Result.success(propertyService.exists(id));
+    }
+
+    @GetMapping("/brief")
+    public Result<List<com.xss.propertyservice.vo.PropertyBriefVO>> getBrief(@RequestParam List<Long> ids) {
+        List<com.xss.propertyservice.vo.PropertyBriefVO> result = ids.stream()
+                .map(propertyService::getBrief)
+                .filter(v -> v != null)
+                .collect(java.util.stream.Collectors.toList());
+        return Result.success(result);
     }
 }

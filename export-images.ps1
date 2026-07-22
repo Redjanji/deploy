@@ -14,10 +14,11 @@ $business_images = @(
     "xss/message-service:latest",
     "xss/favorite-service:latest",
     "xss/review-service:latest",
-    "xss/booking-service:latest"
+    "xss/booking-service:latest",
+    "nginx:1.27-alpine"
 )
 
-$PART_SIZE_MB = 95
+$PART_SIZE_MB = 45
 $PART_SIZE_BYTES = $PART_SIZE_MB * 1024 * 1024
 
 Write-Host "==========================================" -ForegroundColor Cyan

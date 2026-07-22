@@ -219,6 +219,27 @@ public class PropertyServiceImpl implements PropertyService {
                 id, entity.getTitle(), entity.getPrice(), appId);
     }
 
+    @Override
+    public boolean exists(Long id) {
+        return propertyMapper.selectById(id) != null;
+    }
+
+    @Override
+    public com.xss.propertyservice.vo.PropertyBriefVO getBrief(Long id) {
+        PropertyEntity entity = propertyMapper.selectById(id);
+        if (entity == null) return null;
+        com.xss.propertyservice.vo.PropertyBriefVO vo = new com.xss.propertyservice.vo.PropertyBriefVO();
+        vo.setId(entity.getId());
+        vo.setTitle(entity.getTitle());
+        PropertyImageEntity cover = imageMapper.selectOne(new LambdaQueryWrapper<PropertyImageEntity>()
+                .eq(PropertyImageEntity::getPropertyId, entity.getId())
+                .eq(PropertyImageEntity::getIsCover, true));
+        if (cover != null) {
+            vo.setCoverUrl(imageHubClient.getImageUrl(cover.getImageId(), "small"));
+        }
+        return vo;
+    }
+
     // ===== 内部辅助方法 =====
 
     private PropertyEntity getEntityOrThrow(Long id, String appId) {

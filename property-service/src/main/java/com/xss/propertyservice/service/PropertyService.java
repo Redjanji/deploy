@@ -23,4 +23,8 @@ public interface PropertyService {
     void updatePublishStatus(Long id, Integer publishStatus, String appId, Long ownerId);
 
     void updateAuditStatus(Long id, Integer status, String appId);
+
+boolean exists(Long id);
+
+com.xss.propertyservice.vo.PropertyBriefVO getBrief(Long id);
 }

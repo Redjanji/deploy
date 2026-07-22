@@ -44,7 +44,7 @@ public class DictService {
         DICT_TABLES.put("unit", new DictTableConfig("sys_unit", "code", "name", "sort_order", true));
         DICT_TABLES.put("common_status", new DictTableConfig("sys_common_status", "code", "name", "sort_order", true));
         DICT_TABLES.put("payment_method", new DictTableConfig("sys_payment_method", "code", "name", "sort_order", true));
-        DICT_TABLES.put("property_type", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
+        DICT_TABLES.put("property_type", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", false));
         DICT_TABLES.put("decoration", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
         DICT_TABLES.put("heating_method", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));
         DICT_TABLES.put("water_supply", new DictTableConfig("sys_property_dict_item", "item_key", "item_value", "sort_order", true));

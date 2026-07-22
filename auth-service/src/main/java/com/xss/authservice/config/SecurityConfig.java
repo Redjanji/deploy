@@ -27,8 +27,9 @@ public class SecurityConfig {
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .logout(logout -> logout.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/register", "/auth/login").permitAll()
+                .requestMatchers("/auth/register", "/auth/login", "/auth/logout").permitAll()
                 .requestMatchers("/auth/**").authenticated()
                 .requestMatchers("/actuator/**").permitAll()
                 .anyRequest().denyAll()

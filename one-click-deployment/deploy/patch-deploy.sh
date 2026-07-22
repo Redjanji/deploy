@@ -55,7 +55,7 @@ for arg in "$@"; do
 done
 
 # 远程文件基础 URL
-RAW_BASE="https://gitee.com/redjanji_admin/one-click-deployment/raw/master/one-click-deployment/deploy"
+RAW_BASE="https://gitee.com/redjanji_admin/deploy/raw/master"
 
 # 需要检查/修复的文件列表
 PATCH_FILES=(

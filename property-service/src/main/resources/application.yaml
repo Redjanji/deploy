@@ -27,7 +27,7 @@ spring:
       probability: 0.1
 
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:172.24.35.23}:3306/property_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/property_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: ${MYSQL_USER:root}
     password: ${MYSQL_PASS:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -37,7 +37,7 @@ spring:
     time-zone: Asia/Shanghai
 
   rabbitmq:
-    host: ${RABBITMQ_HOST:172.24.35.23}
+    host: ${RABBITMQ_HOST:127.0.0.1}
     port: 5672
     username: ${RABBITMQ_USER:guest}
     password: ${RABBITMQ_PASS:guest}
