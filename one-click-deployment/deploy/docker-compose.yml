@@ -305,10 +305,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
-      interval: 30s
+      interval: 15s
       timeout: 10s
-      retries: 5
-      start_period: 30s
+      retries: 10
+      start_period: 90s
 
   auth-service:
     image: xss/auth-service:latest
@@ -462,7 +462,7 @@ services:
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin}
       - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
       - MANAGEMENT_TRACING_ENABLED=false
-      - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
+      - JAVA_TOOL_OPTIONS=-Xms64m -Xmx192m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
     profiles: ["business"]
@@ -470,11 +470,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
-          memory: 160M
+          cpus: '0.5'
+          memory: 256M
         reservations:
-          cpus: '0.1'
-          memory: 96M
+          cpus: '0.2'
+          memory: 128M
     depends_on:
       mysql:
         condition: service_healthy
@@ -536,7 +536,7 @@ services:
       - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
       - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
       - MANAGEMENT_TRACING_ENABLED=false
-      - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
+      - JAVA_TOOL_OPTIONS=-Xms64m -Xmx192m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
     profiles: ["business"]
@@ -544,11 +544,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
-          memory: 160M
+          cpus: '0.5'
+          memory: 256M
         reservations:
-          cpus: '0.1'
-          memory: 96M
+          cpus: '0.2'
+          memory: 128M
     depends_on:
       mysql:
         condition: service_healthy
@@ -576,7 +576,7 @@ services:
       - MAIL_PASSWORD=${MAIL_PASSWORD:-ufhravxbjladbeig}
       - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
       - MANAGEMENT_TRACING_ENABLED=false
-      - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
+      - JAVA_TOOL_OPTIONS=-Xms64m -Xmx192m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
     profiles: ["business"]
@@ -584,11 +584,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
-          memory: 160M
+          cpus: '0.5'
+          memory: 256M
         reservations:
-          cpus: '0.1'
-          memory: 96M
+          cpus: '0.2'
+          memory: 128M
     depends_on:
       mysql:
         condition: service_healthy
@@ -607,7 +607,7 @@ services:
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_PASS=${MYSQL_ROOT_PASSWORD:-root}
       - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
       - MANAGEMENT_TRACING_ENABLED=false
       - JAVA_TOOL_OPTIONS=-Xms32m -Xmx64m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
@@ -639,7 +639,7 @@ services:
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_PASS=${MYSQL_ROOT_PASSWORD:-root}
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
@@ -647,7 +647,7 @@ services:
       - REVIEW_INTERNAL_TOKEN=${REVIEW_INTERNAL_TOKEN:-internal-token-review-xxx}
       - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
       - MANAGEMENT_TRACING_ENABLED=false
-      - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
+      - JAVA_TOOL_OPTIONS=-Xms64m -Xmx192m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
     profiles: ["business"]
@@ -655,11 +655,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
-          memory: 160M
+          cpus: '0.5'
+          memory: 256M
         reservations:
-          cpus: '0.1'
-          memory: 96M
+          cpus: '0.2'
+          memory: 128M
     depends_on:
       mysql:
         condition: service_healthy
@@ -678,7 +678,7 @@ services:
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_PASS=${MYSQL_ROOT_PASSWORD:-root}
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
       - RABBITMQ_USER=${RABBITMQ_USER:-guest}
@@ -686,7 +686,7 @@ services:
       - MESSAGE_NOTIFY_ADMIN_EMAIL=${MESSAGE_NOTIFY_ADMIN_EMAIL:-redjanji@163.com}
       - MANAGEMENT_ZIPKIN_TRACING_ENABLED=false
       - MANAGEMENT_TRACING_ENABLED=false
-      - JAVA_TOOL_OPTIONS=-Xms32m -Xmx96m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
+      - JAVA_TOOL_OPTIONS=-Xms64m -Xmx192m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError
     networks:
       - xss-net
     profiles: ["business"]
@@ -694,11 +694,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
-          memory: 160M
+          cpus: '0.5'
+          memory: 256M
         reservations:
-          cpus: '0.1'
-          memory: 96M
+          cpus: '0.2'
+          memory: 128M
     depends_on:
       mysql:
         condition: service_healthy
@@ -735,7 +735,7 @@ services:
           memory: 32M
     depends_on:
       gateway-service:
-        condition: service_healthy
+        condition: service_started
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost/nginx-health || exit 1"]
       interval: 30s

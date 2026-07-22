@@ -1,18 +1,21 @@
 #!/bin/bash
 # =====================================================
-# XSS 微服务集群 - 一键部署脚本 (增强版 v2.2)
+# XSS 微服务集群 - 一键部署脚本 (增强版 v3.0)
 # =====================================================
 # 特性：
 #   - 自动配置 Docker 镜像加速器（使用已验证的8个国内高速源）
 #   - 镜像拉取自动重试 + 超时控制 + 备用仓库切换
 #   - 启动前强制校验必需镜像存在，避免无限卡死
 #   - 网络诊断扩展（检查镜像加速器可达性）
+#   - 数据库表自动验证（确保 init-db.sh 执行成功）
+#   - 服务注册自动等待（确保所有服务注册到 Nacos）
+#   - 部署后冒烟测试（验证核心 API 可用性）
 # =====================================================
 
 set -euo pipefail
 
-# 远程仓库配置（GitHub）
-REMOTE_REPO="https://github.com/Redjanji/deploy.git"
+# 远程仓库配置（Gitee - 国内高速）
+REMOTE_REPO="https://gitee.com/redjanji_admin/deploy.git"
 REMOTE_DEPLOY_PATH="."
 
 # 颜色输出
@@ -33,6 +36,25 @@ for arg in "$@"; do
         --no-pull)   NO_PULL=true ;;
         -h|--help)
             echo "Usage: sudo bash full-deploy.sh [--skip-load] [--restart] [--no-pull]"
+            echo ""
+            echo "选项:"
+            echo "  --skip-load  跳过镜像加载（已加载镜像时使用）"
+            echo "  --restart    仅重启所有服务（不重新拉取代码和镜像）"
+            echo "  --no-pull    跳过远程代码拉取（使用本地文件部署）"
+            echo ""
+            echo "部署流程:"
+            echo "  Step -1: 拉取部署代码"
+            echo "  Step 0:  系统资源检查"
+            echo "  Step 1:  Docker 环境检查 + 清理旧环境"
+            echo "  Step 2:  加载业务镜像"
+            echo "  Step 3:  启动中间件（MySQL/Redis/RabbitMQ/ES/MinIO/Nacos）"
+            echo "  Step 4:  初始化数据库 + 表数量验证"
+            echo "  Step 5:  启动核心服务（Gateway/Auth/Property/Dict）"
+            echo "  Step 6:  启动业务服务（Image/Search/Analytics/Message等）"
+            echo "  Step 7:  启动 Nginx 反向代理"
+            echo "  Step 7.5: 等待所有服务注册到 Nacos"
+            echo "  Step 7.6: 部署后冒烟测试（7项核心API测试）"
+            echo "  Step 8:  部署结果汇总"
             exit 0
             ;;
         *)
@@ -71,14 +93,70 @@ check_mem_available_mb() { free -m | awk '/^Mem:/ {print $7}'; }
 check_disk_gb() { df -BG "$SCRIPT_DIR" | awk 'NR==2 {gsub("G",""); print $4}'; }
 check_cpu_cores() { nproc; }
 
-# ===================== 强制清理残留容器 =====================
+# ===================== 强制清理旧环境（保留中间件镜像） =====================
 force_clean_containers() {
     local containers=$(docker ps -a --filter "name=xss-" -q 2>/dev/null)
-    if [ -n "$containers" ]; then
-        log_warn "检测到残留容器，正在清理（数据卷保留）..."
-        docker rm -f $containers >/dev/null 2>&1 || true
-        log_ok "残留容器已清理"
+    if [ -z "$containers" ]; then
+        log_ok "未发现旧环境，跳过清理"
+        return 0
     fi
+
+    log_warn "检测到旧环境，开始清理..."
+
+    # 1. 停止并删除所有 xss- 容器
+    log_info "停止并删除旧容器..."
+    $COMPOSE_CMD down --remove-orphans 2>/dev/null || true
+    docker rm -f $containers >/dev/null 2>&1 || true
+    log_ok "旧容器已清除"
+
+    # 2. 删除数据卷（数据库数据全部清除，确保最新初始化）
+    log_info "删除旧数据卷..."
+    local volumes="mysql-data redis-data rabbitmq-data es-data minio-data nacos-data nginx-log"
+    for vol in $volumes; do
+        if docker volume inspect "xss_${vol}" &>/dev/null; then
+            docker volume rm "xss_${vol}" 2>/dev/null && \
+                log_ok "  已删除: xss_${vol}" || \
+                log_warn "  跳过: xss_${vol}"
+        fi
+    done
+    log_ok "数据卷已清除"
+
+    # 3. 删除业务镜像（xss/*），保留中间件镜像
+    log_info "删除旧业务镜像（保留中间件镜像）..."
+    local business_images=$(docker images --filter "reference=xss/*" --format "{{.Repository}}:{{.Tag}}" 2>/dev/null)
+    if [ -n "$business_images" ]; then
+        for img in $business_images; do
+            docker rmi -f "$img" 2>/dev/null && \
+                log_ok "  已删除: $img" || \
+                log_warn "  跳过: $img"
+        done
+    else
+        log_info "  无业务镜像需要删除"
+    fi
+    log_ok "业务镜像已清除"
+
+    # 4. 显示保留的中间件镜像
+    log_info "保留的中间件镜像:"
+    local middleware_images=(
+        "mysql:8.0"
+        "redis:7-alpine"
+        "rabbitmq:3.12-management-alpine"
+        "docker.elastic.co/elasticsearch/elasticsearch:8.11.0"
+        "minio/minio:latest"
+        "nacos/nacos-server:v2.3.2"
+        "nginx:1.27-alpine"
+    )
+    for img in "${middleware_images[@]}"; do
+        if docker image inspect "$img" &>/dev/null; then
+            log_ok "  ✅ $img"
+        else
+            log_warn "  （未安装）$img"
+        fi
+    done
+
+    # 5. 清理悬空镜像层
+    docker image prune -f 2>/dev/null
+    log_ok "清理完成"
 }
 
 # ===================== 网络连通性诊断（增强版） =====================
@@ -428,8 +506,6 @@ check_docker() {
     else
         log_ok ".env 配置文件已就绪"
     fi
-
-    force_clean_containers
 }
 
 # ===================== 端口占用检查 =====================
@@ -707,6 +783,61 @@ init_config() {
         log_ok "数据库已完全初始化"
     fi
 
+    # ===================== 数据库表数量验证 =====================
+    log_info "验证各数据库表数量..."
+    # 预期表数量（与 SQL 文件一致）
+    declare -A expected_tables=(
+        ["auth_db"]=1
+        ["dict_db"]=31
+        ["property_db"]=2
+        ["image_db"]=3
+        ["analytics_db"]=3
+        ["message_db"]=2
+        ["favorite_db"]=1
+        ["review_db"]=2
+        ["booking_db"]=1
+    )
+
+    local table_check_failed=false
+    for db in "${!expected_tables[@]}"; do
+        local actual_count=$(docker exec -e MYSQL_PWD="$mysql_pwd" xss-mysql mysql -uroot -N -e \
+            "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$db'" 2>/dev/null || echo "0")
+        local expected=${expected_tables[$db]}
+        if [ "$actual_count" -ge "$expected" ]; then
+            log_ok "  $db: $actual_count 表 (预期 ≥$expected)"
+        else
+            log_error "  $db: $actual_count 表 (预期 ≥$expected) - 表缺失！"
+            table_check_failed=true
+        fi
+    done
+
+    if [ "$table_check_failed" = true ]; then
+        log_warn "部分数据库表缺失，重新执行 init-db.sh..."
+        if [ -f "./init-db.sh" ]; then
+            chmod +x ./init-db.sh
+            bash ./init-db.sh
+            # 再次验证
+            local still_failed=false
+            for db in "${!expected_tables[@]}"; do
+                local actual_count=$(docker exec -e MYSQL_PWD="$mysql_pwd" xss-mysql mysql -uroot -N -e \
+                    "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$db'" 2>/dev/null || echo "0")
+                local expected=${expected_tables[$db]}
+                if [ "$actual_count" -lt "$expected" ]; then
+                    log_error "  $db 仍然缺失表: $actual_count / $expected"
+                    still_failed=true
+                fi
+            done
+            if [ "$still_failed" = true ]; then
+                log_error "数据库表初始化失败，请手动检查 SQL 文件和 MySQL 日志"
+                exit 1
+            else
+                log_ok "重新初始化后所有表验证通过"
+            fi
+        fi
+    else
+        log_ok "所有数据库表验证通过"
+    fi
+
     if [ -d "./nacos-config" ]; then
         log_info "Nacos 配置目录已就绪"
     fi
@@ -790,6 +921,200 @@ start_nginx() {
     fi
 }
 
+# ===================== Step 7.5: 等待所有服务注册到 Nacos =====================
+wait_for_services() {
+    cd "$SCRIPT_DIR"
+    step "7.5" "等待所有服务注册到 Nacos"
+
+    local expected_services=(
+        "gateway-service"
+        "auth-service"
+        "property-service"
+        "dict-service"
+        "image-service"
+        "search-service"
+        "analytics-service"
+        "message-service"
+        "favorite-service"
+        "review-service"
+        "booking-service"
+    )
+    local expected_count=${#expected_services[@]}
+    local max_wait=300
+    local waited=0
+
+    log_info "预期注册服务数: $expected_count"
+    log_info "等待所有服务注册到 Nacos（最长 $max_wait 秒）..."
+
+    while [ "$waited" -lt "$max_wait" ]; do
+        # 通过 Gateway 的 actuator/health 获取已注册的服务列表
+        local registered=$(curl -s http://localhost:8080/actuator/health 2>/dev/null \
+            | python3 -c "
+import json, sys
+try:
+    d = json.load(sys.stdin)
+    services = d.get('components',{}).get('discoveryComposite',{}).get('components',{}).get('discoveryClient',{}).get('details',{}).get('services',[])
+    print(' '.join(services))
+except:
+    print('')
+" 2>/dev/null)
+
+        local reg_count=0
+        for svc in "${expected_services[@]}"; do
+            if echo "$registered" | grep -q "$svc"; then
+                reg_count=$((reg_count + 1))
+            fi
+        done
+
+        if [ "$reg_count" -eq "$expected_count" ]; then
+            log_ok "所有 $expected_count 个服务已注册到 Nacos (${waited}s)"
+            return 0
+        fi
+
+        if [ $((waited % 30)) -eq 0 ] && [ "$waited" -gt 0 ]; then
+            log_info "  已注册 $reg_count / $expected_count (${waited}s)..."
+            # 列出未注册的服务
+            for svc in "${expected_services[@]}"; do
+                if ! echo "$registered" | grep -q "$svc"; then
+                    log_warn "    未注册: $svc"
+                fi
+            done
+        fi
+
+        sleep 10
+        waited=$((waited + 10))
+    done
+
+    log_warn "超时：部分服务未在 $max_wait 秒内注册到 Nacos"
+    for svc in "${expected_services[@]}"; do
+        if ! echo "$registered" | grep -q "$svc"; then
+            log_warn "  未注册: $svc (请检查: docker logs xss-${svc%%-service})"
+        fi
+    done
+    log_warn "部署将继续，但部分服务可能不可用"
+}
+
+# ===================== Step 7.6: 部署后冒烟测试 =====================
+smoke_test() {
+    cd "$SCRIPT_DIR"
+    step "7.6" "部署后冒烟测试"
+
+    local gateway_url="http://localhost:8080"
+    local nginx_url="http://localhost"
+    local pass=0
+    local fail=0
+
+    # 读取配置
+    local app_id="${APP_ID:-my-backend-system}"
+    local app_secret="${APP_SECRET_BACKEND:-XssBackend2026SecHmacKey8xYz}"
+    if [ -f .env ]; then
+        app_id=$(grep '^APP_ID=' .env 2>/dev/null | sed 's/^APP_ID=//' || echo "$app_id")
+        app_secret=$(grep '^APP_SECRET_BACKEND=' .env 2>/dev/null | sed 's/^APP_SECRET_BACKEND=//' || echo "$app_secret")
+    fi
+
+    # 测试1: Nginx 健康检查
+    if curl -s -o /dev/null -w "%{http_code}" "$nginx_url/nginx-health" 2>/dev/null | grep -q "200"; then
+        log_ok "  [1] Nginx 健康检查: PASS"
+        pass=$((pass + 1))
+    else
+        log_error "  [1] Nginx 健康检查: FAIL"
+        fail=$((fail + 1))
+    fi
+
+    # 测试2: Gateway 健康检查
+    local gw_health=$(curl -s "$gateway_url/actuator/health" 2>/dev/null)
+    if echo "$gw_health" | grep -q '"status":"UP"'; then
+        log_ok "  [2] Gateway 健康检查: PASS"
+        pass=$((pass + 1))
+    else
+        log_error "  [2] Gateway 健康检查: FAIL"
+        fail=$((fail + 1))
+    fi
+
+    # 测试3: 获取应用 Token (HMAC 签名)
+    local timestamp=$(date +%s)
+    local nonce=$(cat /proc/sys/kernel/random/uuid 2>/dev/null || echo "nonce$(date +%s%N)")
+    local payload="${app_id}:${timestamp}:${nonce}"
+    local sign=$(echo -n "$payload" | openssl dgst -sha256 -hmac "$app_secret" -binary 2>/dev/null | base64 -w0 2>/dev/null || echo "")
+    local encoded_sign=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$sign', safe=''))" 2>/dev/null || echo "$sign")
+
+    local token_resp=$(curl -s -X POST "$gateway_url/token" \
+        -H "Content-Type: application/x-www-form-urlencoded" \
+        -d "appId=${app_id}&timestamp=${timestamp}&nonce=${nonce}&sign=${encoded_sign}" 2>/dev/null)
+
+    local app_token=$(echo "$token_resp" | python3 -c "import json,sys; print(json.load(sys.stdin).get('data',{}).get('token',''))" 2>/dev/null || echo "")
+    if [ -n "$app_token" ]; then
+        log_ok "  [3] 获取应用 Token: PASS"
+        pass=$((pass + 1))
+    else
+        log_error "  [3] 获取应用 Token: FAIL ($token_resp)"
+        fail=$((fail + 1))
+    fi
+
+    # 测试4: 字典服务 - 国家列表
+    if [ -n "$app_token" ]; then
+        local dict_resp=$(curl -s "$gateway_url/api/countries" \
+            -H "Authorization: Bearer $app_token" 2>/dev/null)
+        local country_count=$(echo "$dict_resp" | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d.get('data',[])) if d.get('code')==200 else 0)" 2>/dev/null || echo "0")
+        if [ "$country_count" -gt 0 ]; then
+            log_ok "  [4] 字典服务-国家: PASS ($country_count 条)"
+            pass=$((pass + 1))
+        else
+            log_error "  [4] 字典服务-国家: FAIL ($dict_resp)"
+            fail=$((fail + 1))
+        fi
+
+        # 测试5: 字典服务 - property_type
+        local pt_resp=$(curl -s "$gateway_url/api/dict/property_type/list" \
+            -H "Authorization: Bearer $app_token" 2>/dev/null)
+        if echo "$pt_resp" | python3 -c "import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get('code')==200 else 1)" 2>/dev/null; then
+            log_ok "  [5] 字典服务-property_type: PASS"
+            pass=$((pass + 1))
+        else
+            log_error "  [5] 字典服务-property_type: FAIL ($pt_resp)"
+            fail=$((fail + 1))
+        fi
+
+        # 测试6: 房产服务
+        local prop_resp=$(curl -s "$gateway_url/api/properties?page=1&size=1" \
+            -H "Authorization: Bearer $app_token" 2>/dev/null)
+        if echo "$prop_resp" | python3 -c "import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get('code')==200 else 1)" 2>/dev/null; then
+            log_ok "  [6] 房产服务: PASS"
+            pass=$((pass + 1))
+        else
+            log_error "  [6] 房产服务: FAIL ($prop_resp)"
+            fail=$((fail + 1))
+        fi
+    fi
+
+    # 测试7: 用户注册+登录
+    local test_user="smoke_test_$(date +%s)"
+    local reg_resp=$(curl -s -X POST "$gateway_url/auth/register" \
+        -H "Content-Type: application/json" \
+        -d "{\"username\":\"$test_user\",\"password\":\"password123\",\"email\":\"$test_user@test.com\",\"phone\":\"13800138000\"}" 2>/dev/null)
+    local login_resp=$(curl -s -X POST "$gateway_url/auth/login" \
+        -H "Content-Type: application/json" \
+        -d "{\"username\":\"$test_user\",\"password\":\"password123\"}" 2>/dev/null)
+    local user_token=$(echo "$login_resp" | python3 -c "import json,sys; print(json.load(sys.stdin).get('token',''))" 2>/dev/null || echo "")
+    if [ -n "$user_token" ]; then
+        log_ok "  [7] 用户注册+登录: PASS"
+        pass=$((pass + 1))
+    else
+        log_error "  [7] 用户注册+登录: FAIL ($login_resp)"
+        fail=$((fail + 1))
+    fi
+
+    # 汇总
+    echo ""
+    echo "  ────────────────────────────────────────────────"
+    echo "  冒烟测试结果: $pass 通过 / $fail 失败"
+    if [ "$fail" -eq 0 ]; then
+        log_ok "所有冒烟测试通过！"
+    else
+        log_warn "部分测试失败，请检查对应服务日志"
+    fi
+}
+
 # ===================== Step 8: 部署结果汇总 =====================
 report_status() {
     step "8" "部署结果汇总"
@@ -839,6 +1164,8 @@ restart_all() {
     start_core
     start_business
     start_nginx
+    wait_for_services
+    smoke_test
     report_status
 }
 
@@ -864,6 +1191,7 @@ main() {
     check_system_resources
     network_diag
     check_docker
+    force_clean_containers
     check_port_conflicts
     load_images
     start_infra
@@ -871,6 +1199,8 @@ main() {
     start_core
     start_business
     start_nginx
+    wait_for_services
+    smoke_test
     report_status
 }
 

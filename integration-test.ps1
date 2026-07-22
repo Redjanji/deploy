@@ -48,8 +48,9 @@ try {
     $timestamp = [math]::Floor([datetime]::UtcNow.Subtract([datetime]::new(1970, 1, 1)).TotalSeconds)
     $nonce = ([guid]::NewGuid()).ToString("N")
     $sign = Generate-HmacSign $APP_ID $timestamp $nonce $APP_SECRET
+    $encodedSign = [System.Uri]::EscapeDataString($sign)
     
-    $body = "appId=$APP_ID&timestamp=$timestamp&nonce=$nonce&sign=$sign"
+    $body = "appId=$APP_ID&timestamp=$timestamp&nonce=$nonce&sign=$encodedSign"
     $resp = Invoke-RestMethod -Uri "$GATEWAY_URL/token" -Method POST `
         -ContentType "application/x-www-form-urlencoded" `
         -Body $body `

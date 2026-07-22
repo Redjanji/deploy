@@ -108,13 +108,38 @@ public class ForwardingController {
                     entity,
                     byte[].class
             );
-            return response;
+            // Strip hop-by-hop headers from backend response to prevent duplicates
+            HttpHeaders cleanedHeaders = new HttpHeaders();
+            HttpHeaders backendHeaders = response.getHeaders();
+            for (String headerName : backendHeaders.keySet()) {
+                if (headerName.equalsIgnoreCase("transfer-encoding")
+                        || headerName.equalsIgnoreCase("content-length")
+                        || headerName.equalsIgnoreCase("connection")) {
+                    continue;
+                }
+                cleanedHeaders.put(headerName, backendHeaders.get(headerName));
+            }
+            return ResponseEntity.status(response.getStatusCode())
+                    .headers(cleanedHeaders)
+                    .body(response.getBody());
         } catch (HttpStatusCodeException e) {
+            // Strip hop-by-hop headers from error response as well
+            HttpHeaders errorHeaders = new HttpHeaders();
+            if (e.getResponseHeaders() != null) {
+                for (String headerName : e.getResponseHeaders().keySet()) {
+                    if (headerName.equalsIgnoreCase("transfer-encoding")
+                            || headerName.equalsIgnoreCase("content-length")
+                            || headerName.equalsIgnoreCase("connection")) {
+                        continue;
+                    }
+                    errorHeaders.put(headerName, e.getResponseHeaders().get(headerName));
+                }
+            }
+            if (errorHeaders.getContentType() == null) {
+                errorHeaders.setContentType(MediaType.APPLICATION_JSON);
+            }
             return ResponseEntity.status(e.getStatusCode())
-                    .contentType(e.getResponseHeaders() != null
-                            && e.getResponseHeaders().getContentType() != null
-                            ? e.getResponseHeaders().getContentType()
-                            : MediaType.APPLICATION_JSON)
+                    .headers(errorHeaders)
                     .body(e.getResponseBodyAsByteArray());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
