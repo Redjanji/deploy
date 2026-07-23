@@ -42,6 +42,10 @@ x-common-logging: &common-logging
 x-common-restart: &common-restart
   restart: unless-stopped
 
+x-common-business: &common-business
+  restart: unless-stopped
+  pull_policy: never
+
 services:
   # =====================================================
   # 一、基础设施（中间件）
@@ -276,7 +280,7 @@ services:
   gateway-service:
     image: xss/gateway-service:latest
     container_name: xss-gateway
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -313,7 +317,7 @@ services:
   auth-service:
     image: xss/auth-service:latest
     container_name: xss-auth
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -360,7 +364,7 @@ services:
   property-service:
     image: xss/property-service:latest
     container_name: xss-property
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -402,7 +406,7 @@ services:
   dict-service:
     image: xss/dict-service:latest
     container_name: xss-dict
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -447,7 +451,7 @@ services:
   image-service:
     image: xss/image-service:latest
     container_name: xss-image
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -488,7 +492,7 @@ services:
   search-service:
     image: xss/search-service:latest
     container_name: xss-search
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -522,7 +526,7 @@ services:
   analytics-service:
     image: xss/analytics-service:latest
     container_name: xss-analytics
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -562,7 +566,7 @@ services:
   message-service:
     image: xss/message-service:latest
     container_name: xss-message
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -600,7 +604,7 @@ services:
   favorite-service:
     image: xss/favorite-service:latest
     container_name: xss-favorite
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public
@@ -632,7 +636,7 @@ services:
   review-service:
     image: xss/review-service:latest
     container_name: xss-review
-    <<: *common-restart
+    <<: *common-business
     environment:
       - NACOS_SERVER_ADDR=nacos:8848
       - NACOS_NAMESPACE=public

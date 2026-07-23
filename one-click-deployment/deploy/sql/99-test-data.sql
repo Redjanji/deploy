@@ -1,4 +1,4 @@
-﻿SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
+SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -12,7 +12,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ============================================================
 USE `auth_db`;
 
-INSERT INTO `users` (`id`, `username`, `password_hash`, `email`, `phone`, `created_at`) VALUES
+INSERT IGNORE INTO `users` (`id`, `username`, `password_hash`, `email`, `phone`, `created_at`) VALUES
 (1, 'testuser', '$2a$10$xVvf6b/52y3hatdSjA1W3u8PALfH99kUgkTqtO/b4K0YCk7PYrR1S', 'test@example.com', '13800138000', '2026-07-01 10:00:00'),
 (2, 'agent001', '$2a$10$xVvf6b/52y3hatdSjA1W3u8PALfH99kUgkTqtO/b4K0YCk7PYrR1S', 'agent@example.com', '13900139000', '2026-07-01 11:00:00'),
 (3, 'admin', '$2a$10$xVvf6b/52y3hatdSjA1W3u8PALfH99kUgkTqtO/b4K0YCk7PYrR1S', 'admin@example.com', '13700137000', '2026-07-01 09:00:00');
@@ -22,7 +22,7 @@ INSERT INTO `users` (`id`, `username`, `password_hash`, `email`, `phone`, `creat
 -- ============================================================
 USE `property_db`;
 
-INSERT INTO `properties` (`id`, `title`, `type`, `price`, `rental_area`, `rooms`, `orientation`, `floor`, `total_floors`, `address`, `lat`, `lng`, `city_code`, `city_name`, `district_code`, `district_name`, `description`, `contact_phone`, `agent_name`, `agent_phone`, `publish_status`, `status`, `hot`, `featured`, `owner_id`, `created_at`) VALUES
+INSERT IGNORE INTO `properties` (`id`, `title`, `type`, `price`, `rental_area`, `rooms`, `orientation`, `floor`, `total_floors`, `address`, `lat`, `lng`, `city_code`, `city_name`, `district_code`, `district_name`, `description`, `contact_phone`, `agent_name`, `agent_phone`, `publish_status`, `status`, `hot`, `featured`, `owner_id`, `created_at`) VALUES
 (1, '精装两室一厅 南北通透 拎包入住', 'residential', 580000, 89, '2室1厅', 'south_north', '15层', 32, '深圳市南山区科技园路88号', 22.543100, 113.944500, '440300', '深圳市', '440305', '南山区', '靠近地铁，交通便利，周边配套齐全，小区环境优美，物业完善', '13800138001', '张经理', '13900139001', 1, 1, 1, 1, 1, '2026-07-05 10:00:00'),
 (2, '福田CBD精装写字楼 落地窗采光好', 'office', 1200000, 150, '开间', 'south', '28层', 45, '深圳市福田区深南大道6000号', 22.540600, 114.056800, '440300', '深圳市', '440304', '福田区', '甲级写字楼，配套设施完善，交通便利，近地铁站', '13800138002', '李总监', '13900139002', 1, 1, 1, 1, 2, '2026-07-06 14:00:00'),
 (3, '南山商业街旺铺 人流量大', 'commercial', 2000000, 60, '开间', 'south', '1层', 3, '深圳市南山区海岸城购物中心', 22.536800, 113.924500, '440300', '深圳市', '440305', '南山区', '黄金地段，人流量大，适合餐饮、零售等多种业态', '13800138003', '王总', '13900139003', 1, 1, 0, 1, 2, '2026-07-07 09:00:00'),
@@ -34,7 +34,7 @@ INSERT INTO `properties` (`id`, `title`, `type`, `price`, `rental_area`, `rooms`
 -- ============================================================
 USE `favorite_db`;
 
-INSERT INTO `user_favorites` (`user_id`, `property_id`, `created_at`) VALUES
+INSERT IGNORE INTO `user_favorites` (`user_id`, `property_id`, `created_at`) VALUES
 (1, 1, '2026-07-10 10:00:00'),
 (1, 2, '2026-07-11 14:00:00'),
 (1, 5, '2026-07-12 09:00:00');
@@ -44,13 +44,13 @@ INSERT INTO `user_favorites` (`user_id`, `property_id`, `created_at`) VALUES
 -- ============================================================
 USE `review_db`;
 
-INSERT INTO `audit_tasks` (`id`, `property_id`, `app_id`, `task_type`, `status`, `result_detail`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `audit_tasks` (`id`, `property_id`, `app_id`, `task_type`, `status`, `result_detail`, `created_at`, `updated_at`) VALUES
 (1, 1, 'default', 'MANUAL', 2, '{"pass":true,"score":95}', '2026-07-05 10:30:00', '2026-07-05 11:00:00'),
 (2, 2, 'default', 'MANUAL', 2, '{"pass":true,"score":90}', '2026-07-06 14:30:00', '2026-07-06 15:00:00'),
 (3, 3, 'default', 'MANUAL', 2, '{"pass":true,"score":88}', '2026-07-07 09:30:00', '2026-07-07 10:00:00'),
 (4, 4, 'default', 'MANUAL', 1, '{"pass":null,"score":null}', '2026-07-08 16:30:00', '2026-07-08 16:30:00');
 
-INSERT INTO `audit_records` (`task_id`, `audit_type`, `result`, `reason`, `auditor_id`, `audit_at`) VALUES
+INSERT IGNORE INTO `audit_records` (`task_id`, `audit_type`, `result`, `reason`, `auditor_id`, `audit_at`) VALUES
 (1, 'MANUAL', 1, '内容合规，图片清晰', 3, '2026-07-05 11:00:00'),
 (2, 'MANUAL', 1, '资料齐全，符合要求', 3, '2026-07-06 15:00:00'),
 (3, 'MANUAL', 1, '商铺信息完整', 3, '2026-07-07 10:00:00');
@@ -60,7 +60,7 @@ INSERT INTO `audit_records` (`task_id`, `audit_type`, `result`, `reason`, `audit
 -- ============================================================
 USE `booking_db`;
 
-INSERT INTO `bookings` (`id`, `property_id`, `user_id`, `agent_id`, `appointment_time`, `status`, `remark`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `bookings` (`id`, `property_id`, `user_id`, `agent_id`, `appointment_time`, `status`, `remark`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 2, '2026-07-15 14:00:00', 2, '希望下午看房', '2026-07-14 10:00:00', '2026-07-15 15:00:00'),
 (2, 2, 1, 2, '2026-07-16 10:00:00', 1, '想了解写字楼详情', '2026-07-14 15:00:00', '2026-07-14 16:00:00'),
 (3, 5, 1, 2, '2026-07-18 14:00:00', 0, '周末看房', '2026-07-17 09:00:00', '2026-07-17 09:00:00');
